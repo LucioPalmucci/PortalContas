@@ -17,10 +17,6 @@ Instalá las dependencias:
 npm install
 ```
  
-## Uso
- 
-Una vez instaladas las dependencias, iniciá el proyecto según corresponda a tu entorno de desarrollo (agregar aquí el comando de arranque, por ejemplo `npm start` o `npm run dev`).
- 
 ## Cómo colaborar
  
 Las contribuciones se realizan mediante **pull requests**:
