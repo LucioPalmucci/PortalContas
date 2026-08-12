@@ -1,0 +1,227 @@
+/* ===========================================================
+   Contas Portal - ajustes sobre Bootstrap 5
+   Solo lo que Bootstrap no cubre: graficos en CSS, calendario,
+   fondo del login. Colores de estado via utilidades bg-*/text-*
+   de Bootstrap (success/warning/danger/secondary).
+   =========================================================== */
+
+:root {
+    /* Paleta categorica para el grafico de composicion de gastos (8 series + "otras") */
+    --serie-1: #4E79A7;
+    --serie-2: #F28E2B;
+    --serie-3: #E15759;
+    --serie-4: #76B7B2;
+    --serie-5: #59A14F;
+    --serie-6: #EDC948;
+    --serie-7: #B07AA1;
+    --serie-8: #9C9C9C;
+
+    /* Tipografia y acento en modo claro */
+    --bs-body-font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --bs-primary: #2F6FB0;
+    --bs-primary-rgb: 47, 111, 176;
+    --bs-primary-text-emphasis: #24578c;
+    --bs-primary-bg-subtle: #e6f0f9;
+    --bs-primary-border-subtle: #b7d3ea;
+    --bs-link-color: #2F6FB0;
+    --bs-link-color-rgb: 47, 111, 176;
+    --bs-link-hover-color: #24578c;
+    --bs-link-hover-color-rgb: 36, 87, 140;
+    --bs-tertiary-bg: #eef1f4;
+}
+
+body {
+    background-color: var(--bs-tertiary-bg);
+    font-family: var(--bs-body-font-family);
+}
+
+.card {
+    border: 0;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, .08);
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-hover-bg: var(--bs-link-hover-color);
+    --bs-btn-hover-border-color: var(--bs-link-hover-color);
+}
+
+.min-vh-100-menos-nav {
+    min-height: calc(100vh - 130px);
+}
+
+/* ---------- Menu lateral (offcanvas) ---------- */
+#sidebarMenu {
+    --bs-offcanvas-width: 280px;
+}
+.menu-lateral-link {
+    display: block;
+    padding: .65rem 1.25rem;
+    color: var(--bs-body-color);
+    text-decoration: none;
+}
+.menu-lateral-link:hover {
+    background-color: var(--bs-tertiary-bg);
+}
+
+/* ---------- Login ---------- */
+.login-fondo {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: linear-gradient(160deg, var(--bs-primary) 0%, var(--bs-indigo, #3b0a58) 100%);
+}
+
+/* ---------- Graficos de barras en CSS puro ---------- */
+.grafico-barras {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 160px;
+    padding-top: 1.5rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+.grafico-barras .barra-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+    min-width: 18px;
+}
+.grafico-barras .barra {
+    width: 100%;
+    max-width: 26px;
+    border-radius: 3px 3px 0 0;
+    background: var(--bs-primary);
+}
+.grafico-barras .barra-valor {
+    font-size: .65rem;
+    color: var(--bs-secondary-color);
+    margin-bottom: 2px;
+    white-space: nowrap;
+}
+.grafico-etiquetas {
+    display: flex;
+    gap: 6px;
+    margin-top: .4rem;
+}
+.grafico-etiquetas span {
+    flex: 1;
+    text-align: center;
+    font-size: .7rem;
+    color: var(--bs-secondary-color);
+    min-width: 18px;
+}
+
+.grafico-divergente {
+    display: flex;
+    gap: 6px;
+    height: 220px;
+}
+.grafico-divergente .barra-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 18px;
+}
+.grafico-divergente .mitad-arriba {
+    height: 45%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.grafico-divergente .mitad-abajo {
+    height: 45%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+.grafico-divergente .linea-base {
+    height: 1px;
+    background: var(--bs-border-color);
+}
+.grafico-divergente .barra {
+    width: 100%;
+    max-width: 26px;
+    border-radius: 3px;
+}
+.grafico-divergente .barra.positivo { background: var(--bs-success); border-radius: 3px 3px 0 0; }
+.grafico-divergente .barra.negativo { background: var(--bs-danger); border-radius: 0 0 3px 3px; }
+.grafico-divergente .etiqueta {
+    height: 10%;
+    text-align: center;
+    font-size: .7rem;
+    color: var(--bs-secondary-color);
+    padding-top: .3rem;
+}
+
+.grafico-leyenda-punto {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.barra-horizontal-pista {
+    background: var(--bs-secondary-bg);
+    border-radius: 999px;
+    height: 14px;
+    overflow: hidden;
+}
+.barra-horizontal-relleno {
+    height: 100%;
+    border-radius: 999px;
+}
+
+/* ---------- Calendario de vencimientos ---------- */
+.calendario {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+.calendario-celda {
+    min-height: 78px;
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    padding: .4rem;
+    font-size: .8rem;
+    background: var(--bs-body-bg);
+}
+.calendario-celda.vacia { background: transparent; border-color: transparent; }
+.calendario-dia { font-weight: 700; margin-bottom: .25rem; }
+.calendario-punto {
+    display: block;
+    font-size: .72rem;
+    border-radius: var(--bs-border-radius-sm);
+    padding: .12rem .35rem;
+    margin-top: .2rem;
+    color: #fff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.calendario-punto.critico { background: var(--bs-danger); }
+.calendario-punto.advertencia { background: var(--bs-warning); color: #201400; }
+.calendario-punto.bueno { background: var(--bs-success); }
+
+@media (max-width: 700px) {
+    .calendario { grid-template-columns: repeat(7, minmax(34px, 1fr)); }
+    .calendario-celda { min-height: 56px; font-size: .7rem; padding: .25rem; }
+    .calendario-punto { font-size: 0; padding: 0; width: 8px; height: 8px; border-radius: 50%; margin: 2px auto 0; }
+}
+
+/* Tarjetas clicables del panel */
+a.card-enlace {
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow .15s ease, transform .15s ease;
+}
+a.card-enlace:hover {
+    box-shadow: var(--bs-box-shadow);
+    transform: translateY(-2px);
+}

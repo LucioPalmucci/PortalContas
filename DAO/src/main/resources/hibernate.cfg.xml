@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="connection.url">jdbc:sqlserver://localhost:1433;databaseName=GestionFinancieraDB;encrypt=true;trustServerCertificate=true</property>
+        <property name="connection.username">sa</property>
+        <property name="connection.password">1234</property>
+
+        <!-- JDBC connection pool (use the built-in) -->
+        <property name="connection.pool_size">1</property>
+        <property name="dialect">org.hibernate.dialect.SQLServerDialect</property>
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+        <!-- Drop and re-create the database schema on startup -->
+        <property name="hbm2ddl.auto">update</property>
+
+        <!-- Names the annotated entity classes -->
+        <mapping class="edu.usal.jdbc.dominio.Usuario" />
+        <mapping class="edu.usal.jdbc.dominio.MetodoOperacion" />
+        <mapping class="edu.usal.jdbc.dominio.CategoriaConcepto" />
+        <mapping class="edu.usal.jdbc.dominio.Venta" />
+        <mapping class="edu.usal.jdbc.dominio.Compra" />
+        <mapping class="edu.usal.jdbc.dominio.Gasto" />
+        <mapping class="edu.usal.jdbc.dominio.OtroIngreso" />
+        <mapping class="edu.usal.jdbc.dominio.OtroEgreso" />
+        <mapping class="edu.usal.jdbc.dominio.ConfiguracionEstadoResultados" />
+        <mapping class="edu.usal.jdbc.dominio.Vencimiento" />
+    </session-factory>
+</hibernate-configuration>
