@@ -1,20 +1,30 @@
 # Portal Contas
  
-Sistema de gestión financiera para los clientes de contas.arg.
+Sistema de gestión financiera para los clientes de contas.ar.
  
 ## Instalación
  
-Cloná el repositorio:
+Este proyecto se instala de forma manual con IntelliJ. No usa `npm`.
  
+### Requisitos previos
+ 
+- **JDK 21**
+- **Apache Tomcat 9.0.109**
+- **IntelliJ IDEA**
+### Pasos
+ 
+1. Cloná el repositorio:
 ```bash
-git clone https://github.com/contas-ar/portal-contas.git
-cd portal-contas
+   git clone https://github.com/LucioPalmucci/PortalContas.git
+   cd PortalContas
 ```
  
-Instalá las dependencias:
- 
-```bash
-npm install
+2. Abrí el proyecto en **IntelliJ IDEA**.
+3. Configurá el JDK del proyecto en `File > Project Structure > Project SDK` y seleccioná **JDK 21**.
+4. Configurá Tomcat como servidor de aplicaciones: `Run > Edit Configurations > Add New Configuration > Tomcat Server > Local`, y apuntá a tu instalación de **Tomcat 9.0.109**.
+5. Desplegá el artefacto (`.war`) en la pestaña **Deployment** de la configuración de Tomcat.
+6. Ejecutá la configuración desde IntelliJ para levantar el proyecto en Tomcat.
+
 ```
  
 ## Cómo colaborar
