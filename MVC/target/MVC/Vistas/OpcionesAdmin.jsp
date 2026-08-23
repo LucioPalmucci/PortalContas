@@ -80,6 +80,56 @@
             </div>
         </div>
 
+        <h2 class="h5 mt-4">Movimientos de usuarios</h2>
+        <p class="text-secondary">Seleccione un tipo de movimiento y luego el usuario para ver su informacion.</p>
+        <div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+            <div class="col">
+                <a class="card h-100 position-relative card-enlace" href="${pageContext.request.contextPath}/Venta">
+                    <div class="card-body">
+                        <h3 class="h5">Ventas</h3>
+                        <p class="text-secondary mb-0">Ver y editar las ventas de un usuario.</p>
+                    </div>
+                    <span class="stretched-link"></span>
+                </a>
+            </div>
+            <div class="col">
+                <a class="card h-100 position-relative card-enlace" href="${pageContext.request.contextPath}/Compra">
+                    <div class="card-body">
+                        <h3 class="h5">Compras</h3>
+                        <p class="text-secondary mb-0">Ver y editar las compras de un usuario.</p>
+                    </div>
+                    <span class="stretched-link"></span>
+                </a>
+            </div>
+            <div class="col">
+                <a class="card h-100 position-relative card-enlace" href="${pageContext.request.contextPath}/Gasto">
+                    <div class="card-body">
+                        <h3 class="h5">Gastos</h3>
+                        <p class="text-secondary mb-0">Ver y editar los gastos de un usuario.</p>
+                    </div>
+                    <span class="stretched-link"></span>
+                </a>
+            </div>
+            <div class="col">
+                <a class="card h-100 position-relative card-enlace" href="${pageContext.request.contextPath}/OtroIngreso">
+                    <div class="card-body">
+                        <h3 class="h5">Otros ingresos</h3>
+                        <p class="text-secondary mb-0">Ver y editar otros ingresos de un usuario.</p>
+                    </div>
+                    <span class="stretched-link"></span>
+                </a>
+            </div>
+            <div class="col">
+                <a class="card h-100 position-relative card-enlace" href="${pageContext.request.contextPath}/OtroEgreso">
+                    <div class="card-body">
+                        <h3 class="h5">Otros egresos</h3>
+                        <p class="text-secondary mb-0">Ver y editar otros egresos de un usuario.</p>
+                    </div>
+                    <span class="stretched-link"></span>
+                </a>
+            </div>
+        </div>
+
         <%@ include file="/Vistas/fragmentos/Footer.jsp" %>
     </c:otherwise>
 </c:choose>

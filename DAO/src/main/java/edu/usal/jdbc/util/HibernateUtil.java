@@ -7,7 +7,20 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HibernateUtil {
 
+    private static volatile SessionFactory sessionFactory;
+
     public static SessionFactory getSessionFactory(){
+        if (sessionFactory == null) {
+            synchronized (HibernateUtil.class) {
+                if (sessionFactory == null) {
+                    sessionFactory = construirSessionFactory();
+                }
+            }
+        }
+        return sessionFactory;
+    }
+
+    private static SessionFactory construirSessionFactory() {
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                 .configure();
 

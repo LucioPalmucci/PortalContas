@@ -10,8 +10,16 @@
         <c:set var="tituloPagina" value="Otros ingresos" scope="request"/>
         <%@ include file="/Vistas/fragmentos/Header.jsp" %>
 
-        <h1>Otros ingresos</h1>
-        <p class="text-secondary">Registre ingresos que no son ventas: alquileres cobrados, intereses, subsidios, etc.</p>
+        <c:choose>
+            <c:when test="${esAdmin}">
+                <h1>Otros ingresos de usuarios</h1>
+                <p class="text-secondary">Seleccione un usuario para ver sus otros ingresos.</p>
+            </c:when>
+            <c:otherwise>
+                <h1>Otros ingresos</h1>
+                <p class="text-secondary">Registre ingresos que no son ventas: alquileres cobrados, intereses, subsidios, etc.</p>
+            </c:otherwise>
+        </c:choose>
 
         <%@ include file="/Vistas/fragmentos/Mensajes.jsp" %>
 
@@ -84,53 +92,65 @@
         </div>
 
         <c:if test="${not empty otroIngresoAEditar}">
-            <div class="card mb-4">
-                <div class="card-header">Editar otro ingreso #${otroIngresoAEditar.idOtroIngreso}</div>
-                <div class="card-body">
-                    <form method="post" action="${pageContext.request.contextPath}/OtroIngreso">
-                        <input type="hidden" name="action" value="editar">
-                        <input type="hidden" name="idOtroIngreso" value="${otroIngresoAEditar.idOtroIngreso}">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="ecategoria" class="form-label">Categoria</label>
-                                <select class="form-select" id="ecategoria" name="idCategoria" required>
-                                    <c:forEach var="categoria" items="${categorias}">
-                                        <option value="${categoria.idCategoria}" ${categoria.idCategoria == otroIngresoAEditar.categoria.idCategoria ? 'selected' : ''}>${categoria.nombre}</option>
-                                    </c:forEach>
-                                </select>
+            <div class="modal fade" id="modalEditarOtroIngreso" tabindex="-1" aria-labelledby="modalEditarOtroIngresoLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form method="post" action="${pageContext.request.contextPath}/OtroIngreso">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalEditarOtroIngresoLabel">Editar otro ingreso #${otroIngresoAEditar.idOtroIngreso}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar" onclick="window.location='${pageContext.request.contextPath}/OtroIngreso'"></button>
                             </div>
-                            <div class="col-md-6">
-                                <label for="evalor" class="form-label">Monto ($)</label>
-                                <input type="number" class="form-control" id="evalor" name="valor" min="0.01" step="0.01" value="${otroIngresoAEditar.valor}" required>
+                            <div class="modal-body">
+                                <input type="hidden" name="action" value="editar">
+                                <input type="hidden" name="idOtroIngreso" value="${otroIngresoAEditar.idOtroIngreso}">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="ecategoria" class="form-label">Categoria</label>
+                                        <select class="form-select" id="ecategoria" name="idCategoria" required>
+                                            <c:forEach var="categoria" items="${categorias}">
+                                                <option value="${categoria.idCategoria}" ${categoria.idCategoria == otroIngresoAEditar.categoria.idCategoria ? 'selected' : ''}>${categoria.nombre}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="evalor" class="form-label">Monto ($)</label>
+                                        <input type="number" class="form-control" id="evalor" name="valor" min="0.01" step="0.01" value="${otroIngresoAEditar.valor}" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="emetodo" class="form-label">Medio de cobro</label>
+                                        <select class="form-select" id="emetodo" name="idMetodo" required>
+                                            <c:forEach var="metodo" items="${metodosCobro}">
+                                                <option value="${metodo.idMetodo}" ${metodo.idMetodo == otroIngresoAEditar.metodo.idMetodo ? 'selected' : ''}>${metodo.nombre}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="eestado" class="form-label">Estado</label>
+                                        <select class="form-select" id="eestado" name="estado">
+                                            <option value="PENDIENTE_DE_COBRO" ${otroIngresoAEditar.estado == 'PENDIENTE_DE_COBRO' ? 'selected' : ''}>Pendiente de cobro</option>
+                                            <option value="COBRADO" ${otroIngresoAEditar.estado == 'COBRADO' ? 'selected' : ''}>Cobrado</option>
+                                            <option value="ANULADO" ${otroIngresoAEditar.estado == 'ANULADO' ? 'selected' : ''}>Anulado</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="edescripcion" class="form-label">Descripcion (opcional)</label>
+                                        <textarea class="form-control" id="edescripcion" name="descripcion">${otroIngresoAEditar.descripcion}</textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label for="emetodo" class="form-label">Medio de cobro</label>
-                                <select class="form-select" id="emetodo" name="idMetodo" required>
-                                    <c:forEach var="metodo" items="${metodosCobro}">
-                                        <option value="${metodo.idMetodo}" ${metodo.idMetodo == otroIngresoAEditar.metodo.idMetodo ? 'selected' : ''}>${metodo.nombre}</option>
-                                    </c:forEach>
-                                </select>
+                            <div class="modal-footer">
+                                <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/OtroIngreso">Cancelar</a>
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
                             </div>
-                            <div class="col-md-6">
-                                <label for="eestado" class="form-label">Estado</label>
-                                <select class="form-select" id="eestado" name="estado">
-                                    <option value="PENDIENTE_DE_COBRO" ${otroIngresoAEditar.estado == 'PENDIENTE_DE_COBRO' ? 'selected' : ''}>Pendiente de cobro</option>
-                                    <option value="COBRADO" ${otroIngresoAEditar.estado == 'COBRADO' ? 'selected' : ''}>Cobrado</option>
-                                    <option value="ANULADO" ${otroIngresoAEditar.estado == 'ANULADO' ? 'selected' : ''}>Anulado</option>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <label for="edescripcion" class="form-label">Descripcion (opcional)</label>
-                                <textarea class="form-control" id="edescripcion" name="descripcion">${otroIngresoAEditar.descripcion}</textarea>
-                            </div>
-                        </div>
-                        <div class="d-flex gap-2 mt-3">
-                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/OtroIngreso">Cancelar</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    new bootstrap.Modal(document.getElementById("modalEditarOtroIngreso")).show();
+                });
+            </script>
         </c:if>
 
         <c:if test="${esAdmin}">

@@ -4,14 +4,15 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-        <property name="connection.url">jdbc:sqlserver://localhost:1433;databaseName=GestionFinancieraDB;encrypt=true;trustServerCertificate=true</property>
-        <property name="connection.username">sa</property>
-        <property name="connection.password">1234</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="connection.url">jdbc:postgresql://ep-blue-tooth-axmk6rs3.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require</property>
+        <property name="connection.username">neondb_owner</property>
+        <!-- La contrasenia NO se hardcodea aca: se setea con la variable de entorno DB_PASSWORD (ver HibernateUtil) -->
+        <property name="connection.password"></property>
 
         <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">1</property>
-        <property name="dialect">org.hibernate.dialect.SQLServerDialect</property>
+        <property name="connection.pool_size">10</property>
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
         <!-- Drop and re-create the database schema on startup -->

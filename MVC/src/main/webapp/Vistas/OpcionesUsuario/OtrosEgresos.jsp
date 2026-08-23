@@ -10,8 +10,16 @@
         <c:set var="tituloPagina" value="Otros egresos" scope="request"/>
         <%@ include file="/Vistas/fragmentos/Header.jsp" %>
 
-        <h1>Otros egresos</h1>
-        <p class="text-secondary">Registre salidas de dinero atipicas: devoluciones a clientes, retiros del titular, deudas no operativas, etc.</p>
+        <c:choose>
+            <c:when test="${esAdmin}">
+                <h1>Otros egresos de usuarios</h1>
+                <p class="text-secondary">Seleccione un usuario para ver sus otros egresos.</p>
+            </c:when>
+            <c:otherwise>
+                <h1>Otros egresos</h1>
+                <p class="text-secondary">Registre salidas de dinero atipicas: devoluciones a clientes, retiros del titular, deudas no operativas, etc.</p>
+            </c:otherwise>
+        </c:choose>
 
         <%@ include file="/Vistas/fragmentos/Mensajes.jsp" %>
 
@@ -84,53 +92,65 @@
         </div>
 
         <c:if test="${not empty otroEgresoAEditar}">
-            <div class="card mb-4">
-                <div class="card-header">Editar otro egreso #${otroEgresoAEditar.idOtroEgreso}</div>
-                <div class="card-body">
-                    <form method="post" action="${pageContext.request.contextPath}/OtroEgreso">
-                        <input type="hidden" name="action" value="editar">
-                        <input type="hidden" name="idOtroEgreso" value="${otroEgresoAEditar.idOtroEgreso}">
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="ecategoria" class="form-label">Categoria</label>
-                                <select class="form-select" id="ecategoria" name="idCategoria" required>
-                                    <c:forEach var="categoria" items="${categorias}">
-                                        <option value="${categoria.idCategoria}" ${categoria.idCategoria == otroEgresoAEditar.categoria.idCategoria ? 'selected' : ''}>${categoria.nombre}</option>
-                                    </c:forEach>
-                                </select>
+            <div class="modal fade" id="modalEditarOtroEgreso" tabindex="-1" aria-labelledby="modalEditarOtroEgresoLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form method="post" action="${pageContext.request.contextPath}/OtroEgreso">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalEditarOtroEgresoLabel">Editar otro egreso #${otroEgresoAEditar.idOtroEgreso}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar" onclick="window.location='${pageContext.request.contextPath}/OtroEgreso'"></button>
                             </div>
-                            <div class="col-md-6">
-                                <label for="evalor" class="form-label">Monto ($)</label>
-                                <input type="number" class="form-control" id="evalor" name="valor" min="0.01" step="0.01" value="${otroEgresoAEditar.valor}" required>
+                            <div class="modal-body">
+                                <input type="hidden" name="action" value="editar">
+                                <input type="hidden" name="idOtroEgreso" value="${otroEgresoAEditar.idOtroEgreso}">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label for="ecategoria" class="form-label">Categoria</label>
+                                        <select class="form-select" id="ecategoria" name="idCategoria" required>
+                                            <c:forEach var="categoria" items="${categorias}">
+                                                <option value="${categoria.idCategoria}" ${categoria.idCategoria == otroEgresoAEditar.categoria.idCategoria ? 'selected' : ''}>${categoria.nombre}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="evalor" class="form-label">Monto ($)</label>
+                                        <input type="number" class="form-control" id="evalor" name="valor" min="0.01" step="0.01" value="${otroEgresoAEditar.valor}" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="emetodo" class="form-label">Medio de pago</label>
+                                        <select class="form-select" id="emetodo" name="idMetodo" required>
+                                            <c:forEach var="metodo" items="${metodosPago}">
+                                                <option value="${metodo.idMetodo}" ${metodo.idMetodo == otroEgresoAEditar.metodo.idMetodo ? 'selected' : ''}>${metodo.nombre}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="eestado" class="form-label">Estado</label>
+                                        <select class="form-select" id="eestado" name="estado">
+                                            <option value="PENDIENTE_DE_PAGO" ${otroEgresoAEditar.estado == 'PENDIENTE_DE_PAGO' ? 'selected' : ''}>Pendiente de pago</option>
+                                            <option value="PAGADO" ${otroEgresoAEditar.estado == 'PAGADO' ? 'selected' : ''}>Pagado</option>
+                                            <option value="ANULADO" ${otroEgresoAEditar.estado == 'ANULADO' ? 'selected' : ''}>Anulado</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="edescripcion" class="form-label">Descripcion (opcional)</label>
+                                        <textarea class="form-control" id="edescripcion" name="descripcion">${otroEgresoAEditar.descripcion}</textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <label for="emetodo" class="form-label">Medio de pago</label>
-                                <select class="form-select" id="emetodo" name="idMetodo" required>
-                                    <c:forEach var="metodo" items="${metodosPago}">
-                                        <option value="${metodo.idMetodo}" ${metodo.idMetodo == otroEgresoAEditar.metodo.idMetodo ? 'selected' : ''}>${metodo.nombre}</option>
-                                    </c:forEach>
-                                </select>
+                            <div class="modal-footer">
+                                <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/OtroEgreso">Cancelar</a>
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
                             </div>
-                            <div class="col-md-6">
-                                <label for="eestado" class="form-label">Estado</label>
-                                <select class="form-select" id="eestado" name="estado">
-                                    <option value="PENDIENTE_DE_PAGO" ${otroEgresoAEditar.estado == 'PENDIENTE_DE_PAGO' ? 'selected' : ''}>Pendiente de pago</option>
-                                    <option value="PAGADO" ${otroEgresoAEditar.estado == 'PAGADO' ? 'selected' : ''}>Pagado</option>
-                                    <option value="ANULADO" ${otroEgresoAEditar.estado == 'ANULADO' ? 'selected' : ''}>Anulado</option>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <label for="edescripcion" class="form-label">Descripcion (opcional)</label>
-                                <textarea class="form-control" id="edescripcion" name="descripcion">${otroEgresoAEditar.descripcion}</textarea>
-                            </div>
-                        </div>
-                        <div class="d-flex gap-2 mt-3">
-                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/OtroEgreso">Cancelar</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    new bootstrap.Modal(document.getElementById("modalEditarOtroEgreso")).show();
+                });
+            </script>
         </c:if>
 
         <c:if test="${esAdmin}">

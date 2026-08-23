@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/custom.css?v=<%= System.currentTimeMillis() %>">
 </head>
 <body class="d-flex flex-column min-vh-100">
+<div id="barraCarga" class="barra-carga"></div>
 
 <c:if test="${not empty sessionScope.idUsuario}">
     <nav class="navbar bg-body-tertiary border-bottom d-print-none sticky-top">
@@ -38,6 +39,13 @@
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Usuario">Usuarios</a>
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Vencimiento">Vencimientos</a>
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Catalogo">Categorias y medios</a>
+                        <hr class="my-2">
+                        <div class="px-3 text-secondary small text-uppercase fw-bold mb-1">Movimientos de usuarios</div>
+                        <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Venta">Ventas</a>
+                        <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Compra">Compras</a>
+                        <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Gasto">Gastos</a>
+                        <a class="menu-lateral-link" href="${pageContext.request.contextPath}/OtroIngreso">Otros ingresos</a>
+                        <a class="menu-lateral-link" href="${pageContext.request.contextPath}/OtroEgreso">Otros egresos</a>
                     </c:when>
                     <c:otherwise>
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Vistas/OpcionesUsuario/Panel.jsp">Inicio</a>

@@ -260,7 +260,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="margenCMV" class="form-label">Margen de costo de mercaderia vendida (%)</label>
-                                <input type="number" class="form-control" id="margenCMV" name="margenCMV" min="0" max="100" step="0.1" value="${configuracion.margenCMV}" required>
+                                <input type="number" class="form-control" id="margenCMV" name="margenCMV" min="0" max="100" step="1" value="${configuracion.margenCMV}" required>
                                 <div class="form-text">Porcentaje de las ventas que se considera costo de mercaderia vendida.</div>
                             </div>
                         </div>

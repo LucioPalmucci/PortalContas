@@ -10,8 +10,16 @@
         <c:set var="tituloPagina" value="Ventas" scope="request"/>
         <%@ include file="/Vistas/fragmentos/Header.jsp" %>
 
-        <h1>Mis ventas</h1>
-        <p class="text-secondary">Registre cada venta que realiza. El subtotal se calcula automaticamente.</p>
+        <c:choose>
+            <c:when test="${esAdmin}">
+                <h1>Ventas de usuarios</h1>
+                <p class="text-secondary">Seleccione un usuario para ver sus ventas. El subtotal se calcula automaticamente.</p>
+            </c:when>
+            <c:otherwise>
+                <h1>Mis ventas</h1>
+                <p class="text-secondary">Registre cada venta que realiza. El subtotal se calcula automaticamente.</p>
+            </c:otherwise>
+        </c:choose>
 
         <%@ include file="/Vistas/fragmentos/Mensajes.jsp" %>
 
@@ -83,57 +91,69 @@
         </div>
 
         <c:if test="${not empty ventaAEditar}">
-            <div class="card mb-4">
-                <div class="card-header">Editar venta #${ventaAEditar.idVenta}</div>
-                <div class="card-body">
-                    <form method="post" action="${pageContext.request.contextPath}/Venta">
-                        <input type="hidden" name="action" value="editar">
-                        <input type="hidden" name="idVenta" value="${ventaAEditar.idVenta}">
-                        <div class="row g-3">
-                            <div class="col-md-4">
-                                <label for="efecha" class="form-label">Fecha</label>
-                                <input type="date" class="form-control" id="efecha" name="fecha" value="<fmt:formatDate value="${ventaAEditar.fecha}" pattern="yyyy-MM-dd"/>" required>
+            <div class="modal fade" id="modalEditarVenta" tabindex="-1" aria-labelledby="modalEditarVentaLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <form method="post" action="${pageContext.request.contextPath}/Venta">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalEditarVentaLabel">Editar venta #${ventaAEditar.idVenta}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar" onclick="window.location='${pageContext.request.contextPath}/Venta'"></button>
                             </div>
-                            <div class="col-md-8">
-                                <label for="econcepto" class="form-label">Concepto</label>
-                                <input type="text" class="form-control" id="econcepto" name="conceptoVenta" value="${ventaAEditar.conceptoVenta}" required>
+                            <div class="modal-body">
+                                <input type="hidden" name="action" value="editar">
+                                <input type="hidden" name="idVenta" value="${ventaAEditar.idVenta}">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label for="efecha" class="form-label">Fecha</label>
+                                        <input type="date" class="form-control" id="efecha" name="fecha" value="<fmt:formatDate value="${ventaAEditar.fecha}" pattern="yyyy-MM-dd"/>" required>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label for="econcepto" class="form-label">Concepto</label>
+                                        <input type="text" class="form-control" id="econcepto" name="conceptoVenta" value="${ventaAEditar.conceptoVenta}" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="eprecio" class="form-label">Precio unitario ($)</label>
+                                        <input type="number" class="form-control" id="eprecio" name="precioUnitario" min="0.01" step="0.01" value="${ventaAEditar.precioUnitario}" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="ecantidad" class="form-label">Cantidad</label>
+                                        <input type="number" class="form-control" id="ecantidad" name="cantidad" min="1" step="1" value="${ventaAEditar.cantidad}" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="emetodo" class="form-label">Medio de cobro</label>
+                                        <select class="form-select" id="emetodo" name="idMetodo" required>
+                                            <c:forEach var="metodo" items="${metodosCobro}">
+                                                <option value="${metodo.idMetodo}" ${metodo.idMetodo == ventaAEditar.metodo.idMetodo ? 'selected' : ''}>${metodo.nombre}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="eestado" class="form-label">Estado</label>
+                                        <select class="form-select" id="eestado" name="estado">
+                                            <option value="PENDIENTE_DE_COBRO" ${ventaAEditar.estado == 'PENDIENTE_DE_COBRO' ? 'selected' : ''}>Pendiente de cobro</option>
+                                            <option value="COBRADO" ${ventaAEditar.estado == 'COBRADO' ? 'selected' : ''}>Cobrada</option>
+                                            <option value="ANULADO" ${ventaAEditar.estado == 'ANULADO' ? 'selected' : ''}>Anulada</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="edescripcion" class="form-label">Descripcion (opcional)</label>
+                                        <textarea class="form-control" id="edescripcion" name="descripcion">${ventaAEditar.descripcion}</textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <label for="eprecio" class="form-label">Precio unitario ($)</label>
-                                <input type="number" class="form-control" id="eprecio" name="precioUnitario" min="0.01" step="0.01" value="${ventaAEditar.precioUnitario}" required>
+                            <div class="modal-footer">
+                                <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/Venta">Cancelar</a>
+                                <button type="submit" class="btn btn-primary">Guardar cambios</button>
                             </div>
-                            <div class="col-md-4">
-                                <label for="ecantidad" class="form-label">Cantidad</label>
-                                <input type="number" class="form-control" id="ecantidad" name="cantidad" min="1" step="1" value="${ventaAEditar.cantidad}" required>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="emetodo" class="form-label">Medio de cobro</label>
-                                <select class="form-select" id="emetodo" name="idMetodo" required>
-                                    <c:forEach var="metodo" items="${metodosCobro}">
-                                        <option value="${metodo.idMetodo}" ${metodo.idMetodo == ventaAEditar.metodo.idMetodo ? 'selected' : ''}>${metodo.nombre}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="eestado" class="form-label">Estado</label>
-                                <select class="form-select" id="eestado" name="estado">
-                                    <option value="PENDIENTE_DE_COBRO" ${ventaAEditar.estado == 'PENDIENTE_DE_COBRO' ? 'selected' : ''}>Pendiente de cobro</option>
-                                    <option value="COBRADO" ${ventaAEditar.estado == 'COBRADO' ? 'selected' : ''}>Cobrada</option>
-                                    <option value="ANULADO" ${ventaAEditar.estado == 'ANULADO' ? 'selected' : ''}>Anulada</option>
-                                </select>
-                            </div>
-                            <div class="col-12">
-                                <label for="edescripcion" class="form-label">Descripcion (opcional)</label>
-                                <textarea class="form-control" id="edescripcion" name="descripcion">${ventaAEditar.descripcion}</textarea>
-                            </div>
-                        </div>
-                        <div class="d-flex gap-2 mt-3">
-                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
-                            <a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/Venta">Cancelar</a>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    new bootstrap.Modal(document.getElementById("modalEditarVenta")).show();
+                });
+            </script>
         </c:if>
 
         <c:if test="${esAdmin}">

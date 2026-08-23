@@ -1,0 +1,382 @@
+{
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/AplicaA.java": {
+    "mtime": 1783710397688.4648,
+    "hash": "9345a9d2b3af258aa34fbc8fad446d57"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/CategoriaConcepto.java": {
+    "mtime": 1783710423818.8557,
+    "hash": "76d154ef01a706d93e4ea7b6a1228821"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/CobroOPago.java": {
+    "mtime": 1783710396603.2683,
+    "hash": "1045198ec284c2ea9811aaed4c91790b"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/Compra.java": {
+    "mtime": 1783710446020.537,
+    "hash": "231c401813970d3343fdd5569095e720"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/ConfiguracionEstadoResultados.java": {
+    "mtime": 1783710487142.6765,
+    "hash": "9c74e29c479e80704925ee21290959e8"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/EstadoCobro.java": {
+    "mtime": 1783710399147.5442,
+    "hash": "e34873bcc3d8f81c854f88578455289b"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/EstadoPago.java": {
+    "mtime": 1783710400225.6667,
+    "hash": "d9ba6c1e63d79329af11a5652650eeda"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/EstadoVencimiento.java": {
+    "mtime": 1783710401102.0747,
+    "hash": "8f8b70e6cd9c616163f5ffcccf71acf8"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/Gasto.java": {
+    "mtime": 1783710458947.58,
+    "hash": "e20cefd57b4142ee24526944f8f664d4"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/MetodoOperacion.java": {
+    "mtime": 1783710419512.8137,
+    "hash": "a17b905e263354f9186849bb852825b2"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/OtroEgreso.java": {
+    "mtime": 1783710475079.2595,
+    "hash": "c8532bb62fdab1fd28f811830299809a"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/OtroIngreso.java": {
+    "mtime": 1783710466895.0586,
+    "hash": "a5c7d8d07d68bb470992c4ed6c68e642"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/Rol.java": {
+    "mtime": 1783710395498.888,
+    "hash": "d272b3d601530919777a9ff29c987f74"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/Usuario.java": {
+    "mtime": 1785436234067.3035,
+    "hash": "c826167a4af3646a829abf4643311361"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/Vencimiento.java": {
+    "mtime": 1783710496548.4575,
+    "hash": "c125e58c511d1be0c9ff351c79d39170"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dominio/Venta.java": {
+    "mtime": 1783710436870.9062,
+    "hash": "959858aee7dcf189150832b881f5373d"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dto/ComparacionPeriodoDTO.java": {
+    "mtime": 1783711277631.185,
+    "hash": "b4fb48cc2582be0eac0601701c9e65cc"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dto/ComposicionCategoriaDTO.java": {
+    "mtime": 1783711274004.8208,
+    "hash": "bd943e0584b4eae6c9f728bbccf69eea"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dto/EstadoFinancieroDTO.java": {
+    "mtime": 1783711282070.486,
+    "hash": "7f6252674c7a83e4cdfde30b0635b8bc"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dto/EstadoResultadosDTO.java": {
+    "mtime": 1783711268156.9756,
+    "hash": "b4693fb737b766dc2a32bf50b096bc5d"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dto/PuntoTendenciaDTO.java": {
+    "mtime": 1783711271069.2864,
+    "hash": "95df3610a13b80bb0c2de3f7f348cd2d"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/dto/TesoreriaDTO.java": {
+    "mtime": 1785435372216.0789,
+    "hash": "c3176cec5f0239d1faaf4bf872fcc510"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/excepciones/FactoryException.java": {
+    "mtime": 1783710366626.6355,
+    "hash": "bbb41aee7cc373fd3aa460b67a6929cb"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/excepciones/HQLException.java": {
+    "mtime": 1783710364296.819,
+    "hash": "c6c4d49609b19fd7e24ae719dd402e07"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/excepciones/ServiceException.java": {
+    "mtime": 1783710365412.161,
+    "hash": "edb6bc2e2e2df6a76f4e84676d78fc96"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/factory/CategoriaConceptoFactory.java": {
+    "mtime": 1783710695156.8943,
+    "hash": "fba62b24324148131677b11cd58bb0ff"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/factory/CompraFactory.java": {
+    "mtime": 1783710671553.9265,
+    "hash": "15d83aa77d45420a338a78cf15934f75"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/factory/ConfiguracionEstadoResultadosFactory.java": {
+    "mtime": 1783710709049.5945,
+    "hash": "a9e9f1cadbae5fb40ff3d671a8d6a433"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/factory/GastoFactory.java": {
+    "mtime": 1783710709122.0376,
+    "hash": "70b6883fd9af2699e8e66b8cd4883a9e"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/factory/MetodoOperacionFactory.java": {
+    "mtime": 1783710667016.7795,
+    "hash": "dacda35473ba9b14be962e10285a58b7"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/factory/OtroEgresoFactory.java": {
+    "mtime": 1783710712827.6902,
+    "hash": "5df2a9e76777350153f8bebee408ab5a"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/factory/OtroIngresoFactory.java": {
+    "mtime": 1783710710908.402,
+    "hash": "67bd48c0367819d862e393b76071598a"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/factory/UsuarioFactory.java": {
+    "mtime": 1783710633492.1702,
+    "hash": "ace4ce909560ca69c7e1737869077585"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/factory/VencimientoFactory.java": {
+    "mtime": 1783710710708.5283,
+    "hash": "338640d424e34cba319f77a13aefec7c"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/factory/VentaFactory.java": {
+    "mtime": 1783710669957.6455,
+    "hash": "4f3f814381b3111c38b0143e24b02fe4"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/implementacion/CategoriaConceptoDAOImplDb.java": {
+    "mtime": 1783710693137.8342,
+    "hash": "ca152f9a25d4325bdff553e532942052"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/implementacion/CompraDAOImplDb.java": {
+    "mtime": 1785529741363.4607,
+    "hash": "0b5061fefbd4065c92fa754b29c57eb0"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/implementacion/ConfiguracionEstadoResultadosDAOImplDb.java": {
+    "mtime": 1783710690981.0215,
+    "hash": "cc2d246bde97fef8ebb965798af2ae77"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/implementacion/GastoDAOImplDb.java": {
+    "mtime": 1785529757169.191,
+    "hash": "9ad4ebbe8292a67af77f8a2db11065d7"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/implementacion/MetodoOperacionDAOImplDb.java": {
+    "mtime": 1783710664455.9485,
+    "hash": "44fb40913d93f610970f15eb90bb43f8"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/implementacion/OtroEgresoDAOImplDb.java": {
+    "mtime": 1785529791653.72,
+    "hash": "73cf73972f203ef2a144537830c81cfd"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/implementacion/OtroIngresoDAOImplDb.java": {
+    "mtime": 1785529773937.1355,
+    "hash": "e9f86739b03b448909134514c1d63cf4"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/implementacion/UsuarioDAOImplDb.java": {
+    "mtime": 1785530329949.9502,
+    "hash": "ede3acbf76493fb36b6e6f24f644d3b6"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/implementacion/VencimientoDAOImplDb.java": {
+    "mtime": 1783710701876.5278,
+    "hash": "859965993fe5c848ef04b0f80d54ead2"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/implementacion/VentaDAOImplDb.java": {
+    "mtime": 1785529730475.1814,
+    "hash": "8b562f6ffb5a0f67b116f9996370c447"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/interfaz/ICategoriaConceptoDAO.java": {
+    "mtime": 1783710684699.911,
+    "hash": "5b4cadc3cc33278d15274ce180661a9d"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/interfaz/ICompraDAO.java": {
+    "mtime": 1783710639187.9978,
+    "hash": "954f774c0b84670247ee2390b50a5f7c"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/interfaz/IConfiguracionEstadoResultadosDAO.java": {
+    "mtime": 1783710677236.2476,
+    "hash": "f0e9ebe911f108f3f8ef404b209f1bb7"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/interfaz/IGastoDAO.java": {
+    "mtime": 1783710654496.9292,
+    "hash": "2b6b4b56050f36a4941a30ac3331daf1"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/interfaz/IMetodoOperacionDAO.java": {
+    "mtime": 1783710656452.2122,
+    "hash": "99debe29413f22f693f3d373189a17eb"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/interfaz/IOtroEgresoDAO.java": {
+    "mtime": 1783710661972.3787,
+    "hash": "c4863c07606b3bc5816c9610474aa8d8"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/interfaz/IOtroIngresoDAO.java": {
+    "mtime": 1783710658486.079,
+    "hash": "d73afc05deb3077045b8699f0f1b5733"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/interfaz/IUsuarioDAO.java": {
+    "mtime": 1785436256526.4885,
+    "hash": "e0cfaa9c279d7c3b31a48f14ad901394"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/interfaz/IVencimientoDAO.java": {
+    "mtime": 1783710680286.0947,
+    "hash": "d9db4327c287aa9d74170cfbac8126c1"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/interfaz/IVentaDAO.java": {
+    "mtime": 1783710636352.5703,
+    "hash": "b8639bdc875bef99ef4c643abb15f20f"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/servicio/CategoriaConceptoServicio.java": {
+    "mtime": 1783710708937.159,
+    "hash": "b0c64b4aeae4a3552f050526435c33da"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/servicio/CompraServicio.java": {
+    "mtime": 1783710703846.5918,
+    "hash": "03412caedcb965d3cc31103fa6ca733a"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/servicio/ConfiguracionServicio.java": {
+    "mtime": 1783710732419.8145,
+    "hash": "33c30a698b0a93c37db12295b63cb460"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/servicio/GastoServicio.java": {
+    "mtime": 1783710733239.5125,
+    "hash": "541e1b84e32b9b275f782c06b75a0799"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/servicio/MetodoOperacionServicio.java": {
+    "mtime": 1783710679328.8225,
+    "hash": "021667835fc358c6994b578cf0f5d570"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/servicio/OtroEgresoServicio.java": {
+    "mtime": 1783710776698.3838,
+    "hash": "d388895fec450ca24331e3646d1e2482"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/servicio/OtroIngresoServicio.java": {
+    "mtime": 1783710758929.581,
+    "hash": "885f1a42a64bd2cdbb8cd7bea3dfc0a5"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/servicio/ReporteServicio.java": {
+    "mtime": 1785435399722.1482,
+    "hash": "f7033a4d9ed792cef954938df7d6943c"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/servicio/UsuarioServicio.java": {
+    "mtime": 1785530326466.8748,
+    "hash": "72b031136e4d945d50e8180d1e41a616"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/servicio/VencimientoServicio.java": {
+    "mtime": 1783710754358.7034,
+    "hash": "0979d38ca10d45b0d1c6eb53598f7b76"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/servicio/VentaServicio.java": {
+    "mtime": 1783710689362.1704,
+    "hash": "014bd66d003d6bea2f87d8008a576d7d"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/util/ConfigUtil.java": {
+    "mtime": 1783710368665.6145,
+    "hash": "33287936d9ad0acb42516c6295605433"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/java/edu/usal/jdbc/util/HibernateUtil.java": {
+    "mtime": 1786730725522.07,
+    "hash": "5b72d55e7126dfcdb56210805c26c59d"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/src/main/resources/script.sql": {
+    "mtime": 1786734536666.1096,
+    "hash": "b6e4cf0c8db0d4c1168a01db5cfe3a79"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/DAO/target/classes/script.sql": {
+    "mtime": 1785530421029.7024,
+    "hash": "1f5f415f507671e9c1f76fbed77829c5"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/BarraComposicion.java": {
+    "mtime": 1783711810935.2654,
+    "hash": "9d8b0b28cafa7efbafb7248c24382eb3"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/CatalogoServlet.java": {
+    "mtime": 1783966194402.428,
+    "hash": "639538072eadc18581bd829054a0e16d"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/CeldaCalendario.java": {
+    "mtime": 1783711577192.9038,
+    "hash": "b0700e31200cc706b04a89f4e2669194"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/CompraServlet.java": {
+    "mtime": 1785523771510.5544,
+    "hash": "59b8d1f778ce035a94fef31b8e4a250a"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/EstadoFinancieroServlet.java": {
+    "mtime": 1783980546315.1907,
+    "hash": "aede18e7befa7184d43877034819c4fa"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/EstadoResultadosServlet.java": {
+    "mtime": 1785536544138.6846,
+    "hash": "7f430ec6d8d06496873b853fcc983305"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/EvolucionMensualUtil.java": {
+    "mtime": 1783975093625.3457,
+    "hash": "8ac3077c6d853685b5122150d4026a29"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/GastoServlet.java": {
+    "mtime": 1785523790772.1548,
+    "hash": "7105846a67abc5a1b2728b79db4ec216"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/MovimientoResumen.java": {
+    "mtime": 1783980383830.817,
+    "hash": "daeaa8ed7d95dca3fb01f12defe3db65"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/OtroEgresoServlet.java": {
+    "mtime": 1785523822036.8994,
+    "hash": "d23d941406529bcff8982cb1d4ac5b5c"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/OtroIngresoServlet.java": {
+    "mtime": 1785523808484.7024,
+    "hash": "31d7aba35f63016cc15d010c7debe37b"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/PuntoBarra.java": {
+    "mtime": 1783711805782.2556,
+    "hash": "49682ef4f84cce88901a83efae03d3b0"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/SoporteServlet.java": {
+    "mtime": 1783966196478.555,
+    "hash": "ca1f9cd6ff2899948e4133cc6f84e7d3"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/TesoreriaServlet.java": {
+    "mtime": 1783977911509.0269,
+    "hash": "d876d604e6758de1d73b7ea8a5cf5f72"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/UsuarioServlet.java": {
+    "mtime": 1785530237910.803,
+    "hash": "16d49c04f50d12ee88f1e3abd48fd6f0"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/VencimientoServlet.java": {
+    "mtime": 1783974384699.7617,
+    "hash": "51d727e16244513e25a70259f116ecaa"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/VentaServlet.java": {
+    "mtime": 1785523613830.572,
+    "hash": "abfbc6a86e7f296fc6b240fb305efed4"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/java/edu/usal/servlet/loginServlet.java": {
+    "mtime": 1785530429281.9211,
+    "hash": "80fa56880b7cc9bae8975216869745f2"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/webapp/JS/app.js": {
+    "mtime": 1783970648708.7803,
+    "hash": "d1b3b085299064357463c94a23b4cf36"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/webapp/JS/bootstrap.bundle.min.js": {
+    "mtime": 1785526806587.723,
+    "hash": "2e477967e482f32e65d4ea9b2fd8e106"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/src/main/webapp/JS/tabla-filtros.js": {
+    "mtime": 1783980270902.773,
+    "hash": "449d3abfc20e2d4cf1f46f9b38fbcf96"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/target/MVC/JS/app.js": {
+    "mtime": 1783970648708.7803,
+    "hash": "d1b3b085299064357463c94a23b4cf36"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/target/MVC/JS/bootstrap.bundle.min.js": {
+    "mtime": 1785526806587.723,
+    "hash": "2e477967e482f32e65d4ea9b2fd8e106"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/MVC/target/MVC/JS/tabla-filtros.js": {
+    "mtime": 1783980270902.773,
+    "hash": "449d3abfc20e2d4cf1f46f9b38fbcf96"
+  },
+  "D:/School/Universidad/4toAnio/Seminario/Software/GestionFinanciera/README.md": {
+    "mtime": 1786735178236.0034,
+    "hash": "e343d7637d33c17193d9565e1bc574da"
+  }
+}
