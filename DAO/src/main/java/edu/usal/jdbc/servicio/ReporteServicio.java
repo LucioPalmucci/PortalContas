@@ -101,8 +101,7 @@ public class ReporteServicio {
 
     private EstadoResultadosDTO calcularEstadoResultados(int idUsuario, Date desde, Date hasta) throws ServiceException {
         ConfiguracionEstadoResultados config = configuracionServicio.obtenerOCrearConfiguracion(idUsuario);
-        Set<Integer> idsExcluidas = config.getCategoriasExcluidas() == null ? Set.of() :
-                config.getCategoriasExcluidas().stream().map(CategoriaConcepto::getIdCategoria).collect(Collectors.toSet());
+        Set<Integer> idsExcluidas = obtenerIdsCategoriasExcluidas(config);
 
         double ventasTotal = ventaServicio.obtenerVentasPorUsuarioYPeriodo(idUsuario, desde, hasta)
                 .stream().mapToDouble(Venta::getSubtotal).sum();
@@ -129,6 +128,7 @@ public class ReporteServicio {
         dto.setPeriodoFin(hasta);
         dto.setVentasTotal(ventasTotal);
         dto.setCmv(cmv);
+        dto.setMargenCMV(config.getMargenCMV());
         dto.setUtilidadBruta(utilidadBruta);
         dto.setGastosTotal(gastosTotal);
         dto.setoIngresosTotal(oIngresosTotal);
@@ -155,7 +155,10 @@ public class ReporteServicio {
 
     // ---------- UC-15 Composicion de gastos ----------
     public List<ComposicionCategoriaDTO> obtenerComposicionGastos(int idUsuario, Date desde, Date hasta) throws ServiceException {
-        List<Gasto> gastos = gastoServicio.obtenerGastosPorUsuarioYPeriodo(idUsuario, desde, hasta);
+        Set<Integer> idsExcluidas = obtenerIdsCategoriasExcluidas(idUsuario);
+        List<Gasto> gastos = gastoServicio.obtenerGastosPorUsuarioYPeriodo(idUsuario, desde, hasta).stream()
+                .filter(g -> !idsExcluidas.contains(g.getCategoria().getIdCategoria()))
+                .collect(Collectors.toList());
         double total = gastos.stream().mapToDouble(Gasto::getValor).sum();
 
         Map<String, Double> porCategoria = new HashMap<>();
@@ -175,7 +178,10 @@ public class ReporteServicio {
 
     // ---------- Composicion de otros ingresos (por categoria, mismo criterio que composicion de gastos) ----------
     public List<ComposicionCategoriaDTO> obtenerComposicionOtrosIngresos(int idUsuario, Date desde, Date hasta) throws ServiceException {
-        List<OtroIngreso> otrosIngresos = otroIngresoServicio.obtenerOtrosIngresosPorUsuarioYPeriodo(idUsuario, desde, hasta);
+        Set<Integer> idsExcluidas = obtenerIdsCategoriasExcluidas(idUsuario);
+        List<OtroIngreso> otrosIngresos = otroIngresoServicio.obtenerOtrosIngresosPorUsuarioYPeriodo(idUsuario, desde, hasta).stream()
+                .filter(o -> !idsExcluidas.contains(o.getCategoria().getIdCategoria()))
+                .collect(Collectors.toList());
         double total = otrosIngresos.stream().mapToDouble(OtroIngreso::getValor).sum();
 
         Map<String, Double> porCategoria = new HashMap<>();
@@ -250,6 +256,15 @@ public class ReporteServicio {
         dto.setUmbralAlerta(UMBRAL_ALERTA_DEFECTO);
         dto.setAlertas(alertas);
         return dto;
+    }
+
+    private Set<Integer> obtenerIdsCategoriasExcluidas(int idUsuario) throws ServiceException {
+        return obtenerIdsCategoriasExcluidas(configuracionServicio.obtenerOCrearConfiguracion(idUsuario));
+    }
+
+    private Set<Integer> obtenerIdsCategoriasExcluidas(ConfiguracionEstadoResultados config) {
+        return config.getCategoriasExcluidas() == null ? Set.of() :
+                config.getCategoriasExcluidas().stream().map(CategoriaConcepto::getIdCategoria).collect(Collectors.toSet());
     }
 
     private LocalDate aLocalDate(Date fecha) {

@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
             <div class="col">
                 <a class="card h-100 position-relative card-enlace" href="${pageContext.request.contextPath}/Venta">
                     <div class="card-body">

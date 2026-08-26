@@ -7,7 +7,6 @@ import edu.usal.jdbc.dominio.Gasto;
 import edu.usal.jdbc.dominio.OtroEgreso;
 import edu.usal.jdbc.dominio.OtroIngreso;
 import edu.usal.jdbc.dominio.Venta;
-import edu.usal.jdbc.dto.ComposicionCategoriaDTO;
 import edu.usal.jdbc.dto.EstadoResultadosDTO;
 import edu.usal.jdbc.excepciones.ServiceException;
 import edu.usal.jdbc.servicio.CategoriaConceptoServicio;
@@ -44,7 +43,7 @@ import java.util.Set;
 public class EstadoResultadosServlet extends HttpServlet {
 
     private static final String[] COLORES_SERIE = {
-            "--serie-1", "--serie-2", "--serie-3", "--serie-4", "--serie-5", "--serie-6", "--serie-7", "--serie-8"
+            "#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F", "#EDC948", "#B07AA1", "#9C9C9C"
     };
 
     private final ReporteServicio reporteServicio;
@@ -111,6 +110,11 @@ public class EstadoResultadosServlet extends HttpServlet {
             return;
         }
 
+        if ("volver".equals(req.getParameter("action"))) {
+            req.getSession().removeAttribute("estadoResultadosGenerado");
+        }
+        req.setAttribute("mostrarResultados", req.getSession().getAttribute("estadoResultadosGenerado") != null);
+
         try {
             ConfiguracionEstadoResultados config = configuracionServicio.obtenerOCrearConfiguracion(idUsuario);
             req.setAttribute("configuracion", config);
@@ -155,8 +159,7 @@ public class EstadoResultadosServlet extends HttpServlet {
             req.setAttribute("movimientosIncluidos", incluidos);
             req.setAttribute("movimientosExcluidos", excluidos);
 
-            req.setAttribute("composicionGastos", construirBarrasComposicion(reporteServicio.obtenerComposicionGastos(idUsuario, desde, hasta)));
-            req.setAttribute("composicionIngresos", construirBarrasComposicion(reporteServicio.obtenerComposicionOtrosIngresos(idUsuario, desde, hasta)));
+            req.setAttribute("composicionFinanciera", construirComposicionFinanciera(estado));
 
             req.setAttribute("resumenNarrativo", construirResumenNarrativo(estado));
         } catch (ServiceException e) {
@@ -192,10 +195,7 @@ public class EstadoResultadosServlet extends HttpServlet {
                     for (String id : idsSeleccionados) idsCategorias.add(Integer.parseInt(id));
                 }
                 configuracionServicio.guardarOActualizarConfiguracion(idUsuario, periodoInicio, periodoFin, margenCMV, idsCategorias);
-                req.setAttribute("exito", "Configuracion guardada.");
-            } else if ("resetear".equals(action)) {
-                configuracionServicio.resetearConfiguracion(idUsuario);
-                req.setAttribute("exito", "Configuracion restablecida a los valores por defecto.");
+                req.getSession().setAttribute("estadoResultadosGenerado", true);
             }
         } catch (ServiceException | NumberFormatException | java.text.ParseException e) {
             req.setAttribute("error", "No se pudo guardar la configuracion: " + e.getMessage());
@@ -249,22 +249,18 @@ public class EstadoResultadosServlet extends HttpServlet {
         }
     }
 
-    // Limita la composicion a las primeras 7 categorias + un total "Otras" para no romper el orden fijo de colores categoricos.
-    private List<BarraComposicion> construirBarrasComposicion(List<ComposicionCategoriaDTO> composicion) {
+    // Composicion financiera: distribucion de ingresos y egresos por categoria general del estado de resultados.
+    private List<BarraComposicion> construirComposicionFinanciera(EstadoResultadosDTO estado) {
         List<BarraComposicion> resultado = new ArrayList<>();
-        double totalOtras = 0;
-        double porcentajeOtras = 0;
-        for (int i = 0; i < composicion.size(); i++) {
-            ComposicionCategoriaDTO c = composicion.get(i);
-            if (i < 7) {
-                resultado.add(new BarraComposicion(c.getNombreCategoria(), c.getPorcentaje(), formatoMoneda(c.getTotal()), COLORES_SERIE[i]));
-            } else {
-                totalOtras += c.getTotal();
-                porcentajeOtras += c.getPorcentaje();
-            }
-        }
-        if (totalOtras > 0) {
-            resultado.add(new BarraComposicion("Otras categorias", porcentajeOtras, formatoMoneda(totalOtras), COLORES_SERIE[7]));
+        String[] nombres = {"Ventas", "Costo de mercaderia vendida", "Gastos operativos", "Otros ingresos", "Otros egresos"};
+        double[] valores = {estado.getVentasTotal(), estado.getCmv(), estado.getGastosTotal(), estado.getoIngresosTotal(), estado.getoEgresosTotal()};
+
+        double total = 0;
+        for (double v : valores) total += Math.abs(v);
+
+        for (int i = 0; i < nombres.length; i++) {
+            double porcentaje = total > 0 ? (Math.abs(valores[i]) / total) * 100.0 : 0.0;
+            resultado.add(new BarraComposicion(nombres[i], porcentaje, formatoMoneda(valores[i]), COLORES_SERIE[i]));
         }
         return resultado;
     }

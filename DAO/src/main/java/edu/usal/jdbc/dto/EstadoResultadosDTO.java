@@ -9,6 +9,7 @@ public class EstadoResultadosDTO {
     private Date periodoFin;
     private double ventasTotal;
     private double cmv;
+    private double margenCMV;
     private double utilidadBruta;
     private double gastosTotal;
     private double oIngresosTotal;
@@ -31,6 +32,9 @@ public class EstadoResultadosDTO {
 
     public double getCmv() { return cmv; }
     public void setCmv(double cmv) { this.cmv = cmv; }
+
+    public double getMargenCMV() { return margenCMV; }
+    public void setMargenCMV(double margenCMV) { this.margenCMV = margenCMV; }
 
     public double getUtilidadBruta() { return utilidadBruta; }
     public void setUtilidadBruta(double utilidadBruta) { this.utilidadBruta = utilidadBruta; }

@@ -176,7 +176,6 @@
                         <h3 class="h5">Hablar con el estudio</h3>
                         <p class="text-secondary">Escribanos por WhatsApp y le responderemos a la brevedad.</p>
                         <a class="btn btn-primary w-100" href="https://wa.me/5490000000000" target="_blank" rel="noopener">Escribir por WhatsApp</a>
-                        <p class="small text-secondary mt-2 mb-0">Numero de ejemplo: reemplazar por el numero real del estudio.</p>
                     </div>
                 </div>
             </div>
