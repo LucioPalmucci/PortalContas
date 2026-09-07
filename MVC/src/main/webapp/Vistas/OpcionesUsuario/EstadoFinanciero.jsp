@@ -10,17 +10,24 @@
         <c:set var="tituloPagina" value="Estado financiero" scope="request"/>
         <%@ include file="/Vistas/fragmentos/Header.jsp" %>
 
-        <h1>Estado financiero</h1>
-        <p class="text-secondary">Panorama de los ultimos 12 meses: tendencias, composicion de gastos y alertas.</p>
+        <div class="d-flex align-items-center gap-3 mb-5">
+            <div class="icono-circulo icono-serie-8" style="width:52px;height:52px;font-size:1.5rem;">
+                <i class="bi bi-graph-up" aria-hidden="true"></i>
+            </div>
+            <div>
+                <h1 class="h3 mb-1">Estado financiero</h1>
+                <p class="text-secondary mb-0">Panorama de los ultimos 12 meses: tendencias, composicion de gastos y alertas.</p>
+            </div>
+        </div>
 
         <%@ include file="/Vistas/fragmentos/Mensajes.jsp" %>
 
         <c:if test="${esAdmin}">
-            <div class="card mb-4 d-print-none">
+            <div class="card mb-5 d-print-none">
                 <div class="card-body">
                     <form method="get" action="${pageContext.request.contextPath}/EstadoFinanciero" class="row g-2 align-items-end">
                         <div class="col-md-6">
-                            <label class="form-label">Ver estado financiero de</label>
+                            <label class="form-label d-flex align-items-center gap-2"><i class="bi bi-funnel texto-serie-8" aria-hidden="true"></i>Ver estado financiero de</label>
                             <select class="form-select" name="idUsuarioFiltro" onchange="this.form.submit()">
                                 <option value="">Seleccione un cliente...</option>
                                 <c:forEach var="cliente" items="${clientes}">
@@ -45,49 +52,58 @@
 
         <c:if test="${not esAdmin or not empty idUsuarioFiltro}">
 
-        <ul class="nav nav-tabs mb-3 d-print-none" id="tabsEstadoFinanciero" role="tablist">
+        <ul class="nav nav-tabs mb-4 d-print-none" id="tabsEstadoFinanciero" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#panel-dashboard" type="button" role="tab">Dashboard</button>
+                <button class="nav-link active d-flex align-items-center gap-2" data-bs-toggle="tab" data-bs-target="#panel-dashboard" type="button" role="tab"><i class="bi bi-speedometer2" aria-hidden="true"></i>Dashboard</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#panel-tendencias" type="button" role="tab">Tendencias</button>
+                <button class="nav-link d-flex align-items-center gap-2" data-bs-toggle="tab" data-bs-target="#panel-tendencias" type="button" role="tab"><i class="bi bi-graph-up" aria-hidden="true"></i>Tendencias</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#panel-comparativa" type="button" role="tab">Comparativa</button>
+                <button class="nav-link d-flex align-items-center gap-2" data-bs-toggle="tab" data-bs-target="#panel-comparativa" type="button" role="tab"><i class="bi bi-arrow-left-right" aria-hidden="true"></i>Comparativa</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#panel-composicion" type="button" role="tab">Composicion</button>
+                <button class="nav-link d-flex align-items-center gap-2" data-bs-toggle="tab" data-bs-target="#panel-composicion" type="button" role="tab"><i class="bi bi-pie-chart" aria-hidden="true"></i>Composicion</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#panel-criticos" type="button" role="tab">Puntos criticos</button>
+                <button class="nav-link d-flex align-items-center gap-2" data-bs-toggle="tab" data-bs-target="#panel-criticos" type="button" role="tab"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i>Puntos criticos</button>
             </li>
         </ul>
 
         <div class="tab-content">
             <div class="tab-pane fade show active" id="panel-dashboard" role="tabpanel">
-                <div class="row row-cols-1 row-cols-md-3 g-3 mb-3">
+                <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
                     <div class="col">
-                        <div class="card card-body h-100">
-                            <div class="small text-secondary text-uppercase">Meses con perdida (12m)</div>
-                            <div class="fs-3 fw-bold ${estadoFinanciero.mesesPerdida > 0 ? 'text-danger' : 'text-success'}">${estadoFinanciero.mesesPerdida}</div>
+                        <div class="card card-body h-100 border-start border-4 ${estadoFinanciero.mesesPerdida > 0 ? 'border-danger' : 'border-success'} d-flex flex-row align-items-center gap-3">
+                            <div class="icono-circulo ${estadoFinanciero.mesesPerdida > 0 ? 'bg-danger-subtle text-danger' : 'bg-success-subtle text-success'}"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i></div>
+                            <div>
+                                <div class="small text-secondary text-uppercase">Meses con perdida (12m)</div>
+                                <div class="fs-3 fw-bold ${estadoFinanciero.mesesPerdida > 0 ? 'text-danger' : 'text-success'}">${estadoFinanciero.mesesPerdida}</div>
+                            </div>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card card-body h-100">
-                            <div class="small text-secondary text-uppercase">Mejor mes</div>
-                            <div class="fs-3 fw-bold">${estadoFinanciero.mejorMes}</div>
+                        <div class="card card-body h-100 border-start border-4 border-success d-flex flex-row align-items-center gap-3">
+                            <div class="icono-circulo bg-success-subtle text-success"><i class="bi bi-arrow-up-circle" aria-hidden="true"></i></div>
+                            <div>
+                                <div class="small text-secondary text-uppercase">Mejor mes</div>
+                                <div class="fs-3 fw-bold">${estadoFinanciero.mejorMes}</div>
+                            </div>
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card card-body h-100">
-                            <div class="small text-secondary text-uppercase">Peor mes</div>
-                            <div class="fs-3 fw-bold">${estadoFinanciero.peorMes}</div>
+                        <div class="card card-body h-100 border-start border-4 border-danger d-flex flex-row align-items-center gap-3">
+                            <div class="icono-circulo bg-danger-subtle text-danger"><i class="bi bi-arrow-down-circle" aria-hidden="true"></i></div>
+                            <div>
+                                <div class="small text-secondary text-uppercase">Peor mes</div>
+                                <div class="fs-3 fw-bold">${estadoFinanciero.peorMes}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="h5">Resumen ejecutivo</h2>
+                        <h2 class="h5 border-start border-4 borde-serie-8 ps-2 d-flex align-items-center gap-2"><i class="bi bi-file-text texto-serie-8" aria-hidden="true"></i>Resumen ejecutivo</h2>
                         <p class="text-secondary mb-0">${resumenEjecutivo}</p>
                         <c:if test="${not empty estadoFinanciero.alertas}">
                             <div class="alert alert-warning d-flex align-items-center mt-3 mb-0" role="alert">
@@ -99,9 +115,9 @@
             </div>
 
             <div class="tab-pane fade" id="panel-tendencias" role="tabpanel">
-                <div class="card mb-4">
+                <div class="card mb-5">
                     <div class="card-body">
-                        <h2 class="h5">Ganancia mensual (ultimos 12 meses)</h2>
+                        <h2 class="h5 border-start border-4 borde-serie-8 ps-2 d-flex align-items-center gap-2"><i class="bi bi-graph-up texto-serie-8" aria-hidden="true"></i>Ganancia mensual (ultimos 12 meses)</h2>
                         <div class="d-flex gap-3 small text-secondary mb-2">
                             <span><span class="grafico-leyenda-punto bg-success"></span> Ganancia</span>
                             <span><span class="grafico-leyenda-punto bg-danger"></span> Perdida</span>
@@ -125,7 +141,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="h5">Ventas mensuales (ultimos 12 meses)</h2>
+                        <h2 class="h5 border-start border-4 borde-serie-8 ps-2 d-flex align-items-center gap-2"><i class="bi bi-bar-chart texto-serie-8" aria-hidden="true"></i>Ventas mensuales (ultimos 12 meses)</h2>
                         <div class="grafico-barras">
                             <c:forEach var="barra" items="${barrasVentas}">
                                 <div class="barra-col" title="${barra.etiqueta}: ${barra.valorFormateado}">
@@ -144,7 +160,7 @@
             <div class="tab-pane fade" id="panel-comparativa" role="tabpanel">
                 <div class="card d-print-none">
                     <div class="card-body">
-                        <h2 class="h5">Comparar dos periodos</h2>
+                        <h2 class="h5 border-start border-4 borde-serie-8 ps-2 d-flex align-items-center gap-2"><i class="bi bi-arrow-left-right texto-serie-8" aria-hidden="true"></i>Comparar dos periodos</h2>
                         <form method="get" action="${pageContext.request.contextPath}/EstadoFinanciero" class="row g-3 align-items-end">
                             <c:if test="${esAdmin}"><input type="hidden" name="idUsuarioFiltro" value="${idUsuarioFiltro}"></c:if>
                             <div class="col-6 col-md-3">
@@ -164,14 +180,14 @@
                                 <input type="date" class="form-control" name="hasta2" required>
                             </div>
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary">Comparar</button>
+                                <button type="submit" class="btn btn-primary rounded-pill"><i class="bi bi-arrow-left-right me-1" aria-hidden="true"></i>Comparar</button>
                             </div>
                         </form>
 
                         <c:if test="${not empty comparacion}">
                             <hr>
                             <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0">
+                                <table class="table table-hover align-middle mb-0 filas-espaciadas">
                                     <thead class="table-light"><tr><th></th><th>Periodo 1</th><th>Periodo 2</th><th>Variacion</th></tr></thead>
                                     <tbody>
                                     <tr>
@@ -203,7 +219,7 @@
             <div class="tab-pane fade" id="panel-composicion" role="tabpanel">
                 <div class="card">
                     <div class="card-body">
-                        <h2 class="h5">Composicion de gastos (mes actual)</h2>
+                        <h2 class="h5 border-start border-4 borde-serie-8 ps-2 d-flex align-items-center gap-2"><i class="bi bi-pie-chart texto-serie-8" aria-hidden="true"></i>Composicion de gastos (mes actual)</h2>
                         <c:forEach var="barra" items="${barrasComposicion}">
                             <div class="row align-items-center mb-2 g-2">
                                 <div class="col-3 col-md-2 small">${barra.nombreCategoria}</div>
@@ -224,8 +240,8 @@
 
             <div class="tab-pane fade" id="panel-criticos" role="tabpanel">
                 <c:if test="${not empty estadoFinanciero.alertas}">
-                    <div class="card mb-4">
-                        <div class="card-header fw-bold">Alertas</div>
+                    <div class="card mb-5">
+                        <div class="card-header d-flex align-items-center gap-2 text-danger fw-bold"><i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>Alertas</div>
                         <div class="card-body">
                             <c:forEach var="alerta" items="${estadoFinanciero.alertas}">
                                 <div class="alert alert-danger d-flex align-items-center mb-2" role="alert">
@@ -240,15 +256,15 @@
                 </c:if>
 
                 <div class="card">
-                    <div class="card-header fw-bold">Ranking de categorias de gasto por impacto (mes actual)</div>
+                    <div class="card-header d-flex align-items-center gap-2 texto-serie-8 fw-bold"><i class="bi bi-list-ol" aria-hidden="true"></i>Ranking de categorias de gasto por impacto (mes actual)</div>
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
+                        <table class="table table-hover align-middle mb-0 filas-espaciadas">
                             <thead class="table-light"><tr><th>#</th><th>Categoria</th><th>Monto</th><th>% del total</th></tr></thead>
                             <tbody>
                             <c:forEach var="barra" items="${barrasComposicion}" varStatus="fila">
                                 <tr>
                                     <td>${fila.count}</td>
-                                    <td>${barra.nombreCategoria}</td>
+                                    <td class="fw-semibold">${barra.nombreCategoria}</td>
                                     <td>${barra.valorFormateado}</td>
                                     <td><fmt:formatNumber value="${barra.porcentaje}" maxFractionDigits="1"/>%</td>
                                 </tr>

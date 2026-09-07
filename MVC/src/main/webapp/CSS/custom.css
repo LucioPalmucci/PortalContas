@@ -51,15 +51,28 @@ body {
     min-height: calc(100vh - 130px);
 }
 
+/* ---------- Navbar superior ---------- */
+.navbar.sticky-top {
+    box-shadow: 0 1px 4px rgba(15, 23, 42, .08);
+}
+
 /* ---------- Menu lateral (offcanvas) ---------- */
 #sidebarMenu {
     --bs-offcanvas-width: 280px;
 }
 .menu-lateral-link {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
     padding: .65rem 1.25rem;
     color: var(--bs-body-color);
     text-decoration: none;
+}
+.menu-lateral-link i {
+    width: 20px;
+    text-align: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
 }
 .menu-lateral-link:hover {
     background-color: var(--bs-tertiary-bg);
@@ -67,12 +80,83 @@ body {
 
 /* ---------- Login ---------- */
 .login-fondo {
+    /* Color solido en vez de linear-gradient(): en algunas combinaciones de
+       navegador/monitor el degradado se renderiza "lavado" y casi invisible
+       (ver .panel-bienvenida mas abajo). Mismo azul que --bs-primary, sin
+       degradado a --bs-indigo (violeta), que era un tono ajeno al resto de
+       la paleta de la app. */
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1.5rem;
-    background: linear-gradient(160deg, var(--bs-primary) 0%, var(--bs-indigo, #3b0a58) 100%);
+    background-color: var(--bs-primary);
+}
+
+/* ---------- Paneles: banner de bienvenida y tarjetas de datos ---------- */
+.panel-bienvenida {
+    /* Sin fondo: titulo e icono en negro/gris plano, igual que el resto de
+       los encabezados de la app. */
+    margin-bottom: 2.5rem;
+}
+.panel-bienvenida p {
+    color: var(--bs-secondary-color);
+}
+
+/* Insignia circular de icono, reutilizada en tarjetas KPI y tarjetas de navegacion */
+.icono-circulo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+/* Colores por categoria para las tarjetas de navegacion, reutilizando la misma
+   paleta categorica ya definida arriba para el grafico de composicion de gastos
+   (--serie-1..8), en vez de inventar colores nuevos sueltos. */
+.icono-serie-1 { background: color-mix(in srgb, var(--serie-1) 15%, white); color: color-mix(in srgb, var(--serie-1) 65%, black); }
+.icono-serie-2 { background: color-mix(in srgb, var(--serie-2) 15%, white); color: color-mix(in srgb, var(--serie-2) 65%, black); }
+.icono-serie-3 { background: color-mix(in srgb, var(--serie-3) 15%, white); color: color-mix(in srgb, var(--serie-3) 65%, black); }
+.icono-serie-4 { background: color-mix(in srgb, var(--serie-4) 15%, white); color: color-mix(in srgb, var(--serie-4) 65%, black); }
+.icono-serie-5 { background: color-mix(in srgb, var(--serie-5) 15%, white); color: color-mix(in srgb, var(--serie-5) 65%, black); }
+.icono-serie-6 { background: color-mix(in srgb, var(--serie-6) 15%, white); color: color-mix(in srgb, var(--serie-6) 65%, black); }
+.icono-serie-7 { background: color-mix(in srgb, var(--serie-7) 15%, white); color: color-mix(in srgb, var(--serie-7) 65%, black); }
+.icono-serie-8 { background: color-mix(in srgb, var(--serie-8) 15%, white); color: color-mix(in srgb, var(--serie-8) 65%, black); }
+
+/* Variantes "solo texto/icono" y "solo borde" de la misma paleta categorica,
+   para encabezados de seccion y botones dentro de cada modulo (Ventas,
+   Compras, Gastos, etc.), reutilizando siempre --serie-1..8. */
+.texto-serie-1 { color: color-mix(in srgb, var(--serie-1) 65%, black); }
+.texto-serie-2 { color: color-mix(in srgb, var(--serie-2) 65%, black); }
+.texto-serie-3 { color: color-mix(in srgb, var(--serie-3) 65%, black); }
+.texto-serie-4 { color: color-mix(in srgb, var(--serie-4) 65%, black); }
+.texto-serie-5 { color: color-mix(in srgb, var(--serie-5) 65%, black); }
+.texto-serie-6 { color: color-mix(in srgb, var(--serie-6) 65%, black); }
+.texto-serie-7 { color: color-mix(in srgb, var(--serie-7) 65%, black); }
+.texto-serie-8 { color: color-mix(in srgb, var(--serie-8) 65%, black); }
+
+.borde-serie-1 { --bs-border-color: var(--serie-1); }
+.borde-serie-2 { --bs-border-color: var(--serie-2); }
+.borde-serie-3 { --bs-border-color: var(--serie-3); }
+.borde-serie-4 { --bs-border-color: var(--serie-4); }
+.borde-serie-5 { --bs-border-color: var(--serie-5); }
+.borde-serie-6 { --bs-border-color: var(--serie-6); }
+.borde-serie-7 { --bs-border-color: var(--serie-7); }
+.borde-serie-8 { --bs-border-color: var(--serie-8); }
+
+/* Separacion extra entre secciones, mas alla del maximo de Bootstrap (mb-5 = 3rem) */
+.mb-6 {
+    margin-bottom: 4.5rem !important;
+}
+
+/* Un poco mas de aire vertical en las filas de tablas de datos */
+.filas-espaciadas tbody td {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
 }
 
 /* ---------- Graficos de barras en CSS puro ---------- */
@@ -241,5 +325,10 @@ a.card-enlace {
 }
 a.card-enlace:hover {
     box-shadow: var(--bs-box-shadow);
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.015);
+}
+@media (prefers-reduced-motion: reduce) {
+    a.card-enlace:hover {
+        transform: none;
+    }
 }

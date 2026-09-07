@@ -10,23 +10,31 @@
         <c:set var="tituloPagina" value="Otros ingresos" scope="request"/>
         <%@ include file="/Vistas/fragmentos/Header.jsp" %>
 
-        <c:choose>
-            <c:when test="${esAdmin}">
-                <h1>Otros ingresos de usuarios</h1>
-                <p class="text-secondary">Seleccione un usuario para ver sus otros ingresos.</p>
-            </c:when>
-            <c:otherwise>
-                <h1>Otros ingresos</h1>
-                <p class="text-secondary">Registre ingresos que no son ventas: alquileres cobrados, intereses, subsidios, etc.</p>
-            </c:otherwise>
-        </c:choose>
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="icono-circulo icono-serie-4" style="width:52px;height:52px;font-size:1.5rem;">
+                <i class="bi bi-plus-circle" aria-hidden="true"></i>
+            </div>
+            <div>
+                <c:choose>
+                    <c:when test="${esAdmin}">
+                        <h1 class="h3 mb-1">Otros ingresos de usuarios</h1>
+                        <p class="text-secondary mb-0">Seleccione un usuario para ver sus otros ingresos.</p>
+                    </c:when>
+                    <c:otherwise>
+                        <h1 class="h3 mb-1">Otros ingresos</h1>
+                        <p class="text-secondary mb-0">Registre ingresos que no son ventas: alquileres cobrados, intereses, subsidios, etc.</p>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
 
         <%@ include file="/Vistas/fragmentos/Mensajes.jsp" %>
 
         <div class="card mb-4">
             <div class="card-header">
-                <button class="btn btn-link text-decoration-none fw-bold p-0" type="button" data-bs-toggle="collapse" data-bs-target="#formAgregarOtroIngreso">
-                    + Registrar nuevo ingreso
+                <button class="btn btn-link text-decoration-none fw-bold p-0 d-flex align-items-center gap-2 texto-serie-4" type="button" data-bs-toggle="collapse" data-bs-target="#formAgregarOtroIngreso">
+                    <i class="bi bi-plus-circle" aria-hidden="true"></i>
+                    Registrar nuevo ingreso
                 </button>
             </div>
             <div class="collapse" id="formAgregarOtroIngreso">
@@ -85,7 +93,7 @@
                                 <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-3">Guardar ingreso</button>
+                        <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-check-lg me-1" aria-hidden="true"></i>Guardar ingreso</button>
                     </form>
                 </div>
             </div>
@@ -97,7 +105,7 @@
                     <div class="modal-content">
                         <form method="post" action="${pageContext.request.contextPath}/OtroIngreso">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalEditarOtroIngresoLabel">Editar otro ingreso #${otroIngresoAEditar.idOtroIngreso}</h5>
+                                <h5 class="modal-title d-flex align-items-center gap-2" id="modalEditarOtroIngresoLabel"><i class="bi bi-pencil-square texto-serie-4" aria-hidden="true"></i>Editar otro ingreso #${otroIngresoAEditar.idOtroIngreso}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar" onclick="window.location='${pageContext.request.contextPath}/OtroIngreso'"></button>
                             </div>
                             <div class="modal-body">
@@ -158,7 +166,7 @@
                 <div class="card-body">
                     <form method="get" action="${pageContext.request.contextPath}/OtroIngreso" class="row g-2 align-items-end">
                         <div class="col-md-6">
-                            <label class="form-label">Ver otros ingresos de</label>
+                            <label class="form-label d-flex align-items-center gap-2"><i class="bi bi-funnel texto-serie-4" aria-hidden="true"></i>Ver otros ingresos de</label>
                             <select class="form-select" name="idUsuarioFiltro" onchange="this.form.submit()">
                                 <option value="">Todos los clientes</option>
                                 <c:forEach var="cliente" items="${clientes}">
@@ -176,7 +184,7 @@
         <c:if test="${not empty otrosIngresos}">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h2 class="h5">Evolucion mensual de otros ingresos (ultimos 12 meses)</h2>
+                    <h2 class="h5 border-start border-4 borde-serie-4 ps-2 d-flex align-items-center gap-2"><i class="bi bi-graph-up texto-serie-4" aria-hidden="true"></i>Evolucion mensual de otros ingresos (ultimos 12 meses)</h2>
                     <div class="grafico-barras">
                         <c:forEach var="barra" items="${evolucionMensual}">
                             <div class="barra-col" title="${barra.etiqueta}: ${barra.valorFormateado}">
@@ -194,6 +202,7 @@
 
         <div class="card" data-tabla-filtros>
             <div class="card-body">
+                <h2 class="h5 border-start border-4 borde-serie-4 ps-2 d-flex align-items-center gap-2"><i class="bi bi-list-ul texto-serie-4" aria-hidden="true"></i>Historial de otros ingresos</h2>
                 <div class="row g-2 align-items-end mb-3 d-print-none">
                     <div class="col-md-4">
                         <label class="form-label small mb-1">Buscar</label>
@@ -218,7 +227,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
+                    <table class="table table-hover align-middle mb-0 filas-espaciadas">
                         <thead class="table-light">
                         <tr>
                             <c:if test="${esAdmin}"><th data-ordenar="cliente">Cliente<span class="indicador-orden"></span></th></c:if>
@@ -242,31 +251,31 @@
                                 data-estado="${otroIngreso.estado}">
                                 <c:if test="${esAdmin}"><td>${otroIngreso.usuario.nombreCompleto}</td></c:if>
                                 <td><fmt:formatDate value="${otroIngreso.fecha}" pattern="dd/MM/yyyy"/></td>
-                                <td>${otroIngreso.categoria.nombre}</td>
-                                <td><fmt:formatNumber value="${otroIngreso.valor}" type="currency" currencySymbol="$"/></td>
+                                <td class="fw-semibold">${otroIngreso.categoria.nombre}</td>
+                                <td class="fw-semibold"><fmt:formatNumber value="${otroIngreso.valor}" type="currency" currencySymbol="$"/></td>
                                 <td>${otroIngreso.metodo.nombre}</td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${otroIngreso.estado == 'COBRADO'}"><span class="badge text-bg-success">Cobrado</span></c:when>
-                                        <c:when test="${otroIngreso.estado == 'PENDIENTE_DE_COBRO'}"><span class="badge text-bg-warning">Pendiente</span></c:when>
-                                        <c:otherwise><span class="badge text-bg-secondary">Anulado</span></c:otherwise>
+                                        <c:when test="${otroIngreso.estado == 'COBRADO'}"><span class="badge rounded-pill bg-success-subtle text-success-emphasis">Cobrado</span></c:when>
+                                        <c:when test="${otroIngreso.estado == 'PENDIENTE_DE_COBRO'}"><span class="badge rounded-pill bg-warning-subtle text-warning-emphasis">Pendiente</span></c:when>
+                                        <c:otherwise><span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis">Anulado</span></c:otherwise>
                                     </c:choose>
                                 </td>
                                 <td class="d-print-none">
                                     <div class="d-flex gap-1 flex-wrap">
-                                        <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/OtroIngreso?editarId=${otroIngreso.idOtroIngreso}">Editar</a>
+                                        <a class="btn btn-sm btn-outline-secondary rounded-pill" href="${pageContext.request.contextPath}/OtroIngreso?editarId=${otroIngreso.idOtroIngreso}"><i class="bi bi-pencil" aria-hidden="true"></i> Editar</a>
                                         <c:if test="${otroIngreso.estado == 'PENDIENTE_DE_COBRO'}">
                                             <form method="post" action="${pageContext.request.contextPath}/OtroIngreso" class="d-inline">
                                                 <input type="hidden" name="action" value="marcarCobrado">
                                                 <input type="hidden" name="idOtroIngreso" value="${otroIngreso.idOtroIngreso}">
-                                                <button type="submit" class="btn btn-sm btn-success">Marcar cobrado</button>
+                                                <button type="submit" class="btn btn-sm btn-success rounded-pill"><i class="bi bi-check2" aria-hidden="true"></i> Marcar cobrado</button>
                                             </form>
                                         </c:if>
                                         <c:if test="${otroIngreso.estado != 'ANULADO'}">
                                             <form method="post" action="${pageContext.request.contextPath}/OtroIngreso" class="d-inline" onsubmit="return confirmarAccion('¿Anular este ingreso?');">
                                                 <input type="hidden" name="action" value="anular">
                                                 <input type="hidden" name="idOtroIngreso" value="${otroIngreso.idOtroIngreso}">
-                                                <button type="submit" class="btn btn-sm btn-danger">Anular</button>
+                                                <button type="submit" class="btn btn-sm btn-danger rounded-pill"><i class="bi bi-x-circle" aria-hidden="true"></i> Anular</button>
                                             </form>
                                         </c:if>
                                     </div>
@@ -282,8 +291,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mt-3 d-print-none">
-                    <small class="text-secondary" data-rol="contador"></small>
+                <div class="d-flex justify-content-end align-items-center mt-3 d-print-none">
                     <div data-rol="paginador"></div>
                 </div>
             </div>
