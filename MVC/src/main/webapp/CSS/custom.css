@@ -266,36 +266,71 @@ body {
 .calendario {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
+    gap: 8px;
+}
+.calendario-dia-semana {
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--bs-secondary-color);
+    text-align: center;
+    padding-bottom: .5rem;
+    margin-bottom: 2px;
+    border-bottom: 2px solid var(--bs-border-color);
 }
 .calendario-celda {
-    min-height: 78px;
+    min-height: 88px;
     border: 1px solid var(--bs-border-color);
-    border-radius: var(--bs-border-radius);
-    padding: .4rem;
+    border-radius: 10px;
+    padding: .5rem;
     font-size: .8rem;
     background: var(--bs-body-bg);
+    transition: box-shadow .15s ease, border-color .15s ease;
+}
+.calendario-celda:not(.vacia):hover {
+    box-shadow: 0 2px 8px rgba(15, 23, 42, .08);
+    border-color: var(--bs-primary-border-subtle);
 }
 .calendario-celda.vacia { background: transparent; border-color: transparent; }
-.calendario-dia { font-weight: 700; margin-bottom: .25rem; }
+.calendario-celda.hoy {
+    background: var(--bs-primary-bg-subtle);
+    border-color: var(--bs-primary);
+}
+.calendario-dia {
+    font-weight: 700;
+    margin-bottom: .35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+}
+.calendario-celda.hoy .calendario-dia {
+    background: var(--bs-primary);
+    color: #fff;
+}
 .calendario-punto {
     display: block;
-    font-size: .72rem;
-    border-radius: var(--bs-border-radius-sm);
-    padding: .12rem .35rem;
-    margin-top: .2rem;
-    color: #fff;
+    font-size: .68rem;
+    font-weight: 600;
+    border-radius: 999px;
+    padding: .15rem .5rem;
+    margin-top: .25rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-.calendario-punto.critico { background: var(--bs-danger); }
-.calendario-punto.advertencia { background: var(--bs-warning); color: #201400; }
-.calendario-punto.bueno { background: var(--bs-success); }
+.calendario-punto.critico { background: var(--bs-danger-bg-subtle); color: var(--bs-danger-text-emphasis); }
+.calendario-punto.advertencia { background: var(--bs-warning-bg-subtle); color: var(--bs-warning-text-emphasis); }
+.calendario-punto.bueno { background: var(--bs-success-bg-subtle); color: var(--bs-success-text-emphasis); }
 
 @media (max-width: 700px) {
-    .calendario { grid-template-columns: repeat(7, minmax(34px, 1fr)); }
+    .calendario { grid-template-columns: repeat(7, minmax(34px, 1fr)); gap: 4px; }
+    .calendario-dia-semana { font-size: .58rem; padding-bottom: .3rem; }
     .calendario-celda { min-height: 56px; font-size: .7rem; padding: .25rem; }
+    .calendario-dia { min-width: 18px; height: 18px; font-size: .7rem; }
     .calendario-punto { font-size: 0; padding: 0; width: 8px; height: 8px; border-radius: 50%; margin: 2px auto 0; }
 }
 

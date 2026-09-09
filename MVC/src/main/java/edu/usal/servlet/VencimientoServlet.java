@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
@@ -277,19 +278,23 @@ public class VencimientoServlet extends HttpServlet {
     private List<CeldaCalendario> construirCalendario(YearMonth mes, List<Vencimiento> vencimientos, Map<Integer, String> claseEstado) {
         Map<Integer, List<Vencimiento>> porDia = new HashMap<>();
         for (Vencimiento v : vencimientos) {
-            LocalDate fechaLocal = v.getFecha().toInstant().atZone(zona).toLocalDate();
+            // No usar .toInstant() aca: Hibernate devuelve java.sql.Date para columnas DATE,
+            // y java.sql.Date.toInstant() siempre tira UnsupportedOperationException.
+            LocalDate fechaLocal = Instant.ofEpochMilli(v.getFecha().getTime()).atZone(zona).toLocalDate();
             if (YearMonth.from(fechaLocal).equals(mes)) {
                 porDia.computeIfAbsent(fechaLocal.getDayOfMonth(), k -> new ArrayList<>()).add(v);
             }
         }
 
+        LocalDate hoy = LocalDate.now(zona);
         List<CeldaCalendario> celdas = new ArrayList<>();
         int offset = mes.atDay(1).getDayOfWeek().getValue() - 1; // Lunes = 0
         for (int i = 0; i < offset; i++) {
             celdas.add(new CeldaCalendario(0, true, List.of()));
         }
         for (int dia = 1; dia <= mes.lengthOfMonth(); dia++) {
-            celdas.add(new CeldaCalendario(dia, false, porDia.getOrDefault(dia, List.of())));
+            boolean esHoy = mes.atDay(dia).equals(hoy);
+            celdas.add(new CeldaCalendario(dia, false, porDia.getOrDefault(dia, List.of()), esHoy));
         }
         while (celdas.size() % 7 != 0) {
             celdas.add(new CeldaCalendario(0, true, List.of()));

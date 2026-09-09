@@ -10,35 +10,43 @@
         <c:set var="tituloPagina" value="Vencimientos" scope="request"/>
         <%@ include file="/Vistas/fragmentos/Header.jsp" %>
 
-        <h1>Calendario de vencimientos</h1>
-        <p class="text-secondary">
-            <span class="badge text-bg-danger">Pendiente</span>
-            <span class="badge text-bg-warning">Vence en 7 dias o menos</span>
-            <span class="badge text-bg-success">Realizado</span>
-        </p>
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="icono-circulo icono-serie-2" style="width:52px;height:52px;font-size:1.5rem;">
+                <i class="bi bi-calendar-event" aria-hidden="true"></i>
+            </div>
+            <div>
+                <h1 class="h3 mb-1">Calendario de vencimientos</h1>
+                <p class="mb-0 d-flex gap-2 flex-wrap">
+                    <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis">Pendiente</span>
+                    <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis">Vence en 7 dias o menos</span>
+                    <span class="badge rounded-pill bg-success-subtle text-success-emphasis">Realizado</span>
+                </p>
+            </div>
+        </div>
 
         <%@ include file="/Vistas/fragmentos/Mensajes.jsp" %>
 
         <div class="card mb-4">
             <div class="card-body">
+                <h2 class="h5 border-start border-4 borde-serie-2 ps-2 d-flex align-items-center gap-2 mb-3"><i class="bi bi-calendar3 texto-serie-2" aria-hidden="true"></i>Calendario mensual</h2>
                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <a class="btn btn-outline-secondary btn-sm" href="${pageContext.request.contextPath}/Vencimiento?anio=${mesAnterior.year}&mes=${mesAnterior.monthValue}">&larr; Anterior</a>
-                    <h2 class="h5 mb-0 text-capitalize">${nombreMesActual}</h2>
-                    <a class="btn btn-outline-secondary btn-sm" href="${pageContext.request.contextPath}/Vencimiento?anio=${mesSiguiente.year}&mes=${mesSiguiente.monthValue}">Siguiente &rarr;</a>
+                    <a class="btn btn-outline-secondary btn-sm rounded-pill" href="${pageContext.request.contextPath}/Vencimiento?anio=${mesAnterior.year}&mes=${mesAnterior.monthValue}"><i class="bi bi-chevron-left" aria-hidden="true"></i> Anterior</a>
+                    <h3 class="h5 mb-0 text-capitalize">${nombreMesActual}</h3>
+                    <a class="btn btn-outline-secondary btn-sm rounded-pill" href="${pageContext.request.contextPath}/Vencimiento?anio=${mesSiguiente.year}&mes=${mesSiguiente.monthValue}">Siguiente <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
                 </div>
                 <div class="calendario">
-                    <div class="small text-secondary text-center">Lun</div>
-                    <div class="small text-secondary text-center">Mar</div>
-                    <div class="small text-secondary text-center">Mie</div>
-                    <div class="small text-secondary text-center">Jue</div>
-                    <div class="small text-secondary text-center">Vie</div>
-                    <div class="small text-secondary text-center">Sab</div>
-                    <div class="small text-secondary text-center">Dom</div>
+                    <div class="calendario-dia-semana">Lun</div>
+                    <div class="calendario-dia-semana">Mar</div>
+                    <div class="calendario-dia-semana">Mie</div>
+                    <div class="calendario-dia-semana">Jue</div>
+                    <div class="calendario-dia-semana">Vie</div>
+                    <div class="calendario-dia-semana">Sab</div>
+                    <div class="calendario-dia-semana">Dom</div>
                     <c:forEach var="celda" items="${celdas}">
                         <c:choose>
                             <c:when test="${celda.vacia}"><div class="calendario-celda vacia"></div></c:when>
                             <c:otherwise>
-                                <div class="calendario-celda">
+                                <div class="calendario-celda ${celda.hoy ? 'hoy' : ''}">
                                     <div class="calendario-dia">${celda.dia}</div>
                                     <c:forEach var="v" items="${celda.vencimientos}">
                                         <span class="calendario-punto ${claseEstado[v.idVencimiento]}" title="${v.impuestoPagar} - ${v.nombreCliente}">${v.impuestoPagar}</span>
@@ -52,8 +60,8 @@
         </div>
 
         <div class="mb-3">
-            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#modalAgregarVencimiento">
-                + Agregar vencimiento
+            <button class="btn btn-primary rounded-pill" type="button" data-bs-toggle="modal" data-bs-target="#modalAgregarVencimiento">
+                <i class="bi bi-plus-circle" aria-hidden="true"></i> Agregar vencimiento
             </button>
         </div>
 
@@ -62,7 +70,7 @@
                 <div class="modal-content">
                     <form method="post" action="${pageContext.request.contextPath}/Vencimiento">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modalAgregarVencimientoLabel">Agregar vencimiento</h5>
+                            <h5 class="modal-title d-flex align-items-center gap-2" id="modalAgregarVencimientoLabel"><i class="bi bi-plus-circle texto-serie-2" aria-hidden="true"></i>Agregar vencimiento</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                         </div>
                         <div class="modal-body">
@@ -94,10 +102,10 @@
         </div>
 
         <div class="card mb-4">
-            <div class="card-header fw-bold">Importar / exportar</div>
+            <div class="card-header d-flex align-items-center gap-2 texto-serie-2 fw-bold"><i class="bi bi-file-earmark-spreadsheet" aria-hidden="true"></i>Importar / exportar</div>
             <div class="card-body">
                 <p class="small text-secondary">El archivo Excel (.xlsx) debe tener las columnas, en este orden: Fecha (aaaa-mm-dd), UltimosDigitosCuit, NombreCliente, ImpuestoPagar.</p>
-                <a class="btn btn-outline-secondary mb-3" href="${pageContext.request.contextPath}/Vencimiento?action=exportarExcel">Exportar a Excel</a>
+                <a class="btn btn-outline-secondary rounded-pill mb-3" href="${pageContext.request.contextPath}/Vencimiento?action=exportarExcel"><i class="bi bi-download" aria-hidden="true"></i> Exportar a Excel</a>
                 <form method="post" action="${pageContext.request.contextPath}/Vencimiento" enctype="multipart/form-data" class="row g-2 align-items-end">
                     <input type="hidden" name="action" value="importarExcel">
                     <div class="col-md-6">
@@ -105,7 +113,7 @@
                         <input type="file" class="form-control" id="archivoExcel" name="archivoExcel" accept=".xlsx">
                     </div>
                     <div class="col-md-3">
-                        <button type="submit" class="btn btn-outline-primary w-100">Importar</button>
+                        <button type="submit" class="btn btn-outline-primary rounded-pill w-100"><i class="bi bi-upload" aria-hidden="true"></i> Importar</button>
                     </div>
                 </form>
             </div>
@@ -117,7 +125,7 @@
                     <div class="modal-content">
                         <form method="post" action="${pageContext.request.contextPath}/Vencimiento">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalEditarVencimientoLabel">Editar vencimiento</h5>
+                                <h5 class="modal-title d-flex align-items-center gap-2" id="modalEditarVencimientoLabel"><i class="bi bi-pencil-square texto-serie-2" aria-hidden="true"></i>Editar vencimiento</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar" onclick="window.location='${pageContext.request.contextPath}/Vencimiento'"></button>
                             </div>
                             <div class="modal-body">
@@ -166,6 +174,7 @@
 
         <div class="card" data-tabla-filtros>
             <div class="card-body">
+                <h2 class="h5 border-start border-4 borde-serie-2 ps-2 d-flex align-items-center gap-2"><i class="bi bi-list-ul texto-serie-2" aria-hidden="true"></i>Historial de vencimientos</h2>
                 <div class="row g-2 align-items-end mb-3 d-print-none">
                     <div class="col-md-6">
                         <label class="form-label small mb-1">Buscar</label>
@@ -188,7 +197,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
+                    <table class="table table-hover align-middle mb-0 filas-espaciadas">
                         <thead class="table-light">
                         <tr>
                             <th data-ordenar="fecha">Fecha<span class="indicador-orden"></span></th>
@@ -212,31 +221,31 @@
                                 data-dias="${diasRestantes[v.idVencimiento]}"
                                 data-estado="${claseEstado[v.idVencimiento]}">
                                 <td><fmt:formatDate value="${v.fecha}" pattern="dd/MM/yyyy"/></td>
-                                <td>${v.impuestoPagar}</td>
+                                <td class="fw-semibold">${v.impuestoPagar}</td>
                                 <td>${v.nombreCliente}</td>
                                 <td>${v.ultimosDigitosCuit}</td>
                                 <td>${diasRestantes[v.idVencimiento]}</td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${claseEstado[v.idVencimiento] == 'bueno'}"><span class="badge text-bg-success">Realizado</span></c:when>
-                                        <c:when test="${claseEstado[v.idVencimiento] == 'advertencia'}"><span class="badge text-bg-warning">Proximo</span></c:when>
-                                        <c:otherwise><span class="badge text-bg-danger">Pendiente</span></c:otherwise>
+                                        <c:when test="${claseEstado[v.idVencimiento] == 'bueno'}"><span class="badge rounded-pill bg-success-subtle text-success-emphasis">Realizado</span></c:when>
+                                        <c:when test="${claseEstado[v.idVencimiento] == 'advertencia'}"><span class="badge rounded-pill bg-warning-subtle text-warning-emphasis">Proximo</span></c:when>
+                                        <c:otherwise><span class="badge rounded-pill bg-danger-subtle text-danger-emphasis">Pendiente</span></c:otherwise>
                                     </c:choose>
                                 </td>
                                 <td class="d-print-none">
                                     <div class="d-flex gap-1 flex-wrap">
-                                        <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/Vencimiento?editarId=${v.idVencimiento}">Editar</a>
+                                        <a class="btn btn-sm btn-outline-secondary rounded-pill" href="${pageContext.request.contextPath}/Vencimiento?editarId=${v.idVencimiento}"><i class="bi bi-pencil" aria-hidden="true"></i> Editar</a>
                                         <c:if test="${v.estado == 'PENDIENTE'}">
                                             <form method="post" action="${pageContext.request.contextPath}/Vencimiento" class="d-inline">
                                                 <input type="hidden" name="action" value="marcarRealizado">
                                                 <input type="hidden" name="idVencimiento" value="${v.idVencimiento}">
-                                                <button type="submit" class="btn btn-sm btn-success">Marcar realizado</button>
+                                                <button type="submit" class="btn btn-sm btn-success rounded-pill"><i class="bi bi-check2" aria-hidden="true"></i> Marcar realizado</button>
                                             </form>
                                         </c:if>
                                         <form method="post" action="${pageContext.request.contextPath}/Vencimiento" class="d-inline" onsubmit="return confirmarAccion('Esta accion elimina el vencimiento de forma permanente. ¿Continuar?');">
                                             <input type="hidden" name="action" value="eliminar">
                                             <input type="hidden" name="idVencimiento" value="${v.idVencimiento}">
-                                            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                                            <button type="submit" class="btn btn-sm btn-danger rounded-pill"><i class="bi bi-trash" aria-hidden="true"></i> Eliminar</button>
                                         </form>
                                     </div>
                                 </td>

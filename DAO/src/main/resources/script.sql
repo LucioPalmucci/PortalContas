@@ -1,7 +1,3 @@
--- La base "neondb" ya existe en Neon (no hace falta CREATE DATABASE/USE como en SQL Server).
--- Nota: Hibernate (hbm2ddl.auto=update) puede crear estas tablas solo en el primer arranque
--- de la app. Este script sirve como referencia y para cargar los datos de ejemplo/semilla.
-
 CREATE TABLE Usuario (
   usuario_id          INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre_completo      VARCHAR(100) NOT NULL,
@@ -111,20 +107,3 @@ CREATE TABLE Vencimiento (
   impuesto_pagar        VARCHAR(50) NOT NULL,
   estado                VARCHAR(20) NOT NULL
 );
-
--- Datos de ejemplo
-INSERT INTO MetodoOperacion (nombre, cobro_o_pago) VALUES
-('Efectivo', 'COBRO'), ('Efectivo', 'PAGO'),
-('Transferencia', 'COBRO'), ('Transferencia', 'PAGO'),
-('Tarjeta de credito', 'COBRO'), ('Tarjeta de debito', 'PAGO'),
-('Cheque', 'COBRO'), ('Cheque', 'PAGO');
-
-INSERT INTO CategoriaConcepto (nombre, aplica_a) VALUES
-('Alquiler', 'GASTO'), ('Servicios', 'GASTO'), ('Sueldos', 'GASTO'),
-('Marketing', 'GASTO'), ('Mantenimiento', 'GASTO'), ('Otros', 'GASTO'),
-('Alquileres cobrados', 'INGRESO'), ('Intereses', 'INGRESO'), ('Subsidios', 'INGRESO'),
-('Devoluciones', 'EGRESO'), ('Retiros del titular', 'EGRESO'), ('Deudas no operativas', 'EGRESO');
-
--- Usuario administrador inicial (usuario: admin / contraseña: Admin1234, hash SHA-256)
-INSERT INTO Usuario (nombre_completo, telefono, correo_electronico, contrasena, esta_activo, descripcion, rol, nombre_usuario, fecha_creacion, ultimo_acceso) VALUES
-('Administrador del Sistema', NULL, 'admin@lofranosanchez.com', '60fe74406e7f353ed979f350f2fbb6a2e8690a5fa7d1b0c32983d1d8b3f95f67', TRUE, 'Cuenta de administracion inicial', 'ADMINISTRADOR', 'admin', NOW(), NULL);

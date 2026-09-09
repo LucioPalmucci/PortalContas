@@ -18,11 +18,10 @@
                 <c:choose>
                     <c:when test="${esAdmin}">
                         <h1 class="h3 mb-1">Ventas de usuarios</h1>
-                        <p class="text-secondary mb-0">Seleccione un usuario para ver sus ventas. El subtotal se calcula automaticamente.</p>
+                        <p class="text-secondary mb-0">Seleccione un usuario para ver sus ventas.</p>
                     </c:when>
                     <c:otherwise>
                         <h1 class="h3 mb-1">Mis ventas</h1>
-                        <p class="text-secondary mb-0">Registre cada venta que realiza. El subtotal se calcula automaticamente.</p>
                     </c:otherwise>
                 </c:choose>
             </div>

@@ -11,6 +11,7 @@ import edu.usal.jdbc.util.ConfigUtil;
 import edu.usal.jdbc.util.HibernateUtil;
 import org.hibernate.Session;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
@@ -156,7 +157,10 @@ public class VencimientoServicio {
     }
 
     public int calcularDiasRestantes(Vencimiento vencimiento) {
-        LocalDate fechaVencimiento = vencimiento.getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        // No usar .toInstant() aca: Hibernate devuelve java.sql.Date para columnas DATE,
+        // y java.sql.Date.toInstant() siempre tira UnsupportedOperationException.
+        LocalDate fechaVencimiento = Instant.ofEpochMilli(vencimiento.getFecha().getTime())
+                .atZone(ZoneId.systemDefault()).toLocalDate();
         return (int) ChronoUnit.DAYS.between(LocalDate.now(), fechaVencimiento);
     }
 

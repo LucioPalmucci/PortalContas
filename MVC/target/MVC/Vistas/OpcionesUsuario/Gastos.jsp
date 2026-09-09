@@ -10,23 +10,31 @@
         <c:set var="tituloPagina" value="Gastos" scope="request"/>
         <%@ include file="/Vistas/fragmentos/Header.jsp" %>
 
-        <c:choose>
-            <c:when test="${esAdmin}">
-                <h1>Gastos de usuarios</h1>
-                <p class="text-secondary">Seleccione un usuario para ver sus gastos.</p>
-            </c:when>
-            <c:otherwise>
-                <h1>Mis gastos</h1>
-                <p class="text-secondary">Registre alquiler, servicios, sueldos y demas gastos operativos.</p>
-            </c:otherwise>
-        </c:choose>
+        <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="icono-circulo icono-serie-3" style="width:52px;height:52px;font-size:1.5rem;">
+                <i class="bi bi-receipt" aria-hidden="true"></i>
+            </div>
+            <div>
+                <c:choose>
+                    <c:when test="${esAdmin}">
+                        <h1 class="h3 mb-1">Gastos de usuarios</h1>
+                        <p class="text-secondary mb-0">Seleccione un usuario para ver sus gastos.</p>
+                    </c:when>
+                    <c:otherwise>
+                        <h1 class="h3 mb-1">Mis gastos</h1>
+                        <p class="text-secondary mb-0">Registre alquiler, servicios, sueldos y demas gastos operativos.</p>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>
 
         <%@ include file="/Vistas/fragmentos/Mensajes.jsp" %>
 
         <div class="card mb-4">
             <div class="card-header">
-                <button class="btn btn-link text-decoration-none fw-bold p-0" type="button" data-bs-toggle="collapse" data-bs-target="#formAgregarGasto">
-                    + Registrar nuevo gasto
+                <button class="btn btn-link text-decoration-none fw-bold p-0 d-flex align-items-center gap-2 texto-serie-3" type="button" data-bs-toggle="collapse" data-bs-target="#formAgregarGasto">
+                    <i class="bi bi-plus-circle" aria-hidden="true"></i>
+                    Registrar nuevo gasto
                 </button>
             </div>
             <div class="collapse" id="formAgregarGasto">
@@ -85,7 +93,7 @@
                                 <textarea class="form-control" id="descripcion" name="descripcion"></textarea>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-3">Guardar gasto</button>
+                        <button type="submit" class="btn btn-primary mt-3"><i class="bi bi-check-lg me-1" aria-hidden="true"></i>Guardar gasto</button>
                     </form>
                 </div>
             </div>
@@ -97,7 +105,7 @@
                     <div class="modal-content">
                         <form method="post" action="${pageContext.request.contextPath}/Gasto">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="modalEditarGastoLabel">Editar gasto #${gastoAEditar.idGasto}</h5>
+                                <h5 class="modal-title d-flex align-items-center gap-2" id="modalEditarGastoLabel"><i class="bi bi-pencil-square texto-serie-3" aria-hidden="true"></i>Editar gasto #${gastoAEditar.idGasto}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar" onclick="window.location='${pageContext.request.contextPath}/Gasto'"></button>
                             </div>
                             <div class="modal-body">
@@ -158,7 +166,7 @@
                 <div class="card-body">
                     <form method="get" action="${pageContext.request.contextPath}/Gasto" class="row g-2 align-items-end">
                         <div class="col-md-6">
-                            <label class="form-label">Ver gastos de</label>
+                            <label class="form-label d-flex align-items-center gap-2"><i class="bi bi-funnel texto-serie-3" aria-hidden="true"></i>Ver gastos de</label>
                             <select class="form-select" name="idUsuarioFiltro" onchange="this.form.submit()">
                                 <option value="">Todos los clientes</option>
                                 <c:forEach var="cliente" items="${clientes}">
@@ -176,7 +184,7 @@
         <c:if test="${not empty gastos}">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h2 class="h5">Evolucion mensual de gastos (ultimos 12 meses)</h2>
+                    <h2 class="h5 border-start border-4 borde-serie-3 ps-2 d-flex align-items-center gap-2"><i class="bi bi-graph-up texto-serie-3" aria-hidden="true"></i>Evolucion mensual de gastos (ultimos 12 meses)</h2>
                     <div class="grafico-barras">
                         <c:forEach var="barra" items="${evolucionMensual}">
                             <div class="barra-col" title="${barra.etiqueta}: ${barra.valorFormateado}">
@@ -194,6 +202,7 @@
 
         <div class="card" data-tabla-filtros>
             <div class="card-body">
+                <h2 class="h5 border-start border-4 borde-serie-3 ps-2 d-flex align-items-center gap-2"><i class="bi bi-list-ul texto-serie-3" aria-hidden="true"></i>Historial de gastos</h2>
                 <div class="row g-2 align-items-end mb-3 d-print-none">
                     <div class="col-md-4">
                         <label class="form-label small mb-1">Buscar</label>
@@ -218,7 +227,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
+                    <table class="table table-hover align-middle mb-0 filas-espaciadas">
                         <thead class="table-light">
                         <tr>
                             <c:if test="${esAdmin}"><th data-ordenar="cliente">Cliente<span class="indicador-orden"></span></th></c:if>
@@ -242,31 +251,31 @@
                                 data-estado="${gasto.estado}">
                                 <c:if test="${esAdmin}"><td>${gasto.usuario.nombreCompleto}</td></c:if>
                                 <td><fmt:formatDate value="${gasto.fecha}" pattern="dd/MM/yyyy"/></td>
-                                <td>${gasto.categoria.nombre}</td>
-                                <td><fmt:formatNumber value="${gasto.valor}" type="currency" currencySymbol="$"/></td>
+                                <td class="fw-semibold">${gasto.categoria.nombre}</td>
+                                <td class="fw-semibold"><fmt:formatNumber value="${gasto.valor}" type="currency" currencySymbol="$"/></td>
                                 <td>${gasto.metodo.nombre}</td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${gasto.estado == 'PAGADO'}"><span class="badge text-bg-success">Pagado</span></c:when>
-                                        <c:when test="${gasto.estado == 'PENDIENTE_DE_PAGO'}"><span class="badge text-bg-warning">Pendiente</span></c:when>
-                                        <c:otherwise><span class="badge text-bg-secondary">Anulado</span></c:otherwise>
+                                        <c:when test="${gasto.estado == 'PAGADO'}"><span class="badge rounded-pill bg-success-subtle text-success-emphasis">Pagado</span></c:when>
+                                        <c:when test="${gasto.estado == 'PENDIENTE_DE_PAGO'}"><span class="badge rounded-pill bg-warning-subtle text-warning-emphasis">Pendiente</span></c:when>
+                                        <c:otherwise><span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis">Anulado</span></c:otherwise>
                                     </c:choose>
                                 </td>
                                 <td class="d-print-none">
                                     <div class="d-flex gap-1 flex-wrap">
-                                        <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/Gasto?editarId=${gasto.idGasto}">Editar</a>
+                                        <a class="btn btn-sm btn-outline-secondary rounded-pill" href="${pageContext.request.contextPath}/Gasto?editarId=${gasto.idGasto}"><i class="bi bi-pencil" aria-hidden="true"></i> Editar</a>
                                         <c:if test="${gasto.estado == 'PENDIENTE_DE_PAGO'}">
                                             <form method="post" action="${pageContext.request.contextPath}/Gasto" class="d-inline">
                                                 <input type="hidden" name="action" value="marcarPagado">
                                                 <input type="hidden" name="idGasto" value="${gasto.idGasto}">
-                                                <button type="submit" class="btn btn-sm btn-success">Marcar pagado</button>
+                                                <button type="submit" class="btn btn-sm btn-success rounded-pill"><i class="bi bi-check2" aria-hidden="true"></i> Marcar pagado</button>
                                             </form>
                                         </c:if>
                                         <c:if test="${gasto.estado != 'ANULADO'}">
                                             <form method="post" action="${pageContext.request.contextPath}/Gasto" class="d-inline" onsubmit="return confirmarAccion('¿Anular este gasto?');">
                                                 <input type="hidden" name="action" value="anular">
                                                 <input type="hidden" name="idGasto" value="${gasto.idGasto}">
-                                                <button type="submit" class="btn btn-sm btn-danger">Anular</button>
+                                                <button type="submit" class="btn btn-sm btn-danger rounded-pill"><i class="bi bi-x-circle" aria-hidden="true"></i> Anular</button>
                                             </form>
                                         </c:if>
                                     </div>
@@ -282,8 +291,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mt-3 d-print-none">
-                    <small class="text-secondary" data-rol="contador"></small>
+                <div class="d-flex justify-content-end align-items-center mt-3 d-print-none">
                     <div data-rol="paginador"></div>
                 </div>
             </div>
