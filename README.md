@@ -24,8 +24,6 @@ Este proyecto se instala de forma manual con IntelliJ. No usa `npm`.
 4. Configurá Tomcat como servidor de aplicaciones: `Run > Edit Configurations > Add New Configuration > Tomcat Server > Local`, y apuntá a tu instalación de **Tomcat 9.0.109**.
 5. Desplegá el artefacto (`.war`) en la pestaña **Deployment** de la configuración de Tomcat.
 6. Ejecutá la configuración desde IntelliJ para levantar el proyecto en Tomcat.
-
-```
  
 ## Cómo colaborar
  
@@ -35,6 +33,8 @@ Las contribuciones se realizan mediante **pull requests**:
 2. Creá una rama para tu cambio (`git checkout -b mi-mejora`).
 3. Hacé commit de tus cambios con un mensaje descriptivo.
 4. Enviá un pull request describiendo qué resuelve o mejora tu cambio.
+
+
 ## Licencia
  
 Este proyecto está licenciado bajo la **Licencia MIT**. Todos los derechos reservados.
