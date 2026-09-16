@@ -29,7 +29,7 @@
 
         <%@ include file="/Vistas/fragmentos/Mensajes.jsp" %>
 
-        <c:if test="${esAdmin}">
+        <c:if test="${esAdmin and not mostrarResultados}">
             <div class="card mb-5 d-print-none">
                 <div class="card-body">
                     <form method="get" action="${pageContext.request.contextPath}/EstadoResultados" class="row g-2 align-items-end">
@@ -268,7 +268,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="margenCMV" class="form-label">Margen de costo de mercaderia vendida (%)</label>
-                            <input type="number" class="form-control" id="margenCMV" name="margenCMV" min="0" max="100" step="1" value="${configuracion.margenCMV}" required>
+                            <input type="number" class="form-control" id="margenCMV" name="margenCMV" min="0" max="100" step="1" value="${configuracion.margenCMV}">
                         </div>
                     </div>
                     <div class="mt-3">
