@@ -169,6 +169,51 @@
             </div>
         </div>
 
+        <div class="card mb-4">
+            <div class="card-header fw-bold">Instalar la app en tu celular</div>
+            <div class="card-body">
+                <p class="text-secondary">Podes instalar Contas Portal en tu celular como cualquier otra app: te queda un icono en la pantalla de inicio y se abre sin la barra del navegador.</p>
+
+                <ul class="nav nav-tabs mb-3" id="tabsInstalacion" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#panel-android" type="button" role="tab">Android / Chrome</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#panel-ios" type="button" role="tab">iPhone / Safari</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#panel-sin-opcion" type="button" role="tab">Si no aparece la opcion</button>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="panel-android" role="tabpanel">
+                        <p class="mb-2">Abra Contas Portal desde <strong>Chrome</strong> en su celular. Va a ver un aviso para "Agregar Contas Portal a la pantalla de inicio" &mdash; toque <strong>Instalar</strong>.</p>
+                        <p class="mb-0">Si no aparece solo: toque los tres puntos (&#8942;) arriba a la derecha &rarr; <strong>Instalar aplicacion</strong> (o "Agregar a pantalla de inicio"). El icono va a quedar en su pantalla de inicio como cualquier otra app.</p>
+                    </div>
+                    <div class="tab-pane fade" id="panel-ios" role="tabpanel">
+                        <p class="mb-2">En iPhone o iPad hay que instalarla a mano, y tiene que ser desde <strong>Safari</strong> (no Chrome: en iOS todos los navegadores usan el motor de Safari por dentro, pero solo Safari puede instalar apps).</p>
+                        <ol class="mb-0">
+                            <li>Abra Contas Portal en Safari.</li>
+                            <li>Toque el boton de <strong>Compartir</strong> (el cuadrado con la flecha hacia arriba, abajo al centro).</li>
+                            <li>Elija <strong>"Agregar a pantalla de inicio"</strong>.</li>
+                            <li>Confirme tocando <strong>Agregar</strong> arriba a la derecha.</li>
+                        </ol>
+                    </div>
+                    <div class="tab-pane fade" id="panel-sin-opcion" role="tabpanel">
+                        <p class="mb-2">Algunos navegadores no permiten instalar apps &mdash; por ejemplo, el navegador que se abre <em>dentro</em> de Instagram o WhatsApp cuando toca un link.</p>
+                        <p class="mb-0">Si no ve la opcion de instalar:</p>
+                        <ol class="mb-0">
+                            <li>Confirme que este usando Chrome (Android) o Safari (iPhone), no otro navegador.</li>
+                            <li>Si toco el link desde otra app, copielo y abralo directo en Chrome o Safari.</li>
+                            <li>Con Firefox, Edge u otro navegador en Android, busque en su menu algo como "Instalar aplicacion" &mdash; casi todos lo tienen, solo cambia el nombre.</li>
+                            <li>Si aun asi no puede instalarla, no hay problema: la app funciona igual desde el navegador, solo que sin el icono en la pantalla de inicio &mdash; guardela como favorito.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row g-3">
             <div class="col-md-6">
                 <div class="card h-100">

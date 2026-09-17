@@ -22,7 +22,6 @@
                     </c:when>
                     <c:otherwise>
                         <h1 class="h3 mb-1">Otros egresos</h1>
-                        <p class="text-secondary mb-0">Registre salidas de dinero atipicas: devoluciones a clientes, retiros del titular, deudas no operativas, etc.</p>
                     </c:otherwise>
                 </c:choose>
             </div>

@@ -13,6 +13,7 @@
     </c:when>
     <c:otherwise>
         <c:set var="tituloPagina" value="Inicio" scope="request"/>
+        <c:set var="ocultarNavPrincipal" value="true" scope="request"/>
         <%@ include file="/Vistas/fragmentos/Header.jsp" %>
 
         <%
@@ -27,14 +28,17 @@
             request.setAttribute("estadoMes", estadoMes);
         %>
 
-        <div class="panel-bienvenida d-flex align-items-center gap-3">
-            <div class="icono-circulo text-secondary" style="width:52px;height:52px;font-size:1.5rem;">
-                <i class="bi bi-house-door" aria-hidden="true"></i>
+        <div class="panel-bienvenida d-flex align-items-center justify-content-between gap-3 flex-wrap">
+            <div class="d-flex align-items-center gap-3">
+                <div class="icono-circulo text-secondary" style="width:52px;height:52px;font-size:1.5rem;">
+                    <i class="bi bi-house-door" aria-hidden="true"></i>
+                </div>
+                <div>
+                    <h1 class="h3 mb-1">Hola, ${sessionScope.nombreUsuarioSesion}</h1>
+                    <p class="mb-0">Este es el resumen de su negocio.</p>
+                </div>
             </div>
-            <div>
-                <h1 class="h3 mb-1">Hola, ${sessionScope.nombreUsuarioSesion}</h1>
-                <p class="mb-0">Este es el resumen de su negocio.</p>
-            </div>
+            <a class="btn btn-outline-danger btn-sm rounded-pill d-print-none" href="${pageContext.request.contextPath}/login?action=logout"><i class="bi bi-box-arrow-right" aria-hidden="true"></i> Cerrar sesion</a>
         </div>
 
         <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">

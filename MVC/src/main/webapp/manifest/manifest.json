@@ -1,0 +1,14 @@
+{
+  "name": "Contas Portal",
+  "short_name": "Contas Portal",
+  "description": "Gestion financiera para clientes de Lofrano Sanchez Estudio Contable.",
+  "start_url": "../",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#eef1f4",
+  "theme_color": "#2F6FB0",
+  "icons": [
+    { "src": "../icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "../icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

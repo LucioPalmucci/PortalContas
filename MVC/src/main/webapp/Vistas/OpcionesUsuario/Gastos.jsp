@@ -22,7 +22,6 @@
                     </c:when>
                     <c:otherwise>
                         <h1 class="h3 mb-1">Mis gastos</h1>
-                        <p class="text-secondary mb-0">Registre alquiler, servicios, sueldos y demas gastos operativos.</p>
                     </c:otherwise>
                 </c:choose>
             </div>

@@ -22,7 +22,6 @@
                     </c:when>
                     <c:otherwise>
                         <h1 class="h3 mb-1">Otros ingresos</h1>
-                        <p class="text-secondary mb-0">Registre ingresos que no son ventas: alquileres cobrados, intereses, subsidios, etc.</p>
                     </c:otherwise>
                 </c:choose>
             </div>

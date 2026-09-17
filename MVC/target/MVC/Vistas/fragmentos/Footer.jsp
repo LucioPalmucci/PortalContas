@@ -7,5 +7,7 @@
 <script src="${pageContext.request.contextPath}/JS/bootstrap.bundle.min.js"></script>
 <script src="${pageContext.request.contextPath}/JS/app.js"></script>
 <script src="${pageContext.request.contextPath}/JS/tabla-filtros.js"></script>
+<script>window.APP_CONTEXT_PATH = '${pageContext.request.contextPath}';</script>
+<script src="${pageContext.request.contextPath}/JS/registerSW.js"></script>
 </body>
 </html>

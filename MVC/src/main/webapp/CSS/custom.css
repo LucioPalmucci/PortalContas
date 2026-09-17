@@ -1,12 +1,5 @@
-/* ===========================================================
-   Contas Portal - ajustes sobre Bootstrap 5
-   Solo lo que Bootstrap no cubre: graficos en CSS, calendario,
-   fondo del login. Colores de estado via utilidades bg-*/text-*
-   de Bootstrap (success/warning/danger/secondary).
-   =========================================================== */
 
 :root {
-    /* Paleta categorica para el grafico de composicion de gastos (8 series + "otras") */
     --serie-1: #4E79A7;
     --serie-2: #F28E2B;
     --serie-3: #E15759;
@@ -16,7 +9,6 @@
     --serie-7: #B07AA1;
     --serie-8: #9C9C9C;
 
-    /* Tipografia y acento en modo claro */
     --bs-body-font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --bs-primary: #2F6FB0;
     --bs-primary-rgb: 47, 111, 176;
@@ -55,6 +47,26 @@ body {
 .navbar.sticky-top {
     box-shadow: 0 1px 4px rgba(15, 23, 42, .08);
 }
+.navbar .btn-outline-secondary {
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+}
+.navbar .btn-outline-secondary:hover {
+    background-color: var(--bs-primary-bg-subtle);
+    color: var(--bs-primary);
+    border-color: var(--bs-primary-border-subtle);
+    transform: scale(1.08);
+}
+.navbar-brand {
+    transition: color .15s ease;
+}
+.navbar-brand:hover {
+    color: var(--bs-primary);
+}
+@media (prefers-reduced-motion: reduce) {
+    .navbar .btn-outline-secondary:hover {
+        transform: none;
+    }
+}
 
 /* ---------- Menu lateral (offcanvas) ---------- */
 #sidebarMenu {
@@ -80,11 +92,6 @@ body {
 
 /* ---------- Login ---------- */
 .login-fondo {
-    /* Color solido en vez de linear-gradient(): en algunas combinaciones de
-       navegador/monitor el degradado se renderiza "lavado" y casi invisible
-       (ver .panel-bienvenida mas abajo). Mismo azul que --bs-primary, sin
-       degradado a --bs-indigo (violeta), que era un tono ajeno al resto de
-       la paleta de la app. */
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -95,8 +102,6 @@ body {
 
 /* ---------- Paneles: banner de bienvenida y tarjetas de datos ---------- */
 .panel-bienvenida {
-    /* Sin fondo: titulo e icono en negro/gris plano, igual que el resto de
-       los encabezados de la app. */
     margin-bottom: 2.5rem;
 }
 .panel-bienvenida p {
@@ -115,9 +120,6 @@ body {
     flex-shrink: 0;
 }
 
-/* Colores por categoria para las tarjetas de navegacion, reutilizando la misma
-   paleta categorica ya definida arriba para el grafico de composicion de gastos
-   (--serie-1..8), en vez de inventar colores nuevos sueltos. */
 .icono-serie-1 { background: color-mix(in srgb, var(--serie-1) 15%, white); color: color-mix(in srgb, var(--serie-1) 65%, black); }
 .icono-serie-2 { background: color-mix(in srgb, var(--serie-2) 15%, white); color: color-mix(in srgb, var(--serie-2) 65%, black); }
 .icono-serie-3 { background: color-mix(in srgb, var(--serie-3) 15%, white); color: color-mix(in srgb, var(--serie-3) 65%, black); }
@@ -127,9 +129,6 @@ body {
 .icono-serie-7 { background: color-mix(in srgb, var(--serie-7) 15%, white); color: color-mix(in srgb, var(--serie-7) 65%, black); }
 .icono-serie-8 { background: color-mix(in srgb, var(--serie-8) 15%, white); color: color-mix(in srgb, var(--serie-8) 65%, black); }
 
-/* Variantes "solo texto/icono" y "solo borde" de la misma paleta categorica,
-   para encabezados de seccion y botones dentro de cada modulo (Ventas,
-   Compras, Gastos, etc.), reutilizando siempre --serie-1..8. */
 .texto-serie-1 { color: color-mix(in srgb, var(--serie-1) 65%, black); }
 .texto-serie-2 { color: color-mix(in srgb, var(--serie-2) 65%, black); }
 .texto-serie-3 { color: color-mix(in srgb, var(--serie-3) 65%, black); }
@@ -148,12 +147,10 @@ body {
 .borde-serie-7 { --bs-border-color: var(--serie-7); }
 .borde-serie-8 { --bs-border-color: var(--serie-8); }
 
-/* Separacion extra entre secciones, mas alla del maximo de Bootstrap (mb-5 = 3rem) */
 .mb-6 {
     margin-bottom: 4.5rem !important;
 }
 
-/* Un poco mas de aire vertical en las filas de tablas de datos */
 .filas-espaciadas tbody td {
     padding-top: .75rem;
     padding-bottom: .75rem;

@@ -22,7 +22,6 @@
                     </c:when>
                     <c:otherwise>
                         <h1 class="h3 mb-1">Mis compras</h1>
-                        <p class="text-secondary mb-0">Registre cada compra de mercaderia que realiza. El total se calcula automaticamente.</p>
                     </c:otherwise>
                 </c:choose>
             </div>

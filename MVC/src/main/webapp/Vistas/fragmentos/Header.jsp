@@ -12,11 +12,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/custom.css?v=<%= System.currentTimeMillis() %>">
+    <link rel="icon" href="${pageContext.request.contextPath}/icons/icon-192.png">
+    <link rel="apple-touch-icon" href="${pageContext.request.contextPath}/icons/icon-192.png">
+    <link rel="manifest" href="${pageContext.request.contextPath}/manifest/manifest.json">
+    <meta name="theme-color" content="#2F6FB0">
 </head>
 <body class="d-flex flex-column min-vh-100">
 <div id="barraCarga" class="barra-carga"></div>
 
-<c:if test="${not empty sessionScope.idUsuario}">
+<c:if test="${not empty sessionScope.idUsuario and empty ocultarNavPrincipal}">
     <nav class="navbar bg-body-tertiary d-print-none sticky-top">
         <div class="container-fluid px-3">
             <button class="btn btn-outline-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-label="Abrir menu">
