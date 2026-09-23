@@ -1,12 +1,5 @@
-/* ===========================================================
-   Contas Portal - ajustes sobre Bootstrap 5
-   Solo lo que Bootstrap no cubre: graficos en CSS, calendario,
-   fondo del login. Colores de estado via utilidades bg-*/text-*
-   de Bootstrap (success/warning/danger/secondary).
-   =========================================================== */
 
 :root {
-    /* Paleta categorica para el grafico de composicion de gastos (8 series + "otras") */
     --serie-1: #4E79A7;
     --serie-2: #F28E2B;
     --serie-3: #E15759;
@@ -16,7 +9,6 @@
     --serie-7: #B07AA1;
     --serie-8: #9C9C9C;
 
-    /* Tipografia y acento en modo claro */
     --bs-body-font-family: 'Inter', -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     --bs-primary: #2F6FB0;
     --bs-primary-rgb: 47, 111, 176;
@@ -47,13 +39,89 @@ body {
     --bs-btn-hover-border-color: var(--bs-link-hover-color);
 }
 
-.min-vh-100-menos-nav {
-    min-height: calc(100vh - 130px);
+/* 100vh en navegadores moviles incluye la barra de URL; dvh sigue el alto visible. */
+.min-dvh-100 {
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+/* En tactil no dejar el resaltado de fila "pegado" despues de tocar. */
+@media (hover: none) {
+    .table-hover > tbody > tr:hover > * {
+        --bs-table-color-state: var(--bs-table-color);
+        --bs-table-bg-state: transparent;
+    }
+}
+
+/* Inputs a 16px en dispositivos tactiles: menos que eso hace zoom automatico en iOS. */
+@media (max-width: 767.98px), (pointer: coarse) {
+    input.form-control,
+    input.form-control-sm,
+    select.form-select,
+    select.form-select-sm,
+    textarea.form-control {
+        font-size: 16px !important;
+    }
 }
 
 /* ---------- Navbar superior ---------- */
 .navbar.sticky-top {
     box-shadow: 0 1px 4px rgba(15, 23, 42, .08);
+}
+.navbar .btn-outline-secondary {
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+}
+/* Hover solo en dispositivos con puntero real: en tactil el :hover queda
+   "pegado" despues de tocar. */
+@media (hover: hover) {
+    .navbar .btn-outline-secondary:hover {
+        background-color: var(--bs-primary-bg-subtle);
+        color: var(--bs-primary);
+        border-color: var(--bs-primary-border-subtle);
+        transform: scale(1.08);
+    }
+    .navbar-brand:hover {
+        color: var(--bs-primary);
+    }
+}
+.navbar-brand {
+    transition: color .15s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+    .navbar .btn-outline-secondary:hover {
+        transform: none;
+    }
+}
+@media (max-width: 767.98px) {
+    .navbar {
+        padding-top: .15rem;
+        padding-bottom: .15rem;
+        min-height: auto;
+    }
+    .navbar > .container-fluid {
+        padding-left: .5rem !important;
+        padding-right: .5rem !important;
+    }
+    .navbar .btn-outline-secondary {
+        padding: .1rem .4rem;
+        line-height: 1.2;
+        position: relative;
+    }
+    /* El boton se ve chico pero el area tactil llega a 44px. */
+    .navbar .btn-outline-secondary::after {
+        content: "";
+        position: absolute;
+        inset: -8px -6px;
+    }
+    .navbar .btn-outline-secondary i {
+        font-size: .9rem !important;
+    }
+    .navbar-brand {
+        font-size: .95rem;
+        padding-top: .15rem;
+        padding-bottom: .15rem;
+        margin-left: .4rem !important;
+    }
 }
 
 /* ---------- Menu lateral (offcanvas) ---------- */
@@ -74,18 +142,19 @@ body {
     font-size: 1.05rem;
     flex-shrink: 0;
 }
-.menu-lateral-link:hover {
+@media (hover: hover) {
+    .menu-lateral-link:hover {
+        background-color: var(--bs-tertiary-bg);
+    }
+}
+.menu-lateral-link:active {
     background-color: var(--bs-tertiary-bg);
 }
 
 /* ---------- Login ---------- */
 .login-fondo {
-    /* Color solido en vez de linear-gradient(): en algunas combinaciones de
-       navegador/monitor el degradado se renderiza "lavado" y casi invisible
-       (ver .panel-bienvenida mas abajo). Mismo azul que --bs-primary, sin
-       degradado a --bs-indigo (violeta), que era un tono ajeno al resto de
-       la paleta de la app. */
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -95,8 +164,6 @@ body {
 
 /* ---------- Paneles: banner de bienvenida y tarjetas de datos ---------- */
 .panel-bienvenida {
-    /* Sin fondo: titulo e icono en negro/gris plano, igual que el resto de
-       los encabezados de la app. */
     margin-bottom: 2.5rem;
 }
 .panel-bienvenida p {
@@ -115,9 +182,6 @@ body {
     flex-shrink: 0;
 }
 
-/* Colores por categoria para las tarjetas de navegacion, reutilizando la misma
-   paleta categorica ya definida arriba para el grafico de composicion de gastos
-   (--serie-1..8), en vez de inventar colores nuevos sueltos. */
 .icono-serie-1 { background: color-mix(in srgb, var(--serie-1) 15%, white); color: color-mix(in srgb, var(--serie-1) 65%, black); }
 .icono-serie-2 { background: color-mix(in srgb, var(--serie-2) 15%, white); color: color-mix(in srgb, var(--serie-2) 65%, black); }
 .icono-serie-3 { background: color-mix(in srgb, var(--serie-3) 15%, white); color: color-mix(in srgb, var(--serie-3) 65%, black); }
@@ -127,9 +191,6 @@ body {
 .icono-serie-7 { background: color-mix(in srgb, var(--serie-7) 15%, white); color: color-mix(in srgb, var(--serie-7) 65%, black); }
 .icono-serie-8 { background: color-mix(in srgb, var(--serie-8) 15%, white); color: color-mix(in srgb, var(--serie-8) 65%, black); }
 
-/* Variantes "solo texto/icono" y "solo borde" de la misma paleta categorica,
-   para encabezados de seccion y botones dentro de cada modulo (Ventas,
-   Compras, Gastos, etc.), reutilizando siempre --serie-1..8. */
 .texto-serie-1 { color: color-mix(in srgb, var(--serie-1) 65%, black); }
 .texto-serie-2 { color: color-mix(in srgb, var(--serie-2) 65%, black); }
 .texto-serie-3 { color: color-mix(in srgb, var(--serie-3) 65%, black); }
@@ -148,18 +209,30 @@ body {
 .borde-serie-7 { --bs-border-color: var(--serie-7); }
 .borde-serie-8 { --bs-border-color: var(--serie-8); }
 
-/* Separacion extra entre secciones, mas alla del maximo de Bootstrap (mb-5 = 3rem) */
 .mb-6 {
     margin-bottom: 4.5rem !important;
 }
 
-/* Un poco mas de aire vertical en las filas de tablas de datos */
 .filas-espaciadas tbody td {
     padding-top: .75rem;
     padding-bottom: .75rem;
 }
+/* Sin nowrap, el navegador prefiere partir el texto en varias lineas para que
+   la tabla "entre" en la pantalla, en vez de dejarla mas ancha y scrollear
+   horizontal (que es lo que ya habilita el .table-responsive que la envuelve). */
+.filas-espaciadas th,
+.filas-espaciadas td {
+    white-space: nowrap;
+}
 
 /* ---------- Graficos de barras en CSS puro ---------- */
+/* Envuelve .grafico-barras + .grafico-etiquetas para que scrolleen juntas
+   como una sola unidad en pantallas chicas, en vez de apretar las columnas
+   hasta que las etiquetas de valor se superpongan entre si. */
+.grafico-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
 .grafico-barras {
     display: flex;
     align-items: flex-end;
@@ -167,15 +240,18 @@ body {
     height: 160px;
     padding-top: 1.5rem;
     border-bottom: 1px solid var(--bs-border-color);
+    min-width: max-content;
 }
 .grafico-barras .barra-col {
-    flex: 1;
+    /* crece para repartir el ancho sobrante cuando entra todo (PC/tablet ancha),
+       pero nunca se achica de 44px (mobile) -- ahi es cuando entra a tallar
+       el overflow-x:auto de .grafico-scroll en vez de apretar las columnas. */
+    flex: 1 0 44px;
     display: flex;
     flex-direction: column;
     align-items: center;
     height: 100%;
     justify-content: flex-end;
-    min-width: 18px;
 }
 .grafico-barras .barra {
     width: 100%;
@@ -193,25 +269,336 @@ body {
     display: flex;
     gap: 6px;
     margin-top: .4rem;
+    min-width: max-content;
 }
 .grafico-etiquetas span {
-    flex: 1;
+    flex: 1 0 44px;
     text-align: center;
     font-size: .7rem;
     color: var(--bs-secondary-color);
-    min-width: 18px;
+    white-space: nowrap;
+}
+
+/* ---------- Formulario de configuracion (Estado de resultados): compacto en mobile ---------- */
+@media (max-width: 767.98px) {
+    .config-compacta .card-header {
+        padding: .45rem .75rem;
+        font-size: .85rem;
+    }
+    .config-compacta .card-body {
+        padding: .75rem;
+    }
+    .config-compacta .row {
+        --bs-gutter-x: .5rem;
+        --bs-gutter-y: .5rem;
+    }
+    .config-compacta .form-label {
+        font-size: .75rem;
+        margin-bottom: .15rem;
+    }
+    .config-compacta .form-control {
+        padding: .25rem .5rem;
+    }
+    .config-compacta .form-check {
+        min-height: auto;
+        margin-bottom: 0;
+    }
+    .config-compacta .form-check-label {
+        font-size: .78rem;
+    }
+    .config-compacta .form-switch .form-check-input {
+        transform: scale(.85);
+    }
+    .config-compacta .btn-lg {
+        padding: .4rem .75rem;
+        font-size: .88rem;
+    }
+    .config-compacta .mt-3 { margin-top: .6rem !important; }
+    .config-compacta .mt-4 { margin-top: .75rem !important; }
+}
+
+/* ---------- Soporte: todo el texto mas chico en mobile ---------- */
+@media (max-width: 767.98px) {
+    .soporte-compacto {
+        font-size: .8rem;
+    }
+    .soporte-compacto h1 { font-size: 1.3rem; }
+    .soporte-compacto h2,
+    .soporte-compacto .h5 { font-size: 1rem; }
+    .soporte-compacto h3,
+    .soporte-compacto h4,
+    .soporte-compacto h5,
+    .soporte-compacto h6 { font-size: .9rem; }
+    .soporte-compacto .card-header { padding: .45rem .75rem; font-size: .88rem; }
+    .soporte-compacto .card-body { padding: .75rem; }
+    .soporte-compacto .accordion-button {
+        font-size: .82rem;
+        padding: .55rem .75rem;
+    }
+    .soporte-compacto .accordion-body { padding: .6rem .75rem; }
+    .soporte-compacto .nav-tabs .nav-link {
+        font-size: .78rem;
+        padding: .35rem .6rem;
+    }
+    .soporte-compacto .form-control { padding: .3rem .6rem; }
+    .soporte-compacto .btn { font-size: .8rem; padding: .3rem .7rem; }
+    .soporte-compacto .small,
+    .soporte-compacto small { font-size: .72rem; }
+    .soporte-compacto li { margin-bottom: .15rem; }
+}
+
+/* ---------- Subtitulo de pagina: mas chico en mobile ---------- */
+@media (max-width: 767.98px) {
+    .subtitulo-pagina {
+        font-size: .8rem;
+    }
+}
+
+/* ---------- Tarjetas KPI (Estado de resultados): mas chicas en mobile ---------- */
+/* En pantallas angostas ya van una debajo de otra (row-cols-1), pero el
+   tamano de fuente/iconos pensado para el grid de 3 columnas de escritorio
+   se ve grande apiladas en una columna sola -- se achican en este breakpoint. */
+@media (max-width: 767.98px) {
+    .kpi-tile {
+        padding: .6rem .85rem !important;
+        gap: .6rem !important;
+    }
+    .kpi-tile .icono-circulo {
+        width: 32px;
+        height: 32px;
+        font-size: .9rem;
+    }
+    .kpi-tile .fs-4,
+    .kpi-tile .fs-3 {
+        font-size: 1.05rem !important;
+    }
+    .kpi-tile .small {
+        font-size: .68rem;
+    }
+}
+
+/* ---------- Tablas de historial: tarjeta plegable en mobile ---------- */
+/* La fila (tr[data-fila]) sigue siendo la misma que usa tabla-filtros.js para
+   buscar/ordenar/paginar -- no se agregan ni sacan filas, solo se cambia como
+   se ve. En mobile cada <tr> pasa a comportarse como una tarjeta: se ven las
+   columnas clave (data-label sin clase col-extra) y el resto (precio unitario,
+   cantidad, medio, acciones) queda oculto atras de un boton "Ver mas detalles"
+   por fila, en vez de mostrar la tabla completa apretada. */
+@media (max-width: 767.98px) {
+    .tabla-tarjetas-movil thead {
+        display: none;
+    }
+    .tabla-tarjetas-movil,
+    .tabla-tarjetas-movil tbody,
+    .tabla-tarjetas-movil tr,
+    .tabla-tarjetas-movil td {
+        display: block;
+        width: 100%;
+        white-space: normal;
+    }
+    /* Tarjeta compacta de 3 lineas: concepto + monto / fecha + estado / "ver mas".
+       Las columnas clave se ubican por su data-label (varia segun el modulo). */
+    .tabla-tarjetas-movil tbody tr[data-fila] {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        column-gap: .75rem;
+        row-gap: .1rem;
+        align-items: center;
+        border: 1px solid var(--bs-border-color);
+        border-radius: .6rem;
+        margin-bottom: .45rem;
+        padding: .45rem .7rem;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td {
+        display: block;
+        width: auto;
+        padding: 0;
+        border: none !important;
+        background: none;
+        box-shadow: none;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td[data-label="Concepto"],
+    .tabla-tarjetas-movil tbody tr[data-fila] td[data-label="Categoria"],
+    .tabla-tarjetas-movil tbody tr[data-fila] td.celda-titulo {
+        grid-column: 1;
+        grid-row: 1;
+        font-size: .92rem;
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.celda-valor {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        text-align: right;
+        font-size: .85rem;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.celda-dias::after {
+        content: " dias";
+        font-size: .72rem;
+        color: var(--bs-secondary-color);
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.celda-sub {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        font-size: .78rem;
+        color: var(--bs-secondary-color);
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td[data-label="Subtotal"],
+    .tabla-tarjetas-movil tbody tr[data-fila] td[data-label="Total"],
+    .tabla-tarjetas-movil tbody tr[data-fila] td[data-label="Monto"] {
+        grid-column: 2;
+        grid-row: 1;
+        text-align: right;
+        font-size: .92rem;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td[data-label="Fecha"] {
+        grid-column: 1;
+        grid-row: 2;
+        font-size: .75rem;
+        color: var(--bs-secondary-color);
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td[data-label="Estado"] {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: end;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td[data-label="Estado"] .badge {
+        font-size: .68rem;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td[data-label="Cliente"]:not(.col-extra) {
+        grid-column: 1;
+        grid-row: 3;
+        font-size: .75rem;
+        color: var(--bs-secondary-color);
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.col-ver {
+        grid-column: 2;
+        grid-row: 3;
+        justify-self: end;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.col-ver .btn {
+        padding: .05rem .5rem;
+        font-size: .75rem;
+        position: relative;
+    }
+    /* Boton visualmente chico, area tactil de 44px. */
+    .tabla-tarjetas-movil tbody tr[data-fila] td.col-ver .btn::after,
+    .tabla-tarjetas-movil tbody tr[data-fila] td.col-alternar .btn::after {
+        content: "";
+        position: absolute;
+        inset: -10px -12px;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.col-acciones .btn {
+        min-height: 40px;
+        display: inline-flex;
+        align-items: center;
+        gap: .25rem;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.col-acciones .d-flex {
+        gap: .5rem !important;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.col-extra {
+        display: none;
+        grid-column: 1 / -1;
+        grid-row: auto;
+        font-size: .8rem;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila].fila-expandida td.col-extra {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: .75rem;
+        padding-top: .25rem;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.col-extra[data-label]::before {
+        content: attr(data-label);
+        font-weight: 600;
+        font-size: .7rem;
+        color: var(--bs-secondary-color);
+        flex-shrink: 0;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.col-extra.col-acciones {
+        justify-content: flex-start;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.col-alternar {
+        grid-column: 1 / -1;
+        grid-row: auto;
+        text-align: center;
+        margin-top: .1rem;
+    }
+    .tabla-tarjetas-movil tbody tr[data-fila] td.col-alternar .btn {
+        width: auto !important;
+        border: none;
+        padding: .05rem .5rem;
+        font-size: .75rem;
+        color: var(--bs-secondary-color);
+        position: relative;
+    }
+}
+
+/* Tablas chicas de 3-4 columnas (Estado financiero): se dejan como tabla pero
+   mas compactas en mobile, permitiendo que el texto parta en varias lineas. */
+@media (max-width: 767.98px) {
+    .tabla-compacta-movil th,
+    .tabla-compacta-movil td {
+        white-space: normal;
+        padding: .4rem .35rem !important;
+        font-size: .8rem;
+    }
+}
+
+/* Paginador: botones tactiles y que envuelva si hay muchas paginas. */
+[data-rol="paginador"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem;
+    justify-content: flex-end;
+}
+[data-rol="paginador"] .btn {
+    margin: 0 !important;
+}
+@media (max-width: 767.98px), (pointer: coarse) {
+    [data-rol="paginador"] .btn {
+        min-width: 40px;
+        min-height: 40px;
+    }
+}
+
+/* Pestañas con scroll horizontal en vez de partirse en varias filas. */
+@media (max-width: 767.98px) {
+    .tabs-scroll {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .tabs-scroll::-webkit-scrollbar {
+        display: none;
+    }
+    .tabs-scroll .nav-link {
+        white-space: nowrap;
+        min-height: 44px;
+    }
 }
 
 .grafico-divergente {
     display: flex;
     gap: 6px;
     height: 220px;
+    min-width: max-content;
 }
 .grafico-divergente .barra-col {
-    flex: 1;
+    /* mismo criterio que .grafico-barras .barra-col: crece para ocupar el
+       ancho disponible en pantallas anchas, pero nunca baja de 44px -- ahi
+       entra a tallar el overflow-x:auto de .grafico-scroll en vez de apretar
+       las columnas hasta que las etiquetas de mes se superpongan. */
+    flex: 1 0 44px;
     display: flex;
     flex-direction: column;
-    min-width: 18px;
 }
 .grafico-divergente .mitad-arriba {
     height: 45%;
@@ -288,9 +675,18 @@ body {
     background: var(--bs-body-bg);
     transition: box-shadow .15s ease, border-color .15s ease;
 }
-.calendario-celda:not(.vacia):hover {
-    box-shadow: 0 2px 8px rgba(15, 23, 42, .08);
-    border-color: var(--bs-primary-border-subtle);
+@media (hover: hover) {
+    .calendario-celda:not(.vacia):hover {
+        box-shadow: 0 2px 8px rgba(15, 23, 42, .08);
+        border-color: var(--bs-primary-border-subtle);
+    }
+}
+.calendario-celda:not(.vacia) {
+    cursor: pointer;
+}
+.calendario-celda.seleccionada {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 2px var(--bs-primary-border-subtle);
 }
 .calendario-celda.vacia { background: transparent; border-color: transparent; }
 .calendario-celda.hoy {
@@ -326,12 +722,22 @@ body {
 .calendario-punto.advertencia { background: var(--bs-warning-bg-subtle); color: var(--bs-warning-text-emphasis); }
 .calendario-punto.bueno { background: var(--bs-success-bg-subtle); color: var(--bs-success-text-emphasis); }
 
-@media (max-width: 700px) {
-    .calendario { grid-template-columns: repeat(7, minmax(34px, 1fr)); gap: 4px; }
-    .calendario-dia-semana { font-size: .58rem; padding-bottom: .3rem; }
-    .calendario-celda { min-height: 56px; font-size: .7rem; padding: .25rem; }
-    .calendario-dia { min-width: 18px; height: 18px; font-size: .7rem; }
-    .calendario-punto { font-size: 0; padding: 0; width: 8px; height: 8px; border-radius: 50%; margin: 2px auto 0; }
+/* En mobile la celda entera (>=44px de alto) es el area tactil; el detalle
+   de los vencimientos del dia se muestra debajo del calendario al tocarla. */
+@media (max-width: 767.98px) {
+    .calendario { grid-template-columns: repeat(7, minmax(40px, 1fr)); gap: 4px; }
+    .calendario-dia-semana { font-size: .7rem; padding-bottom: .3rem; }
+    .calendario-celda { min-height: 56px; font-size: .75rem; padding: .25rem; }
+    .calendario-dia { min-width: 20px; height: 20px; font-size: .75rem; }
+    .calendario-punto { font-size: 0; padding: 0; width: 10px; height: 10px; border-radius: 50%; margin: 2px auto 0; }
+}
+.detalle-dia-calendario .item-detalle {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .4rem 0;
+    border-top: 1px solid var(--bs-border-color);
+    font-size: .875rem;
 }
 
 /* ---------- Barra de carga al navegar ---------- */
@@ -358,11 +764,42 @@ a.card-enlace {
     color: inherit;
     transition: box-shadow .15s ease, transform .15s ease;
 }
-a.card-enlace:hover {
-    box-shadow: var(--bs-box-shadow);
-    transform: translateY(-2px) scale(1.015);
+@media (hover: hover) {
+    a.card-enlace:hover {
+        box-shadow: var(--bs-box-shadow);
+        transform: translateY(-2px) scale(1.015);
+    }
 }
 @media (prefers-reduced-motion: reduce) {
+    a.card-enlace:hover {
+        transform: none;
+    }
+}
+
+/* Menu principal en mobile: opciones mas chicas y mas juntas */
+@media (max-width: 767.98px) {
+    .menu-principal-grid {
+        --bs-gutter-x: .5rem;
+        --bs-gutter-y: .5rem;
+    }
+    .menu-principal-grid a.card-enlace .card-body {
+        padding: .55rem .75rem;
+        gap: .6rem !important;
+        align-items: center !important;
+    }
+    .menu-principal-grid a.card-enlace .icono-circulo {
+        width: 32px;
+        height: 32px;
+        font-size: .95rem;
+    }
+    .menu-principal-grid a.card-enlace h3 {
+        font-size: .9rem;
+        margin-bottom: 0 !important;
+    }
+    .menu-principal-grid a.card-enlace p {
+        font-size: .72rem;
+        line-height: 1.25;
+    }
     a.card-enlace:hover {
         transform: none;
     }

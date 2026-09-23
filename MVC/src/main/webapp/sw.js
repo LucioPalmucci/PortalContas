@@ -1,9 +1,10 @@
-const CACHE_NAME = 'contas-v1';
+const CACHE_NAME = 'contas-v2';
 
 const BASE = self.registration.scope;
 
+// No se cachea BASE ("/"): es una pagina dinamica (login o redireccion al panel
+// segun la sesion) y cachearla mostraba un login viejo al abrir la app.
 const urlsToCache = [
-    BASE,
     BASE + 'manifest/manifest.json',
     BASE + 'icons/icon-192.png',
     BASE + 'icons/icon-512.png',
@@ -34,6 +35,10 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    // Las paginas (JSP) siempre van a la red: dependen de la sesion.
+    if (event.request.mode === 'navigate') {
+        return;
+    }
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
             return cachedResponse || fetch(event.request);

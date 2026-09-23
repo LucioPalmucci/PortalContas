@@ -184,16 +184,18 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="h5 border-start border-4 borde-serie-4 ps-2 d-flex align-items-center gap-2"><i class="bi bi-graph-up texto-serie-4" aria-hidden="true"></i>Evolucion mensual de otros ingresos (ultimos 12 meses)</h2>
-                    <div class="grafico-barras">
-                        <c:forEach var="barra" items="${evolucionMensual}">
-                            <div class="barra-col" title="${barra.etiqueta}: ${barra.valorFormateado}">
-                                <div class="barra-valor">${barra.valorFormateado}</div>
-                                <div class="barra" style="height:${barra.alturaPorcentaje}%;"></div>
-                            </div>
-                        </c:forEach>
-                    </div>
-                    <div class="grafico-etiquetas">
-                        <c:forEach var="barra" items="${evolucionMensual}"><span>${barra.etiqueta}</span></c:forEach>
+                    <div class="grafico-scroll">
+                        <div class="grafico-barras">
+                            <c:forEach var="barra" items="${evolucionMensual}">
+                                <div class="barra-col" title="${barra.etiqueta}: ${barra.valorFormateado}">
+                                    <div class="barra-valor">${barra.valorFormateado}</div>
+                                    <div class="barra" style="height:${barra.alturaPorcentaje}%;"></div>
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <div class="grafico-etiquetas">
+                            <c:forEach var="barra" items="${evolucionMensual}"><span>${barra.etiqueta}</span></c:forEach>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -226,7 +228,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0 filas-espaciadas">
+                    <table class="table table-hover align-middle mb-0 filas-espaciadas tabla-tarjetas-movil">
                         <thead class="table-light">
                         <tr>
                             <c:if test="${esAdmin}"><th data-ordenar="cliente">Cliente<span class="indicador-orden"></span></th></c:if>
@@ -248,19 +250,19 @@
                                 data-monto="${otroIngreso.valor}"
                                 data-medio="${fn:toLowerCase(otroIngreso.metodo.nombre)}"
                                 data-estado="${otroIngreso.estado}">
-                                <c:if test="${esAdmin}"><td>${otroIngreso.usuario.nombreCompleto}</td></c:if>
-                                <td><fmt:formatDate value="${otroIngreso.fecha}" pattern="dd/MM/yyyy"/></td>
-                                <td class="fw-semibold">${otroIngreso.categoria.nombre}</td>
-                                <td class="fw-semibold"><fmt:formatNumber value="${otroIngreso.valor}" type="currency" currencySymbol="$"/></td>
-                                <td>${otroIngreso.metodo.nombre}</td>
-                                <td>
+                                <c:if test="${esAdmin}"><td data-label="Cliente" class="col-extra">${otroIngreso.usuario.nombreCompleto}</td></c:if>
+                                <td data-label="Fecha"><fmt:formatDate value="${otroIngreso.fecha}" pattern="dd/MM/yyyy"/></td>
+                                <td data-label="Categoria" class="fw-semibold">${otroIngreso.categoria.nombre}</td>
+                                <td data-label="Monto" class="fw-semibold"><fmt:formatNumber value="${otroIngreso.valor}" type="currency" currencySymbol="$"/></td>
+                                <td data-label="Medio" class="col-extra">${otroIngreso.metodo.nombre}</td>
+                                <td data-label="Estado">
                                     <c:choose>
                                         <c:when test="${otroIngreso.estado == 'COBRADO'}"><span class="badge rounded-pill bg-success-subtle text-success-emphasis">Cobrado</span></c:when>
                                         <c:when test="${otroIngreso.estado == 'PENDIENTE_DE_COBRO'}"><span class="badge rounded-pill bg-warning-subtle text-warning-emphasis">Pendiente</span></c:when>
                                         <c:otherwise><span class="badge rounded-pill bg-secondary-subtle text-secondary-emphasis">Anulado</span></c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td class="d-print-none">
+                                <td data-label="Acciones" class="d-print-none col-extra col-acciones">
                                     <div class="d-flex gap-1 flex-wrap">
                                         <a class="btn btn-sm btn-outline-secondary rounded-pill" href="${pageContext.request.contextPath}/OtroIngreso?editarId=${otroIngreso.idOtroIngreso}"><i class="bi bi-pencil" aria-hidden="true"></i> Editar</a>
                                         <c:if test="${otroIngreso.estado == 'PENDIENTE_DE_COBRO'}">
@@ -278,6 +280,11 @@
                                             </form>
                                         </c:if>
                                     </div>
+                                </td>
+                                <td class="d-print-none d-md-none col-alternar">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill w-100" onclick="var f=this.closest('tr'); var e=f.classList.toggle('fila-expandida'); this.querySelector('i').className='bi ' + (e ? 'bi-chevron-up' : 'bi-chevron-down'); this.querySelector('span').textContent = e ? 'Ver menos' : 'Ver mas detalles';">
+                                        <i class="bi bi-chevron-down" aria-hidden="true"></i> <span>Ver mas detalles</span>
+                                    </button>
                                 </td>
                             </tr>
                         </c:forEach>

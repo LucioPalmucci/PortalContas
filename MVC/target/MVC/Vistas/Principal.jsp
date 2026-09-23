@@ -18,7 +18,14 @@
                 <link rel="preconnect" href="https://fonts.googleapis.com">
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
                 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-                <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/custom.css?v=<%= System.currentTimeMillis() %>">
+<%!
+    private static final long ARRANQUE_APP = System.currentTimeMillis();
+%>
+<%
+    String cssRutaDisco = application.getRealPath("/CSS/custom.css");
+    long cssVersion = cssRutaDisco != null ? new java.io.File(cssRutaDisco).lastModified() : ARRANQUE_APP;
+%>
+                <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/custom.css?v=<%= cssVersion %>">
                 <link rel="icon" href="${pageContext.request.contextPath}/icons/icon-192.png">
                 <link rel="apple-touch-icon" href="${pageContext.request.contextPath}/icons/icon-192.png">
                 <link rel="manifest" href="${pageContext.request.contextPath}/manifest/manifest.json">
@@ -28,8 +35,10 @@
             <div class="login-fondo">
                 <div class="card shadow" style="width:100%; max-width:400px;">
                     <div class="card-body p-4">
+                        <div class="text-center mb-2">
+                            <img src="${pageContext.request.contextPath}/icons/icon-192.png" alt="" width="64" height="64" class="rounded">
+                        </div>
                         <h1 class="h3 text-center mb-1">Contas Portal</h1>
-                        <p class="text-secondary text-center small mb-4">Ingrese sus datos para acceder a su cuenta</p>
 
                         <c:if test="${not empty requestScope.error}">
                             <div class="alert alert-danger" role="alert">&#9888; ${requestScope.error}</div>

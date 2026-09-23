@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
+                <table class="table table-hover align-middle mb-0 tabla-tarjetas-movil">
                     <thead class="table-light">
                     <tr>
                         <th data-ordenar="nombre">Nombre<span class="indicador-orden"></span></th>
@@ -158,28 +158,28 @@
                             data-tipocuenta="${usuario.rol}"
                             data-estado="${usuario.estaActivo ? 'ACTIVO' : 'INACTIVO'}"
                             data-ultimoacceso="<c:if test="${not empty usuario.ultimoAcceso}"><fmt:formatDate value="${usuario.ultimoAcceso}" pattern="yyyy-MM-dd'T'HH:mm:ss"/></c:if>">
-                            <td>${usuario.nombreCompleto}</td>
-                            <td>${usuario.correoElectronico}</td>
-                            <td>${usuario.nombreUsuario}</td>
-                            <td>${usuario.rol == 'ADMINISTRADOR' ? 'Administrador' : 'Usuario'}</td>
-                            <td>
+                            <td class="fw-semibold celda-titulo">${usuario.nombreCompleto}</td>
+                            <td class="celda-sub">${usuario.correoElectronico}</td>
+                            <td data-label="Usuario" class="col-extra">${usuario.nombreUsuario}</td>
+                            <td data-label="Rol" class="col-extra">${usuario.rol == 'ADMINISTRADOR' ? 'Administrador' : 'Usuario'}</td>
+                            <td class="celda-valor">
                                 <c:choose>
                                     <c:when test="${usuario.estaActivo}"><span class="badge text-bg-success">Activo</span></c:when>
                                     <c:otherwise><span class="badge text-bg-secondary">Inactivo</span></c:otherwise>
                                 </c:choose>
                             </td>
-                            <td>
+                            <td data-label="Ultimo acceso" class="col-extra">
                                 <c:if test="${not empty usuario.ultimoAcceso}"><fmt:formatDate value="${usuario.ultimoAcceso}" pattern="dd/MM/yyyy HH:mm"/></c:if>
                                 <c:if test="${empty usuario.ultimoAcceso}"><span class="text-secondary">Nunca</span></c:if>
                             </td>
-                            <td>
+                            <td data-label="Ultima modificacion" class="col-extra">
                                 <c:if test="${not empty usuario.fechaModificacion}">
                                     <fmt:formatDate value="${usuario.fechaModificacion}" pattern="dd/MM/yyyy HH:mm"/>
                                     <c:if test="${not empty usuario.modificadoPor}"><br><span class="text-secondary small">por ${usuario.modificadoPor.nombreCompleto}</span></c:if>
                                 </c:if>
                                 <c:if test="${empty usuario.fechaModificacion}"><span class="text-secondary">-</span></c:if>
                             </td>
-                            <td>
+                            <td data-label="Acciones" class="col-extra col-acciones">
                                 <div class="d-flex gap-1 flex-wrap">
                                     <a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/Usuario?editarId=${usuario.idUsuario}">Editar</a>
                                     <c:choose>
@@ -216,6 +216,11 @@
                                         </c:otherwise>
                                     </c:choose>
                                 </div>
+                            </td>
+                            <td class="d-md-none col-alternar">
+                                <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill w-100" onclick="var f=this.closest('tr'); var e=f.classList.toggle('fila-expandida'); this.querySelector('i').className='bi ' + (e ? 'bi-chevron-up' : 'bi-chevron-down'); this.querySelector('span').textContent = e ? 'Ver menos' : 'Ver mas detalles';">
+                                    <i class="bi bi-chevron-down" aria-hidden="true"></i> <span>Ver mas detalles</span>
+                                </button>
                             </td>
                         </tr>
                     </c:forEach>

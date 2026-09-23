@@ -37,7 +37,10 @@
                     <p class="mb-0">Panel de administracion del estudio.</p>
                 </div>
             </div>
-            <a class="btn btn-outline-danger btn-sm rounded-pill d-print-none" href="${pageContext.request.contextPath}/login?action=logout"><i class="bi bi-box-arrow-right" aria-hidden="true"></i> Cerrar sesion</a>
+            <div class="d-flex gap-2 d-print-none">
+                <a class="btn btn-outline-secondary btn-sm rounded-pill" href="${pageContext.request.contextPath}/Soporte"><i class="bi bi-question-circle" aria-hidden="true"></i> Ayuda</a>
+                <a class="btn btn-outline-danger btn-sm rounded-pill" href="${pageContext.request.contextPath}/login?action=logout"><i class="bi bi-box-arrow-right" aria-hidden="true"></i> Cerrar sesion</a>
+            </div>
         </div>
 
         <div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
@@ -76,7 +79,7 @@
             </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-3 g-3">
+        <div class="row row-cols-1 row-cols-md-3 g-3 menu-principal-grid">
             <div class="col">
                 <a class="card h-100 position-relative card-enlace" href="${pageContext.request.contextPath}/Usuario">
                     <div class="card-body d-flex align-items-start gap-3">
@@ -117,7 +120,7 @@
 
         <h2 class="h5 mt-4 border-start border-4 border-primary ps-2">Movimientos de usuarios</h2>
         <p class="text-secondary">Seleccione un tipo de movimiento y luego el usuario para ver su informacion.</p>
-        <div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+        <div class="row row-cols-1 row-cols-md-3 g-3 mb-4 menu-principal-grid">
             <div class="col">
                 <a class="card h-100 position-relative card-enlace" href="${pageContext.request.contextPath}/Venta">
                     <div class="card-body d-flex align-items-start gap-3">
@@ -182,7 +185,7 @@
 
         <h2 class="h5 mt-4 border-start border-4 border-primary ps-2">Reportes de usuarios</h2>
         <p class="text-secondary">Consulte la tesoreria, el estado de resultados o el estado financiero de un usuario.</p>
-        <div class="row row-cols-1 row-cols-md-3 g-3 mb-4">
+        <div class="row row-cols-1 row-cols-md-3 g-3 mb-4 menu-principal-grid">
             <div class="col">
                 <a class="card h-100 position-relative card-enlace" href="${pageContext.request.contextPath}/Tesoreria">
                     <div class="card-body d-flex align-items-start gap-3">

@@ -8,6 +8,7 @@
         <c:set var="tituloPagina" value="Soporte" scope="request"/>
         <%@ include file="/Vistas/fragmentos/Header.jsp" %>
 
+<div class="soporte-compacto">
         <h1>Soporte</h1>
         <p class="text-secondary">Encuentre respuestas rapidas o comuniquese directamente con el estudio.</p>
 
@@ -174,9 +175,9 @@
             <div class="card-body">
                 <p class="text-secondary">Podes instalar Contas Portal en tu celular como cualquier otra app: te queda un icono en la pantalla de inicio y se abre sin la barra del navegador.</p>
 
-                <ul class="nav nav-tabs mb-3" id="tabsInstalacion" role="tablist">
+                <ul class="nav nav-tabs mb-3 tabs-scroll" id="tabsInstalacion" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#panel-android" type="button" role="tab">Android / Chrome</button>
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#panel-android" type="button" role="tab">Android</button>
                     </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#panel-ios" type="button" role="tab">iPhone / Safari</button>
@@ -188,14 +189,30 @@
 
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="panel-android" role="tabpanel">
-                        <p class="mb-2">Abra Contas Portal desde <strong>Chrome</strong> en su celular. Va a ver un aviso para "Agregar Contas Portal a la pantalla de inicio" &mdash; toque <strong>Instalar</strong>.</p>
-                        <p class="mb-0">Si no aparece solo: toque los tres puntos (&#8942;) arriba a la derecha &rarr; <strong>Instalar aplicacion</strong> (o "Agregar a pantalla de inicio"). El icono va a quedar en su pantalla de inicio como cualquier otra app.</p>
+                        <p class="mb-2">Los pasos cambian un poco segun el navegador que use su celular:</p>
+                        <p class="mb-1"><strong>Con Chrome:</strong></p>
+                        <ol class="mb-3">
+                            <li>Abra Contas Portal en Chrome.</li>
+                            <li>Toque los tres puntos (&#8942;) arriba a la derecha.</li>
+                            <li>Toque <strong>"Instalar y crear acceso directo"</strong> (o "Instalar aplicacion").</li>
+                            <li>Toque <strong>"Crear acceso directo"</strong>.</li>
+                            <li>Toque <strong>"Agregar"</strong> y confirme con <strong>"Añadir"</strong>.</li>
+                        </ol>
+                        <p class="mb-1"><strong>Con el navegador Samsung Internet:</strong></p>
+                        <ol class="mb-0">
+                            <li>Abra Contas Portal en Samsung Internet.</li>
+                            <li>Toque los tres puntos (&#8942;) abajo a la derecha.</li>
+                            <li>Toque <strong>"Añadir pagina a"</strong>.</li>
+                            <li>Elija <strong>"Pantalla de inicio"</strong>.</li>
+                            <li>Toque <strong>"Añadir"</strong>.</li>
+                        </ol>
                     </div>
                     <div class="tab-pane fade" id="panel-ios" role="tabpanel">
                         <p class="mb-2">En iPhone o iPad hay que instalarla a mano, y tiene que ser desde <strong>Safari</strong> (no Chrome: en iOS todos los navegadores usan el motor de Safari por dentro, pero solo Safari puede instalar apps).</p>
                         <ol class="mb-0">
                             <li>Abra Contas Portal en Safari.</li>
-                            <li>Toque el boton de <strong>Compartir</strong> (el cuadrado con la flecha hacia arriba, abajo al centro).</li>
+                            <li>Si no ve el boton de <strong>Compartir</strong> a la vista, toque primero los tres puntos (<strong>&bull;&bull;&bull;</strong>) y despues <strong>Compartir</strong> dentro de ese menu.</li>
+                            <li>En el listado que se abre, si no ve "Agregar a pantalla de inicio" de entrada, toque la <strong>flechita</strong> (o el texto "Mas"/"Ver mas", segun su iPhone) para desplegar todas las opciones.</li>
                             <li>Elija <strong>"Agregar a pantalla de inicio"</strong>.</li>
                             <li>Confirme tocando <strong>Agregar</strong> arriba a la derecha.</li>
                         </ol>
@@ -220,7 +237,7 @@
                     <div class="card-body">
                         <h3 class="h5">Hablar con el estudio</h3>
                         <p class="text-secondary">Escribanos por WhatsApp y le responderemos a la brevedad.</p>
-                        <a class="btn btn-primary w-100" href="https://wa.me/5490000000000" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+                        <a class="btn btn-primary w-100" href="https://wa.me/+5491122538164" target="_blank" rel="noopener">Escribir por WhatsApp</a>
                     </div>
                 </div>
             </div>
@@ -254,6 +271,7 @@
                 });
             })();
         </script>
+</div>
 
         <%@ include file="/Vistas/fragmentos/Footer.jsp" %>
     </c:otherwise>

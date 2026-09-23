@@ -46,18 +46,57 @@
                         <c:choose>
                             <c:when test="${celda.vacia}"><div class="calendario-celda vacia"></div></c:when>
                             <c:otherwise>
-                                <div class="calendario-celda ${celda.hoy ? 'hoy' : ''}">
+                                <div class="calendario-celda ${celda.hoy ? 'hoy' : ''}" data-dia="${celda.dia}">
                                     <div class="calendario-dia">${celda.dia}</div>
                                     <c:forEach var="v" items="${celda.vencimientos}">
-                                        <span class="calendario-punto ${claseEstado[v.idVencimiento]}" title="${v.impuestoPagar} - ${v.nombreCliente}">${v.impuestoPagar}</span>
+                                        <span class="calendario-punto ${claseEstado[v.idVencimiento]}" title="${v.impuestoPagar} - ${v.nombreCliente}" data-impuesto="${fn:escapeXml(v.impuestoPagar)}" data-cliente="${fn:escapeXml(v.nombreCliente)}">${v.impuestoPagar}</span>
                                     </c:forEach>
                                 </div>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
                 </div>
+                <div class="detalle-dia-calendario mt-3 d-md-none" id="detalleDiaCalendario" aria-live="polite"></div>
             </div>
         </div>
+        <script>
+            (function () {
+                var mes = '<c:out value="${nombreMesActual}"/>';
+                var panel = document.getElementById("detalleDiaCalendario");
+                var celdas = document.querySelectorAll(".calendario-celda:not(.vacia)");
+                celdas.forEach(function (celda) {
+                    celda.addEventListener("click", function () {
+                        celdas.forEach(function (c) { c.classList.remove("seleccionada"); });
+                        celda.classList.add("seleccionada");
+                        var puntos = celda.querySelectorAll(".calendario-punto");
+                        panel.innerHTML = "";
+                        var titulo = document.createElement("div");
+                        titulo.className = "fw-semibold mb-1 text-capitalize";
+                        titulo.textContent = celda.getAttribute("data-dia") + " de " + mes;
+                        panel.appendChild(titulo);
+                        if (puntos.length === 0) {
+                            var vacio = document.createElement("div");
+                            vacio.className = "text-secondary small";
+                            vacio.textContent = "Sin vencimientos este dia.";
+                            panel.appendChild(vacio);
+                            return;
+                        }
+                        puntos.forEach(function (p) {
+                            var fila = document.createElement("div");
+                            fila.className = "item-detalle";
+                            var marca = document.createElement("span");
+                            marca.className = "calendario-punto " + p.className.replace("calendario-punto", "").trim();
+                            marca.style.cssText = "width:10px;height:10px;font-size:0;padding:0;margin:0;flex-shrink:0;";
+                            var texto = document.createElement("span");
+                            texto.textContent = p.getAttribute("data-impuesto") + " - " + p.getAttribute("data-cliente");
+                            fila.appendChild(marca);
+                            fila.appendChild(texto);
+                            panel.appendChild(fila);
+                        });
+                    });
+                });
+            })();
+        </script>
 
         <div class="mb-3">
             <button class="btn btn-primary rounded-pill" type="button" data-bs-toggle="modal" data-bs-target="#modalAgregarVencimiento">
@@ -197,7 +236,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0 filas-espaciadas">
+                    <table class="table table-hover align-middle mb-0 filas-espaciadas tabla-tarjetas-movil">
                         <thead class="table-light">
                         <tr>
                             <th data-ordenar="fecha">Fecha<span class="indicador-orden"></span></th>
@@ -220,19 +259,19 @@
                                 data-cuit="${v.ultimosDigitosCuit}"
                                 data-dias="${diasRestantes[v.idVencimiento]}"
                                 data-estado="${claseEstado[v.idVencimiento]}">
-                                <td><fmt:formatDate value="${v.fecha}" pattern="dd/MM/yyyy"/></td>
-                                <td class="fw-semibold">${v.impuestoPagar}</td>
-                                <td>${v.nombreCliente}</td>
-                                <td>${v.ultimosDigitosCuit}</td>
-                                <td>${diasRestantes[v.idVencimiento]}</td>
-                                <td>
+                                <td data-label="Fecha"><fmt:formatDate value="${v.fecha}" pattern="dd/MM/yyyy"/></td>
+                                <td class="fw-semibold celda-titulo">${v.impuestoPagar}</td>
+                                <td data-label="Cliente">${v.nombreCliente}</td>
+                                <td data-label="CUIT" class="col-extra">${v.ultimosDigitosCuit}</td>
+                                <td class="celda-valor celda-dias">${diasRestantes[v.idVencimiento]}</td>
+                                <td data-label="Estado">
                                     <c:choose>
                                         <c:when test="${claseEstado[v.idVencimiento] == 'bueno'}"><span class="badge rounded-pill bg-success-subtle text-success-emphasis">Realizado</span></c:when>
                                         <c:when test="${claseEstado[v.idVencimiento] == 'advertencia'}"><span class="badge rounded-pill bg-warning-subtle text-warning-emphasis">Proximo</span></c:when>
                                         <c:otherwise><span class="badge rounded-pill bg-danger-subtle text-danger-emphasis">Pendiente</span></c:otherwise>
                                     </c:choose>
                                 </td>
-                                <td class="d-print-none">
+                                <td data-label="Acciones" class="d-print-none col-extra col-acciones">
                                     <div class="d-flex gap-1 flex-wrap">
                                         <a class="btn btn-sm btn-outline-secondary rounded-pill" href="${pageContext.request.contextPath}/Vencimiento?editarId=${v.idVencimiento}"><i class="bi bi-pencil" aria-hidden="true"></i> Editar</a>
                                         <c:if test="${v.estado == 'PENDIENTE'}">
@@ -248,6 +287,11 @@
                                             <button type="submit" class="btn btn-sm btn-danger rounded-pill"><i class="bi bi-trash" aria-hidden="true"></i> Eliminar</button>
                                         </form>
                                     </div>
+                                </td>
+                                <td class="d-print-none d-md-none col-alternar">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill w-100" onclick="var f=this.closest('tr'); var e=f.classList.toggle('fila-expandida'); this.querySelector('i').className='bi ' + (e ? 'bi-chevron-up' : 'bi-chevron-down'); this.querySelector('span').textContent = e ? 'Ver menos' : 'Ver mas detalles';">
+                                        <i class="bi bi-chevron-down" aria-hidden="true"></i> <span>Ver mas detalles</span>
+                                    </button>
                                 </td>
                             </tr>
                         </c:forEach>

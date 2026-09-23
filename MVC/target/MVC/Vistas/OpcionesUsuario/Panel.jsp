@@ -13,6 +13,7 @@
     </c:when>
     <c:otherwise>
         <c:set var="tituloPagina" value="Inicio" scope="request"/>
+        <c:set var="ocultarNavPrincipal" value="true" scope="request"/>
         <%@ include file="/Vistas/fragmentos/Header.jsp" %>
 
         <%
@@ -27,13 +28,19 @@
             request.setAttribute("estadoMes", estadoMes);
         %>
 
-        <div class="panel-bienvenida d-flex align-items-center gap-3">
-            <div class="icono-circulo text-secondary" style="width:52px;height:52px;font-size:1.5rem;">
-                <i class="bi bi-house-door" aria-hidden="true"></i>
+        <div class="panel-bienvenida d-flex align-items-center justify-content-between gap-3 flex-wrap">
+            <div class="d-flex align-items-center gap-3">
+                <div class="icono-circulo text-secondary" style="width:52px;height:52px;font-size:1.5rem;">
+                    <i class="bi bi-house-door" aria-hidden="true"></i>
+                </div>
+                <div>
+                    <h1 class="h3 mb-1">Hola, ${sessionScope.nombreUsuarioSesion}</h1>
+                    <p class="mb-0">Este es el resumen de su negocio.</p>
+                </div>
             </div>
-            <div>
-                <h1 class="h3 mb-1">Hola, ${sessionScope.nombreUsuarioSesion}</h1>
-                <p class="mb-0">Este es el resumen de su negocio.</p>
+            <div class="d-flex gap-2 d-print-none">
+                <a class="btn btn-outline-secondary btn-sm rounded-pill" href="${pageContext.request.contextPath}/Soporte"><i class="bi bi-question-circle" aria-hidden="true"></i> Ayuda</a>
+                <a class="btn btn-outline-danger btn-sm rounded-pill" href="${pageContext.request.contextPath}/login?action=logout"><i class="bi bi-box-arrow-right" aria-hidden="true"></i> Cerrar sesion</a>
             </div>
         </div>
 
@@ -73,7 +80,7 @@
             </div>
         </div>
 
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 menu-principal-grid">
             <div class="col">
                 <a class="card h-100 position-relative card-enlace" href="${pageContext.request.contextPath}/Venta">
                     <div class="card-body d-flex align-items-start gap-3">

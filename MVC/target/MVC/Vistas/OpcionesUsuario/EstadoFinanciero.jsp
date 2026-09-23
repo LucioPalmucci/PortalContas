@@ -52,7 +52,7 @@
 
         <c:if test="${not esAdmin or not empty idUsuarioFiltro}">
 
-        <ul class="nav nav-tabs mb-4 d-print-none" id="tabsEstadoFinanciero" role="tablist">
+        <ul class="nav nav-tabs mb-4 d-print-none tabs-scroll" id="tabsEstadoFinanciero" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active d-flex align-items-center gap-2" data-bs-toggle="tab" data-bs-target="#panel-dashboard" type="button" role="tab"><i class="bi bi-speedometer2" aria-hidden="true"></i>Dashboard</button>
             </li>
@@ -122,19 +122,21 @@
                             <span><span class="grafico-leyenda-punto bg-success"></span> Ganancia</span>
                             <span><span class="grafico-leyenda-punto bg-danger"></span> Perdida</span>
                         </div>
-                        <div class="grafico-divergente">
-                            <c:forEach var="barra" items="${barrasGanancia}">
-                                <div class="barra-col" title="${barra.etiqueta}: ${barra.valorFormateado}">
-                                    <div class="mitad-arriba">
-                                        <c:if test="${barra.positivo}"><div class="barra positivo" style="height:${barra.alturaPorcentaje}%;"></div></c:if>
+                        <div class="grafico-scroll">
+                            <div class="grafico-divergente">
+                                <c:forEach var="barra" items="${barrasGanancia}">
+                                    <div class="barra-col" title="${barra.etiqueta}: ${barra.valorFormateado}">
+                                        <div class="mitad-arriba">
+                                            <c:if test="${barra.positivo}"><div class="barra positivo" style="height:${barra.alturaPorcentaje}%;"></div></c:if>
+                                        </div>
+                                        <div class="linea-base"></div>
+                                        <div class="mitad-abajo">
+                                            <c:if test="${!barra.positivo}"><div class="barra negativo" style="height:${barra.alturaPorcentaje}%;"></div></c:if>
+                                        </div>
+                                        <div class="etiqueta">${barra.etiqueta}</div>
                                     </div>
-                                    <div class="linea-base"></div>
-                                    <div class="mitad-abajo">
-                                        <c:if test="${!barra.positivo}"><div class="barra negativo" style="height:${barra.alturaPorcentaje}%;"></div></c:if>
-                                    </div>
-                                    <div class="etiqueta">${barra.etiqueta}</div>
-                                </div>
-                            </c:forEach>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -142,16 +144,18 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="h5 border-start border-4 borde-serie-8 ps-2 d-flex align-items-center gap-2"><i class="bi bi-bar-chart texto-serie-8" aria-hidden="true"></i>Ventas mensuales (ultimos 12 meses)</h2>
-                        <div class="grafico-barras">
-                            <c:forEach var="barra" items="${barrasVentas}">
-                                <div class="barra-col" title="${barra.etiqueta}: ${barra.valorFormateado}">
-                                    <div class="barra-valor">${barra.valorFormateado}</div>
-                                    <div class="barra" style="height:${barra.alturaPorcentaje}%;"></div>
-                                </div>
-                            </c:forEach>
-                        </div>
-                        <div class="grafico-etiquetas">
-                            <c:forEach var="barra" items="${barrasVentas}"><span>${barra.etiqueta}</span></c:forEach>
+                        <div class="grafico-scroll">
+                            <div class="grafico-barras">
+                                <c:forEach var="barra" items="${barrasVentas}">
+                                    <div class="barra-col" title="${barra.etiqueta}: ${barra.valorFormateado}">
+                                        <div class="barra-valor">${barra.valorFormateado}</div>
+                                        <div class="barra" style="height:${barra.alturaPorcentaje}%;"></div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                            <div class="grafico-etiquetas">
+                                <c:forEach var="barra" items="${barrasVentas}"><span>${barra.etiqueta}</span></c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -187,7 +191,7 @@
                         <c:if test="${not empty comparacion}">
                             <hr>
                             <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0 filas-espaciadas">
+                                <table class="table table-hover align-middle mb-0 filas-espaciadas tabla-compacta-movil">
                                     <thead class="table-light"><tr><th></th><th>Periodo 1</th><th>Periodo 2</th><th>Variacion</th></tr></thead>
                                     <tbody>
                                     <tr>
@@ -258,7 +262,7 @@
                 <div class="card">
                     <div class="card-header d-flex align-items-center gap-2 texto-serie-8 fw-bold"><i class="bi bi-list-ol" aria-hidden="true"></i>Ranking de categorias de gasto por impacto (mes actual)</div>
                     <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0 filas-espaciadas">
+                        <table class="table table-hover align-middle mb-0 filas-espaciadas tabla-compacta-movil">
                             <thead class="table-light"><tr><th>#</th><th>Categoria</th><th>Monto</th><th>% del total</th></tr></thead>
                             <tbody>
                             <c:forEach var="barra" items="${barrasComposicion}" varStatus="fila">

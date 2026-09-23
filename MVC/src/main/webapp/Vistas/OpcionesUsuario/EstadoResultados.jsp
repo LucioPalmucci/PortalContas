@@ -17,7 +17,7 @@
                 </div>
                 <div>
                     <h1 class="h3 mb-1">Estado de resultados</h1>
-                    <p class="text-secondary mb-0">Resumen de ingresos, costos y ganancia para el periodo seleccionado.</p>
+                    <p class="text-secondary mb-0 subtitulo-pagina">Resumen de ingresos, costos y ganancia para el periodo seleccionado.</p>
                 </div>
             </div>
             <div class="d-flex gap-2 d-print-none">
@@ -63,9 +63,9 @@
         <div class="card mb-5">
             <div class="card-body">
                 <h2 class="h5 text-center mb-4 d-flex align-items-center justify-content-center gap-2"><i class="bi bi-calendar-range texto-serie-6" aria-hidden="true"></i>Periodo: <fmt:formatDate value="${estado.periodoInicio}" pattern="dd/MM/yyyy"/> al <fmt:formatDate value="${estado.periodoFin}" pattern="dd/MM/yyyy"/></h2>
-                <div class="row row-cols-2 row-cols-md-3 g-4">
+                <div class="row row-cols-1 row-cols-md-3 g-3 g-md-4">
                     <div class="col">
-                        <div class="border-start border-4 border-primary rounded p-3 h-100 d-flex align-items-center gap-3">
+                        <div class="kpi-tile border-start border-4 border-primary rounded p-3 h-100 d-flex align-items-center gap-3">
                             <div class="icono-circulo bg-primary-subtle text-primary"><i class="bi bi-cart-check" aria-hidden="true"></i></div>
                             <div>
                                 <div class="small text-secondary text-uppercase">Ventas totales</div>
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="border-start border-4 border-primary rounded p-3 h-100 d-flex align-items-center gap-3">
+                        <div class="kpi-tile border-start border-4 border-primary rounded p-3 h-100 d-flex align-items-center gap-3">
                             <div class="icono-circulo bg-primary-subtle text-primary"><i class="bi bi-box-seam" aria-hidden="true"></i></div>
                             <div>
                                 <div class="small text-secondary text-uppercase">Costo de mercaderia vendida</div>
@@ -83,7 +83,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="border-start border-4 border-primary rounded p-3 h-100 d-flex align-items-center gap-3">
+                        <div class="kpi-tile border-start border-4 border-primary rounded p-3 h-100 d-flex align-items-center gap-3">
                             <div class="icono-circulo bg-primary-subtle text-primary"><i class="bi bi-percent" aria-hidden="true"></i></div>
                             <div>
                                 <div class="small text-secondary text-uppercase">Margen utilizado</div>
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="border-start border-4 border-primary rounded p-3 h-100 d-flex align-items-center gap-3">
+                        <div class="kpi-tile border-start border-4 border-primary rounded p-3 h-100 d-flex align-items-center gap-3">
                             <div class="icono-circulo bg-primary-subtle text-primary"><i class="bi bi-graph-up" aria-hidden="true"></i></div>
                             <div>
                                 <div class="small text-secondary text-uppercase">Utilidad bruta</div>
@@ -101,7 +101,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="border-start border-4 border-primary rounded p-3 h-100 d-flex align-items-center gap-3">
+                        <div class="kpi-tile border-start border-4 border-primary rounded p-3 h-100 d-flex align-items-center gap-3">
                             <div class="icono-circulo bg-primary-subtle text-primary"><i class="bi bi-receipt" aria-hidden="true"></i></div>
                             <div>
                                 <div class="small text-secondary text-uppercase">Gastos operativos</div>
@@ -110,7 +110,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="border-start border-4 border-success rounded p-3 h-100 d-flex align-items-center gap-3">
+                        <div class="kpi-tile border-start border-4 border-success rounded p-3 h-100 d-flex align-items-center gap-3">
                             <div class="icono-circulo bg-success-subtle text-success"><i class="bi bi-plus-circle" aria-hidden="true"></i></div>
                             <div>
                                 <div class="small text-secondary text-uppercase">Otros ingresos</div>
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="border-start border-4 border-danger rounded p-3 h-100 d-flex align-items-center gap-3">
+                        <div class="kpi-tile border-start border-4 border-danger rounded p-3 h-100 d-flex align-items-center gap-3">
                             <div class="icono-circulo bg-danger-subtle text-danger"><i class="bi bi-dash-circle" aria-hidden="true"></i></div>
                             <div>
                                 <div class="small text-secondary text-uppercase">Otros egresos</div>
@@ -128,7 +128,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="border-start border-4 ${estado.ganancia >= 0 ? 'border-success' : 'border-danger'} rounded p-3 h-100 d-flex align-items-center gap-3">
+                        <div class="kpi-tile border-start border-4 ${estado.ganancia >= 0 ? 'border-success' : 'border-danger'} rounded p-3 h-100 d-flex align-items-center gap-3">
                             <div class="icono-circulo ${estado.ganancia >= 0 ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'}"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i></div>
                             <div>
                                 <div class="small text-secondary text-uppercase">Ganancia del periodo</div>
@@ -137,7 +137,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="border-start border-4 ${estado.rentabilidad >= 0 ? 'border-success' : 'border-danger'} rounded p-3 h-100 d-flex align-items-center gap-3">
+                        <div class="kpi-tile border-start border-4 ${estado.rentabilidad >= 0 ? 'border-success' : 'border-danger'} rounded p-3 h-100 d-flex align-items-center gap-3">
                             <div class="icono-circulo ${estado.rentabilidad >= 0 ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'}"><i class="bi bi-percent" aria-hidden="true"></i></div>
                             <div>
                                 <div class="small text-secondary text-uppercase">Rentabilidad</div>
@@ -146,7 +146,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="border-start border-4 ${estado.variacionAnterior >= 0 ? 'border-success' : 'border-danger'} rounded p-3 h-100 d-flex align-items-center gap-3">
+                        <div class="kpi-tile border-start border-4 ${estado.variacionAnterior >= 0 ? 'border-success' : 'border-danger'} rounded p-3 h-100 d-flex align-items-center gap-3">
                             <div class="icono-circulo ${estado.variacionAnterior >= 0 ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger'}"><i class="bi bi-arrow-left-right" aria-hidden="true"></i></div>
                             <div>
                                 <div class="small text-secondary text-uppercase">Vs. periodo anterior</div>
@@ -155,7 +155,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="text-secondary mt-4 mb-0">${resumenNarrativo}</p>
+                <p class="text-secondary mt-4 mb-0 subtitulo-pagina">${resumenNarrativo}</p>
             </div>
         </div>
         </c:if>
@@ -244,11 +244,11 @@
             </div>
         </div>
 
-        <a class="btn btn-primary rounded-pill d-print-none" href="${pageContext.request.contextPath}/EstadoResultados?action=volver&idUsuarioFiltro=${idUsuarioFiltro}"><i class="bi bi-arrow-left" aria-hidden="true"></i> Volver</a>
+        <a class="btn btn-primary rounded-pill d-print-none" href="${pageContext.request.contextPath}/EstadoResultados?action=volver&idUsuarioFiltro=${idUsuarioFiltro}"><i class="bi bi-gear" aria-hidden="true"></i> Reconfigurar</a>
         </c:if>
 
         <c:if test="${not mostrarResultados}">
-        <div class="card d-print-none">
+        <div class="card d-print-none config-compacta">
             <div class="card-header d-flex align-items-center gap-2 texto-serie-6">
                 <i class="bi bi-gear" aria-hidden="true"></i>
                 <strong>Configurar estado de resultados</strong>
