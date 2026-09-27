@@ -44,7 +44,7 @@ public class MetodoOperacionDAOImplDb implements IMetodoOperacionDAO {
     public List<MetodoOperacion> obtenerMetodosPorTipo(String cobroOPago) throws HQLException {
         try {
             Query<MetodoOperacion> query = hybernateSession.createQuery(
-                    "from MetodoOperacion m where m.cobroOPago = :tipo", MetodoOperacion.class);
+                    "from MetodoOperacion m where m.cobroOPago = :tipo and m.estaActivo = true", MetodoOperacion.class);
             query.setParameter("tipo", CobroOPago.valueOf(cobroOPago));
             return query.list();
         } catch (HibernateException e) {
@@ -78,17 +78,19 @@ public class MetodoOperacionDAOImplDb implements IMetodoOperacionDAO {
         }
     }
 
+    // Baja logica: el medio se desactiva (deja de ofrecerse en los formularios) pero el registro se conserva.
     @Override
-    public boolean eliminarMetodo(MetodoOperacion metodo) throws HQLException {
+    public boolean cambiarEstadoMetodo(int idMetodo, boolean estaActivo) throws HQLException {
         try {
-            MetodoOperacion existente = hybernateSession.get(MetodoOperacion.class, metodo.getIdMetodo());
+            MetodoOperacion existente = hybernateSession.get(MetodoOperacion.class, idMetodo);
             if (existente == null) {
                 return false;
             }
-            hybernateSession.delete(existente);
+            existente.setEstaActivo(estaActivo);
+            hybernateSession.update(existente);
             return true;
         } catch (HibernateException e) {
-            throw new HQLException("Error al eliminar el metodo: " + e.getMessage());
+            throw new HQLException("Error al cambiar el estado del metodo: " + e.getMessage());
         }
     }
 }

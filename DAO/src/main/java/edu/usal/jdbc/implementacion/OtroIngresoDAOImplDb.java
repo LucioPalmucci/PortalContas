@@ -103,6 +103,7 @@ public class OtroIngresoDAOImplDb implements IOtroIngresoDAO {
             if (existente == null) {
                 return false;
             }
+            existente.setFecha(otroIngreso.getFecha());
             existente.setDescripcion(otroIngreso.getDescripcion());
             existente.setEstado(otroIngreso.getEstado());
             existente.setCategoria(otroIngreso.getCategoria());

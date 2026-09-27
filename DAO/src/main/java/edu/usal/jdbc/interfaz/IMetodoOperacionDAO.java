@@ -20,5 +20,5 @@ public interface IMetodoOperacionDAO {
 
     boolean editarMetodo(MetodoOperacion metodo) throws HQLException;
 
-    boolean eliminarMetodo(MetodoOperacion metodo) throws HQLException;
+    boolean cambiarEstadoMetodo(int idMetodo, boolean estaActivo) throws HQLException;
 }

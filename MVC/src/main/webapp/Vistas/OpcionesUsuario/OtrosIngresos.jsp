@@ -112,8 +112,13 @@
                                 <input type="hidden" name="idOtroIngreso" value="${otroIngresoAEditar.idOtroIngreso}">
                                 <div class="row g-3">
                                     <div class="col-md-6">
+                                        <label for="efecha" class="form-label">Fecha</label>
+                                        <input type="date" class="form-control" id="efecha" name="fecha" value="<fmt:formatDate value="${otroIngresoAEditar.fecha}" pattern="yyyy-MM-dd"/>" required>
+                                    </div>
+                                    <div class="col-md-6">
                                         <label for="ecategoria" class="form-label">Categoria</label>
                                         <select class="form-select" id="ecategoria" name="idCategoria" required>
+                                            <c:if test="${not otroIngresoAEditar.categoria.estaActivo}"><option value="${otroIngresoAEditar.categoria.idCategoria}" selected>${otroIngresoAEditar.categoria.nombre} (inactivo)</option></c:if>
                                             <c:forEach var="categoria" items="${categorias}">
                                                 <option value="${categoria.idCategoria}" ${categoria.idCategoria == otroIngresoAEditar.categoria.idCategoria ? 'selected' : ''}>${categoria.nombre}</option>
                                             </c:forEach>
@@ -126,6 +131,7 @@
                                     <div class="col-md-6">
                                         <label for="emetodo" class="form-label">Medio de cobro</label>
                                         <select class="form-select" id="emetodo" name="idMetodo" required>
+                                            <c:if test="${not otroIngresoAEditar.metodo.estaActivo}"><option value="${otroIngresoAEditar.metodo.idMetodo}" selected>${otroIngresoAEditar.metodo.nombre} (inactivo)</option></c:if>
                                             <c:forEach var="metodo" items="${metodosCobro}">
                                                 <option value="${metodo.idMetodo}" ${metodo.idMetodo == otroIngresoAEditar.metodo.idMetodo ? 'selected' : ''}>${metodo.nombre}</option>
                                             </c:forEach>
@@ -223,7 +229,6 @@
                             <option value="">Todos</option>
                             <option value="COBRADO">Cobrado</option>
                             <option value="PENDIENTE_DE_COBRO">Pendiente</option>
-                            <option value="ANULADO">Anulado</option>
                         </select>
                     </div>
                 </div>

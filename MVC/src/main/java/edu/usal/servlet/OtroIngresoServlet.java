@@ -39,6 +39,15 @@ public class OtroIngresoServlet extends HttpServlet {
         return "ADMINISTRADOR".equals(req.getSession().getAttribute("rolUsuario"));
     }
 
+    private boolean esPropietario(HttpServletRequest req, int idUsuarioSesion) {
+        try {
+            OtroIngreso otroIngreso = otroIngresoServicio.obtenerOtroIngresoPorId(Integer.parseInt(req.getParameter("idOtroIngreso")));
+            return otroIngreso != null && otroIngreso.getUsuario().getIdUsuario() == idUsuarioSesion;
+        } catch (ServiceException | NumberFormatException e) {
+            return false;
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Object idUsuarioAttr = req.getSession().getAttribute("idUsuario");
@@ -94,6 +103,12 @@ public class OtroIngresoServlet extends HttpServlet {
         int idUsuario = (Integer) idUsuarioAttr;
         String action = req.getParameter("action");
 
+        if (!esAdmin(req) && !"agregar".equals(action) && !esPropietario(req, idUsuario)) {
+            req.setAttribute("error", "No tiene permiso para modificar ese registro.");
+            doGet(req, resp);
+            return;
+        }
+
         try {
             if ("agregar".equals(action)) {
                 agregarOtroIngreso(req, idUsuario, esAdmin(req));
@@ -128,6 +143,12 @@ public class OtroIngresoServlet extends HttpServlet {
             return;
         }
 
+        String errorValidacion = ValidacionMovimiento.validarMonto(valor, "valor");
+        if (errorValidacion != null) {
+            req.setAttribute("error", errorValidacion);
+            return;
+        }
+
         int idUsuario = (esAdmin && idUsuarioDestino != null && !idUsuarioDestino.isEmpty())
                 ? Integer.parseInt(idUsuarioDestino) : idUsuarioSesion;
 
@@ -139,8 +160,9 @@ public class OtroIngresoServlet extends HttpServlet {
         req.setAttribute(exito ? "exito" : "error", exito ? "Otro ingreso registrado correctamente." : "No se pudo registrar el otro ingreso.");
     }
 
-    private void editarOtroIngreso(HttpServletRequest req) {
+    private void editarOtroIngreso(HttpServletRequest req) throws ParseException {
         String idOtroIngreso = req.getParameter("idOtroIngreso");
+        String fecha = req.getParameter("fecha");
         String idCategoria = req.getParameter("idCategoria");
         String valor = req.getParameter("valor");
         String idMetodo = req.getParameter("idMetodo");
@@ -152,7 +174,19 @@ public class OtroIngresoServlet extends HttpServlet {
             return;
         }
 
-        boolean exito = otroIngresoServicio.editarOtroIngreso(Integer.parseInt(idOtroIngreso), descripcion, Integer.parseInt(idCategoria),
+        if (fecha == null || fecha.isEmpty() || idCategoria == null || idCategoria.isEmpty()
+                || valor == null || valor.isEmpty() || idMetodo == null || idMetodo.isEmpty()
+                || estado == null || estado.isEmpty()) {
+            req.setAttribute("error", "Complete todos los campos obligatorios.");
+            return;
+        }
+        String errorValidacion = ValidacionMovimiento.validarMonto(valor, "valor");
+        if (errorValidacion != null) {
+            req.setAttribute("error", errorValidacion);
+            return;
+        }
+
+        boolean exito = otroIngresoServicio.editarOtroIngreso(Integer.parseInt(idOtroIngreso), formatoFecha.parse(fecha), descripcion, Integer.parseInt(idCategoria),
                 Double.parseDouble(valor), Integer.parseInt(idMetodo), estado);
 
         req.setAttribute(exito ? "exito" : "error", exito ? "Otro ingreso actualizado correctamente." : "No se pudo actualizar el otro ingreso.");

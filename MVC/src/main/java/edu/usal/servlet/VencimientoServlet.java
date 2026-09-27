@@ -37,8 +37,11 @@ import java.util.List;
 import java.util.Map;
 
 @WebServlet("/Vencimiento")
-@MultipartConfig
+// Tope de la importacion de Excel: POI carga el archivo completo en memoria.
+@MultipartConfig(maxFileSize = 5L * 1024 * 1024, maxRequestSize = 5L * 1024 * 1024 + 512 * 1024)
 public class VencimientoServlet extends HttpServlet {
+
+    private static final long MAX_IMPORTACION_BYTES = 5L * 1024 * 1024;
 
     private final VencimientoServicio vencimientoServicio;
     private final SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -88,7 +91,10 @@ public class VencimientoServlet extends HttpServlet {
 
             String editarId = req.getParameter("editarId");
             if (editarId != null && !editarId.isEmpty()) {
-                req.setAttribute("vencimientoAEditar", vencimientoServicio.obtenerVencimientoPorId(Integer.parseInt(editarId)));
+                Vencimiento aEditar = vencimientoServicio.obtenerVencimientoPorId(Integer.parseInt(editarId));
+                if (aEditar != null && aEditar.getEstado() != EstadoVencimiento.ELIMINADO) {
+                    req.setAttribute("vencimientoAEditar", aEditar);
+                }
             }
         } catch (ServiceException e) {
             req.setAttribute("error", "No se pudieron cargar los vencimientos: " + e.getMessage());
@@ -102,7 +108,19 @@ public class VencimientoServlet extends HttpServlet {
             resp.sendRedirect(req.getContextPath() + "/Vistas/Principal.jsp");
             return;
         }
+        String contentType = req.getContentType();
+        if (contentType != null && contentType.toLowerCase().startsWith("multipart/")
+                && req.getContentLengthLong() > MAX_IMPORTACION_BYTES + 512 * 1024) {
+            req.setAttribute("error", "El archivo supera el maximo permitido de 5 MB.");
+            doGet(req, resp);
+            return;
+        }
         String action = req.getParameter("action");
+        if (action == null) {
+            req.setAttribute("error", "No se pudo procesar la solicitud. Si estaba importando un Excel, verifique que no supere los 5 MB.");
+            doGet(req, resp);
+            return;
+        }
         try {
             switch (action) {
                 case "agregar":
@@ -116,7 +134,7 @@ public class VencimientoServlet extends HttpServlet {
                     req.setAttribute("exito", "Vencimiento marcado como realizado.");
                     break;
                 case "eliminar":
-                    vencimientoServicio.eliminarVencimientoFisico(Integer.parseInt(req.getParameter("idVencimiento")));
+                    vencimientoServicio.eliminarVencimiento(Integer.parseInt(req.getParameter("idVencimiento")));
                     req.setAttribute("exito", "Vencimiento eliminado.");
                     break;
                 case "importarExcel":
@@ -211,7 +229,17 @@ public class VencimientoServlet extends HttpServlet {
     }
 
     private void importarExcel(HttpServletRequest req) throws IOException, ServletException, java.text.ParseException {
-        Part archivo = req.getPart("archivoExcel");
+        Part archivo;
+        try {
+            archivo = req.getPart("archivoExcel");
+        } catch (IllegalStateException e) {
+            req.setAttribute("error", "El archivo supera el maximo permitido de 5 MB.");
+            return;
+        }
+        if (archivo != null && archivo.getSize() > MAX_IMPORTACION_BYTES) {
+            req.setAttribute("error", "El archivo supera el maximo permitido de 5 MB.");
+            return;
+        }
         if (archivo == null || archivo.getSize() == 0) {
             req.setAttribute("error", "Seleccione un archivo Excel (.xlsx) para importar.");
             return;

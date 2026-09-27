@@ -181,6 +181,81 @@
         </c:if>
 
         <c:if test="${mostrarResultados}">
+        <c:set var="ventas" value="${estado.ventasTotal}"/>
+        <div class="card mb-5">
+            <div class="card-body">
+                <h2 class="h5 border-start border-4 borde-serie-6 ps-2 d-flex align-items-center gap-2"><i class="bi bi-table texto-serie-6" aria-hidden="true"></i>Detalle del estado de resultados</h2>
+                <p class="text-secondary small">Totales y subtotales del periodo, con el desglose por categoria y el porcentaje sobre las ventas totales.</p>
+                <div class="table-responsive">
+                    <table class="table table-sm align-middle mb-0 tabla-compacta-movil">
+                        <thead class="table-light">
+                        <tr><th>Concepto</th><th class="text-end">Monto</th><th class="text-end">% s/ ventas</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr class="fw-semibold">
+                            <td>Ventas totales</td>
+                            <td class="text-end"><fmt:formatNumber value="${estado.ventasTotal}" type="currency" currencySymbol="$"/></td>
+                            <td class="text-end">${ventas > 0 ? '100%' : '-'}</td>
+                        </tr>
+                        <tr>
+                            <td>(-) Costo de mercaderia vendida</td>
+                            <td class="text-end"><fmt:formatNumber value="${estado.cmv}" type="currency" currencySymbol="$"/></td>
+                            <td class="text-end"><fmt:formatNumber value="${ventas > 0 ? estado.cmv / ventas * 100 : 0}" maxFractionDigits="1"/>%</td>
+                        </tr>
+                        <tr class="fw-semibold table-light">
+                            <td>Utilidad bruta</td>
+                            <td class="text-end"><fmt:formatNumber value="${estado.utilidadBruta}" type="currency" currencySymbol="$"/></td>
+                            <td class="text-end"><fmt:formatNumber value="${ventas > 0 ? estado.utilidadBruta / ventas * 100 : 0}" maxFractionDigits="1"/>%</td>
+                        </tr>
+                        <tr class="fw-semibold">
+                            <td>(-) Gastos operativos</td>
+                            <td class="text-end"><fmt:formatNumber value="${estado.gastosTotal}" type="currency" currencySymbol="$"/></td>
+                            <td class="text-end"><fmt:formatNumber value="${ventas > 0 ? estado.gastosTotal / ventas * 100 : 0}" maxFractionDigits="1"/>%</td>
+                        </tr>
+                        <c:forEach var="c" items="${desgloseGastos}">
+                            <tr class="text-secondary">
+                                <td class="ps-4">${c.nombreCategoria}</td>
+                                <td class="text-end"><fmt:formatNumber value="${c.total}" type="currency" currencySymbol="$"/></td>
+                                <td class="text-end"><fmt:formatNumber value="${ventas > 0 ? c.total / ventas * 100 : 0}" maxFractionDigits="1"/>%</td>
+                            </tr>
+                        </c:forEach>
+                        <tr class="fw-semibold">
+                            <td>(+) Otros ingresos</td>
+                            <td class="text-end"><fmt:formatNumber value="${estado.oIngresosTotal}" type="currency" currencySymbol="$"/></td>
+                            <td class="text-end"><fmt:formatNumber value="${ventas > 0 ? estado.oIngresosTotal / ventas * 100 : 0}" maxFractionDigits="1"/>%</td>
+                        </tr>
+                        <c:forEach var="c" items="${desgloseOtrosIngresos}">
+                            <tr class="text-secondary">
+                                <td class="ps-4">${c.nombreCategoria}</td>
+                                <td class="text-end"><fmt:formatNumber value="${c.total}" type="currency" currencySymbol="$"/></td>
+                                <td class="text-end"><fmt:formatNumber value="${ventas > 0 ? c.total / ventas * 100 : 0}" maxFractionDigits="1"/>%</td>
+                            </tr>
+                        </c:forEach>
+                        <tr class="fw-semibold">
+                            <td>(-) Otros egresos</td>
+                            <td class="text-end"><fmt:formatNumber value="${estado.oEgresosTotal}" type="currency" currencySymbol="$"/></td>
+                            <td class="text-end"><fmt:formatNumber value="${ventas > 0 ? estado.oEgresosTotal / ventas * 100 : 0}" maxFractionDigits="1"/>%</td>
+                        </tr>
+                        <c:forEach var="c" items="${desgloseOtrosEgresos}">
+                            <tr class="text-secondary">
+                                <td class="ps-4">${c.nombreCategoria}</td>
+                                <td class="text-end"><fmt:formatNumber value="${c.total}" type="currency" currencySymbol="$"/></td>
+                                <td class="text-end"><fmt:formatNumber value="${ventas > 0 ? c.total / ventas * 100 : 0}" maxFractionDigits="1"/>%</td>
+                            </tr>
+                        </c:forEach>
+                        <tr class="fw-bold table-light ${estado.ganancia >= 0 ? 'text-success' : 'text-danger'}">
+                            <td>Ganancia neta del periodo</td>
+                            <td class="text-end"><fmt:formatNumber value="${estado.ganancia}" type="currency" currencySymbol="$"/></td>
+                            <td class="text-end"><fmt:formatNumber value="${ventas > 0 ? estado.ganancia / ventas * 100 : 0}" maxFractionDigits="1"/>%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </c:if>
+
+        <c:if test="${mostrarResultados}">
         <div class="row g-4 mb-5 d-print-none">
             <div class="col-lg-6">
                 <div class="card h-100">
@@ -278,7 +353,7 @@
                                 <div class="col">
                                     <div class="form-check form-switch">
                                         <input type="checkbox" class="form-check-input" role="switch" id="cat${categoria.idCategoria}" name="categoriasExcluidas" value="${categoria.idCategoria}" ${idsExcluidasActuales.contains(categoria.idCategoria) ? 'checked' : ''}>
-                                        <label class="form-check-label" for="cat${categoria.idCategoria}">Excluir ${categoria.nombre}</label>
+                                        <label class="form-check-label" for="cat${categoria.idCategoria}">Excluir ${categoria.nombre}<c:if test="${not categoria.estaActivo}"> (inactiva)</c:if></label>
                                     </div>
                                 </div>
                             </c:forEach>

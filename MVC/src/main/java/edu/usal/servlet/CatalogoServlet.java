@@ -54,24 +54,31 @@ public class CatalogoServlet extends HttpServlet {
                     metodoOperacionServicio.guardarMetodo(req.getParameter("nombreMetodo"), req.getParameter("cobroOPago"));
                     req.setAttribute("exito", "Medio de pago/cobro agregado.");
                     break;
-                case "eliminarMetodo":
-                    metodoOperacionServicio.eliminarMetodo(Integer.parseInt(req.getParameter("idMetodo")));
-                    req.setAttribute("exito", "Medio eliminado.");
+                case "desactivarMetodo":
+                    metodoOperacionServicio.cambiarEstadoMetodo(Integer.parseInt(req.getParameter("idMetodo")), false);
+                    req.setAttribute("exito", "Medio desactivado.");
+                    break;
+                case "activarMetodo":
+                    metodoOperacionServicio.cambiarEstadoMetodo(Integer.parseInt(req.getParameter("idMetodo")), true);
+                    req.setAttribute("exito", "Medio activado.");
                     break;
                 case "agregarCategoria":
                     categoriaConceptoServicio.guardarCategoria(req.getParameter("nombreCategoria"), req.getParameter("aplicaA"));
                     req.setAttribute("exito", "Categoria agregada.");
                     break;
-                case "eliminarCategoria":
-                    categoriaConceptoServicio.eliminarCategoria(Integer.parseInt(req.getParameter("idCategoria")));
-                    req.setAttribute("exito", "Categoria eliminada.");
+                case "desactivarCategoria":
+                    categoriaConceptoServicio.cambiarEstadoCategoria(Integer.parseInt(req.getParameter("idCategoria")), false);
+                    req.setAttribute("exito", "Categoria desactivada.");
+                    break;
+                case "activarCategoria":
+                    categoriaConceptoServicio.cambiarEstadoCategoria(Integer.parseInt(req.getParameter("idCategoria")), true);
+                    req.setAttribute("exito", "Categoria activada.");
                     break;
                 default:
                     break;
             }
         } catch (ServiceException | IllegalArgumentException e) {
-            req.setAttribute("error", "No se pudo completar la operacion: " + e.getMessage()
-                    + " Verifique que no este en uso por ninguna operacion registrada.");
+            req.setAttribute("error", "No se pudo completar la operacion: " + e.getMessage());
         }
         doGet(req, resp);
     }

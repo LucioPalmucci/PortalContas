@@ -37,6 +37,15 @@ public class CompraServlet extends HttpServlet {
         return "ADMINISTRADOR".equals(req.getSession().getAttribute("rolUsuario"));
     }
 
+    private boolean esPropietario(HttpServletRequest req, int idUsuarioSesion) {
+        try {
+            Compra compra = compraServicio.obtenerCompraPorId(Integer.parseInt(req.getParameter("idCompra")));
+            return compra != null && compra.getUsuario().getIdUsuario() == idUsuarioSesion;
+        } catch (ServiceException | NumberFormatException e) {
+            return false;
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Object idUsuarioAttr = req.getSession().getAttribute("idUsuario");
@@ -91,6 +100,12 @@ public class CompraServlet extends HttpServlet {
         int idUsuario = (Integer) idUsuarioAttr;
         String action = req.getParameter("action");
 
+        if (!esAdmin(req) && !"agregar".equals(action) && !esPropietario(req, idUsuario)) {
+            req.setAttribute("error", "No tiene permiso para modificar ese registro.");
+            doGet(req, resp);
+            return;
+        }
+
         try {
             if ("agregar".equals(action)) {
                 agregarCompra(req, idUsuario, esAdmin(req));
@@ -127,6 +142,13 @@ public class CompraServlet extends HttpServlet {
             return;
         }
 
+        String errorValidacion = ValidacionMovimiento.validarMonto(precioUnitario, "precio unitario");
+        if (errorValidacion == null) errorValidacion = ValidacionMovimiento.validarCantidad(cantidad);
+        if (errorValidacion != null) {
+            req.setAttribute("error", errorValidacion);
+            return;
+        }
+
         int idUsuario = (esAdmin && idUsuarioDestino != null && !idUsuarioDestino.isEmpty())
                 ? Integer.parseInt(idUsuarioDestino) : idUsuarioSesion;
 
@@ -150,6 +172,19 @@ public class CompraServlet extends HttpServlet {
 
         if (idCompra == null || idCompra.isEmpty()) {
             req.setAttribute("error", "Falta el identificador de la compra.");
+            return;
+        }
+
+        if (fecha == null || fecha.isEmpty() || concepto == null || concepto.isEmpty()
+                || precioUnitario == null || precioUnitario.isEmpty() || cantidad == null || cantidad.isEmpty()
+                || idMetodo == null || idMetodo.isEmpty() || estado == null || estado.isEmpty()) {
+            req.setAttribute("error", "Complete todos los campos obligatorios.");
+            return;
+        }
+        String errorValidacion = ValidacionMovimiento.validarMonto(precioUnitario, "precio unitario");
+        if (errorValidacion == null) errorValidacion = ValidacionMovimiento.validarCantidad(cantidad);
+        if (errorValidacion != null) {
+            req.setAttribute("error", errorValidacion);
             return;
         }
 

@@ -39,6 +39,15 @@ public class GastoServlet extends HttpServlet {
         return "ADMINISTRADOR".equals(req.getSession().getAttribute("rolUsuario"));
     }
 
+    private boolean esPropietario(HttpServletRequest req, int idUsuarioSesion) {
+        try {
+            Gasto gasto = gastoServicio.obtenerGastoPorId(Integer.parseInt(req.getParameter("idGasto")));
+            return gasto != null && gasto.getUsuario().getIdUsuario() == idUsuarioSesion;
+        } catch (ServiceException | NumberFormatException e) {
+            return false;
+        }
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Object idUsuarioAttr = req.getSession().getAttribute("idUsuario");
@@ -94,6 +103,12 @@ public class GastoServlet extends HttpServlet {
         int idUsuario = (Integer) idUsuarioAttr;
         String action = req.getParameter("action");
 
+        if (!esAdmin(req) && !"agregar".equals(action) && !esPropietario(req, idUsuario)) {
+            req.setAttribute("error", "No tiene permiso para modificar ese registro.");
+            doGet(req, resp);
+            return;
+        }
+
         try {
             if ("agregar".equals(action)) {
                 agregarGasto(req, idUsuario, esAdmin(req));
@@ -128,7 +143,13 @@ public class GastoServlet extends HttpServlet {
             return;
         }
 
-        int idUsuario = (esAdmin && idUsuarioDestino != null && !idUsuarioDestino.isEmpty())
+        String errorValidacion = ValidacionMovimiento.validarMonto(valor, "valor");
+        if (errorValidacion != null) {
+            req.setAttribute("error", errorValidacion);
+            return;
+        }
+
+        int idUsuario = esAdmin && !idUsuarioDestino.isEmpty()
                 ? Integer.parseInt(idUsuarioDestino) : idUsuarioSesion;
 
         Date fechaGasto = formatoFecha.parse(fecha);
@@ -139,8 +160,9 @@ public class GastoServlet extends HttpServlet {
         req.setAttribute(exito ? "exito" : "error", exito ? "Gasto registrado correctamente." : "No se pudo registrar el gasto.");
     }
 
-    private void editarGasto(HttpServletRequest req) {
+    private void editarGasto(HttpServletRequest req) throws ParseException {
         String idGasto = req.getParameter("idGasto");
+        String fecha = req.getParameter("fecha");
         String idCategoria = req.getParameter("idCategoria");
         String valor = req.getParameter("valor");
         String idMetodo = req.getParameter("idMetodo");
@@ -152,7 +174,19 @@ public class GastoServlet extends HttpServlet {
             return;
         }
 
-        boolean exito = gastoServicio.editarGasto(Integer.parseInt(idGasto), descripcion, Integer.parseInt(idCategoria),
+        if (fecha == null || fecha.isEmpty() || idCategoria == null || idCategoria.isEmpty()
+                || valor == null || valor.isEmpty() || idMetodo == null || idMetodo.isEmpty()
+                || estado == null || estado.isEmpty()) {
+            req.setAttribute("error", "Complete todos los campos obligatorios.");
+            return;
+        }
+        String errorValidacion = ValidacionMovimiento.validarMonto(valor, "valor");
+        if (errorValidacion != null) {
+            req.setAttribute("error", errorValidacion);
+            return;
+        }
+
+        boolean exito = gastoServicio.editarGasto(Integer.parseInt(idGasto), formatoFecha.parse(fecha), descripcion, Integer.parseInt(idCategoria),
                 Double.parseDouble(valor), Integer.parseInt(idMetodo), estado);
 
         req.setAttribute(exito ? "exito" : "error", exito ? "Gasto actualizado correctamente." : "No se pudo actualizar el gasto.");

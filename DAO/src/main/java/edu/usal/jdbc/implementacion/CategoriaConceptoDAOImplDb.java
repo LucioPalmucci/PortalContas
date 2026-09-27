@@ -44,7 +44,7 @@ public class CategoriaConceptoDAOImplDb implements ICategoriaConceptoDAO {
     public List<CategoriaConcepto> obtenerCategoriasPorAplicaA(String aplicaA) throws HQLException {
         try {
             Query<CategoriaConcepto> query = hybernateSession.createQuery(
-                    "from CategoriaConcepto c where c.aplicaA = :aplicaA", CategoriaConcepto.class);
+                    "from CategoriaConcepto c where c.aplicaA = :aplicaA and c.estaActivo = true", CategoriaConcepto.class);
             query.setParameter("aplicaA", AplicaA.valueOf(aplicaA));
             return query.list();
         } catch (HibernateException e) {
@@ -78,17 +78,19 @@ public class CategoriaConceptoDAOImplDb implements ICategoriaConceptoDAO {
         }
     }
 
+    // Baja logica: la categoria se desactiva (deja de ofrecerse en los formularios) pero el registro se conserva.
     @Override
-    public boolean eliminarCategoria(CategoriaConcepto categoria) throws HQLException {
+    public boolean cambiarEstadoCategoria(int idCategoria, boolean estaActivo) throws HQLException {
         try {
-            CategoriaConcepto existente = hybernateSession.get(CategoriaConcepto.class, categoria.getIdCategoria());
+            CategoriaConcepto existente = hybernateSession.get(CategoriaConcepto.class, idCategoria);
             if (existente == null) {
                 return false;
             }
-            hybernateSession.delete(existente);
+            existente.setEstaActivo(estaActivo);
+            hybernateSession.update(existente);
             return true;
         } catch (HibernateException e) {
-            throw new HQLException("Error al eliminar la categoria: " + e.getMessage());
+            throw new HQLException("Error al cambiar el estado de la categoria: " + e.getMessage());
         }
     }
 }

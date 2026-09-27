@@ -199,6 +199,29 @@ public class ReporteServicio {
         return resultado;
     }
 
+    // ---------- Composicion de otros egresos (por categoria, mismo criterio que composicion de gastos) ----------
+    public List<ComposicionCategoriaDTO> obtenerComposicionOtrosEgresos(int idUsuario, Date desde, Date hasta) throws ServiceException {
+        Set<Integer> idsExcluidas = obtenerIdsCategoriasExcluidas(idUsuario);
+        List<OtroEgreso> otrosEgresos = otroEgresoServicio.obtenerOtrosEgresosPorUsuarioYPeriodo(idUsuario, desde, hasta).stream()
+                .filter(o -> !idsExcluidas.contains(o.getCategoria().getIdCategoria()))
+                .collect(Collectors.toList());
+        double total = otrosEgresos.stream().mapToDouble(OtroEgreso::getValor).sum();
+
+        Map<String, Double> porCategoria = new HashMap<>();
+        for (OtroEgreso o : otrosEgresos) {
+            String nombre = o.getCategoria().getNombre();
+            porCategoria.merge(nombre, o.getValor(), Double::sum);
+        }
+
+        List<ComposicionCategoriaDTO> resultado = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : porCategoria.entrySet()) {
+            double porcentaje = total > 0 ? (entry.getValue() / total) * 100.0 : 0.0;
+            resultado.add(new ComposicionCategoriaDTO(entry.getKey(), entry.getValue(), porcentaje));
+        }
+        resultado.sort(Comparator.comparingDouble(ComposicionCategoriaDTO::getTotal).reversed());
+        return resultado;
+    }
+
     // ---------- UC-13 Tendencias mensuales ----------
     public List<PuntoTendenciaDTO> obtenerTendenciaMensual(int idUsuario, int cantidadMeses) throws ServiceException {
         List<PuntoTendenciaDTO> puntos = new ArrayList<>();

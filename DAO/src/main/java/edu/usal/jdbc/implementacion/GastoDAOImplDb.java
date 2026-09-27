@@ -103,6 +103,7 @@ public class GastoDAOImplDb implements IGastoDAO {
             if (existente == null) {
                 return false;
             }
+            existente.setFecha(gasto.getFecha());
             existente.setDescripcion(gasto.getDescripcion());
             existente.setEstado(gasto.getEstado());
             existente.setCategoria(gasto.getCategoria());

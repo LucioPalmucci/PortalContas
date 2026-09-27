@@ -13,8 +13,8 @@
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">10</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-        <!-- Echo all executed SQL to stdout -->
-        <property name="show_sql">true</property>
+        <!-- No imprimir el SQL ejecutado en los logs -->
+        <property name="show_sql">false</property>
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
 

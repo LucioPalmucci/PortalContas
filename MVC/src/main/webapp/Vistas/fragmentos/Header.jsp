@@ -67,6 +67,7 @@
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Tesoreria"><i class="bi bi-wallet2 texto-serie-7" aria-hidden="true"></i>Tesoreria</a>
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/EstadoResultados"><i class="bi bi-bar-chart texto-serie-6" aria-hidden="true"></i>Estado de resultados</a>
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/EstadoFinanciero"><i class="bi bi-graph-up texto-serie-8" aria-hidden="true"></i>Estado financiero</a>
+                        <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Soporte"><i class="bi bi-question-circle text-secondary" aria-hidden="true"></i>Soporte</a>
                     </c:when>
                     <c:otherwise>
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Vistas/OpcionesUsuario/Panel.jsp"><i class="bi bi-house-door text-secondary" aria-hidden="true"></i>Inicio</a>

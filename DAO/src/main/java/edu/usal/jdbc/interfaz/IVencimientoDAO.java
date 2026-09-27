@@ -25,5 +25,5 @@ public interface IVencimientoDAO {
 
     boolean marcarRealizado(int idVencimiento) throws HQLException;
 
-    boolean eliminarVencimientoFisico(int idVencimiento) throws HQLException;
+    boolean eliminarVencimiento(int idVencimiento) throws HQLException;
 }

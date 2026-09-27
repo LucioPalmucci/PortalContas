@@ -137,14 +137,14 @@ public class VencimientoServicio {
         return exito;
     }
 
-    //Unico caso de baja fisica de todo el sistema: el vencimiento no tiene relevancia historica una vez borrado
-    public boolean eliminarVencimientoFisico(int idVencimiento) throws ServiceException {
+    //Baja logica: el vencimiento queda con estado ELIMINADO y deja de mostrarse, pero se conserva en la base de datos
+    public boolean eliminarVencimiento(int idVencimiento) throws ServiceException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         boolean exito;
         try {
             ((VencimientoDAOImplDb) vencimientoDAO).setHibernateSession(session);
             session.beginTransaction();
-            exito = vencimientoDAO.eliminarVencimientoFisico(idVencimiento);
+            exito = vencimientoDAO.eliminarVencimiento(idVencimiento);
             if (exito) session.getTransaction().commit();
             else session.getTransaction().rollback();
         } catch (HQLException e) {

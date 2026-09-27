@@ -103,6 +103,7 @@ public class OtroEgresoDAOImplDb implements IOtroEgresoDAO {
             if (existente == null) {
                 return false;
             }
+            existente.setFecha(otroEgreso.getFecha());
             existente.setDescripcion(otroEgreso.getDescripcion());
             existente.setEstado(otroEgreso.getEstado());
             existente.setCategoria(otroEgreso.getCategoria());

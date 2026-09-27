@@ -35,7 +35,8 @@ public class VencimientoDAOImplDb implements IVencimientoDAO {
     public List<Vencimiento> obtenerTodosLosVencimientos() throws HQLException {
         try {
             Query<Vencimiento> query = hybernateSession.createQuery(
-                    "from Vencimiento v order by v.fecha asc", Vencimiento.class);
+                    "from Vencimiento v where v.estado <> :eliminado order by v.fecha asc", Vencimiento.class);
+            query.setParameter("eliminado", EstadoVencimiento.ELIMINADO);
             return query.list();
         } catch (HibernateException e) {
             throw new HQLException("Error al obtener todos los vencimientos: " + e.getMessage());
@@ -58,9 +59,10 @@ public class VencimientoDAOImplDb implements IVencimientoDAO {
     public List<Vencimiento> obtenerVencimientosPorRangoFechas(Date desde, Date hasta) throws HQLException {
         try {
             Query<Vencimiento> query = hybernateSession.createQuery(
-                    "from Vencimiento v where v.fecha between :desde and :hasta order by v.fecha asc", Vencimiento.class);
+                    "from Vencimiento v where v.fecha between :desde and :hasta and v.estado <> :eliminado order by v.fecha asc", Vencimiento.class);
             query.setParameter("desde", desde);
             query.setParameter("hasta", hasta);
+            query.setParameter("eliminado", EstadoVencimiento.ELIMINADO);
             return query.list();
         } catch (HibernateException e) {
             throw new HQLException("Error al obtener los vencimientos por rango de fechas: " + e.getMessage());
@@ -112,13 +114,14 @@ public class VencimientoDAOImplDb implements IVencimientoDAO {
     }
 
     @Override
-    public boolean eliminarVencimientoFisico(int idVencimiento) throws HQLException {
+    public boolean eliminarVencimiento(int idVencimiento) throws HQLException {
         try {
             Vencimiento existente = hybernateSession.get(Vencimiento.class, idVencimiento);
             if (existente == null) {
                 return false;
             }
-            hybernateSession.delete(existente);
+            existente.setEstado(EstadoVencimiento.ELIMINADO);
+            hybernateSession.update(existente);
             return true;
         } catch (HibernateException e) {
             throw new HQLException("Error al eliminar el vencimiento: " + e.getMessage());

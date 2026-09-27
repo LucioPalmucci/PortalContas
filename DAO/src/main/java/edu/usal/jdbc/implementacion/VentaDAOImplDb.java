@@ -103,6 +103,7 @@ public class VentaDAOImplDb implements IVentaDAO {
             if (existente == null) {
                 return false;
             }
+            existente.setFecha(venta.getFecha());
             existente.setDescripcion(venta.getDescripcion());
             existente.setEstado(venta.getEstado());
             existente.setConceptoVenta(venta.getConceptoVenta());

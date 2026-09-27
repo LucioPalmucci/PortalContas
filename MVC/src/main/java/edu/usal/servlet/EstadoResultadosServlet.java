@@ -6,7 +6,9 @@ import edu.usal.jdbc.dominio.ConfiguracionEstadoResultados;
 import edu.usal.jdbc.dominio.Gasto;
 import edu.usal.jdbc.dominio.OtroEgreso;
 import edu.usal.jdbc.dominio.OtroIngreso;
+import edu.usal.jdbc.dominio.Usuario;
 import edu.usal.jdbc.dominio.Venta;
+import edu.usal.jdbc.dto.ComposicionCategoriaDTO;
 import edu.usal.jdbc.dto.EstadoResultadosDTO;
 import edu.usal.jdbc.excepciones.ServiceException;
 import edu.usal.jdbc.servicio.CategoriaConceptoServicio;
@@ -18,12 +20,6 @@ import edu.usal.jdbc.servicio.OtroIngresoServicio;
 import edu.usal.jdbc.servicio.ReporteServicio;
 import edu.usal.jdbc.servicio.UsuarioServicio;
 import edu.usal.jdbc.servicio.VentaServicio;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -161,6 +157,13 @@ public class EstadoResultadosServlet extends HttpServlet {
 
             req.setAttribute("composicionFinanciera", construirComposicionFinanciera(estado));
 
+            List<ComposicionCategoriaDTO> desgloseGastos = reporteServicio.obtenerComposicionGastos(idUsuario, desde, hasta);
+            List<ComposicionCategoriaDTO> desgloseOtrosIngresos = reporteServicio.obtenerComposicionOtrosIngresos(idUsuario, desde, hasta);
+            List<ComposicionCategoriaDTO> desgloseOtrosEgresos = reporteServicio.obtenerComposicionOtrosEgresos(idUsuario, desde, hasta);
+            req.setAttribute("desgloseGastos", desgloseGastos);
+            req.setAttribute("desgloseOtrosIngresos", desgloseOtrosIngresos);
+            req.setAttribute("desgloseOtrosEgresos", desgloseOtrosEgresos);
+
             req.setAttribute("resumenNarrativo", construirResumenNarrativo(estado));
         } catch (ServiceException e) {
             req.setAttribute("error", "No se pudo generar el estado de resultados: " + e.getMessage());
@@ -208,41 +211,24 @@ public class EstadoResultadosServlet extends HttpServlet {
             ConfiguracionEstadoResultados config = configuracionServicio.obtenerOCrearConfiguracion(idUsuario);
             Date desde = obtenerFecha(req.getParameter("desde"), config.getPeriodoInicioDefault());
             Date hasta = obtenerFecha(req.getParameter("hasta"), config.getPeriodoFinDefault());
-            EstadoResultadosDTO estado = reporteServicio.generarEstadoResultados(idUsuario, desde, hasta);
 
-            try (PDDocument documento = new PDDocument()) {
-                PDPage pagina = new PDPage(PDRectangle.A4);
-                documento.addPage(pagina);
+            EstadoResultadosPdf.Datos datos = new EstadoResultadosPdf.Datos();
+            datos.estado = reporteServicio.generarEstadoResultados(idUsuario, desde, hasta);
+            Usuario cliente = usuarioServicio.obtenerUsuarioPorId(idUsuario);
+            datos.cliente = cliente != null ? cliente.getNombreCompleto() : null;
+            datos.desgloseGastos = reporteServicio.obtenerComposicionGastos(idUsuario, desde, hasta);
+            datos.desgloseOtrosIngresos = reporteServicio.obtenerComposicionOtrosIngresos(idUsuario, desde, hasta);
+            datos.desgloseOtrosEgresos = reporteServicio.obtenerComposicionOtrosEgresos(idUsuario, desde, hasta);
+            if (config.getCategoriasExcluidas() != null) {
+                for (CategoriaConcepto c : config.getCategoriasExcluidas()) datos.categoriasExcluidas.add(c.getNombre());
+            }
+            datos.resumen = construirResumenNarrativo(datos.estado);
 
-                try (PDPageContentStream cs = new PDPageContentStream(documento, pagina)) {
-                    float y = 780;
-                    y = escribirLinea(cs, PDType1Font.HELVETICA_BOLD, 18, 50, y, "Estado de resultados");
-                    y -= 8;
-                    y = escribirLinea(cs, PDType1Font.HELVETICA, 11, 50, y,
-                            "Periodo: " + formatoFechaMostrar.format(estado.getPeriodoInicio()) + " al " + formatoFechaMostrar.format(estado.getPeriodoFin()));
-                    y -= 14;
-                    y = escribirLinea(cs, PDType1Font.HELVETICA, 12, 50, y, "Ventas totales: " + formatoMoneda(estado.getVentasTotal()));
-                    y = escribirLinea(cs, PDType1Font.HELVETICA, 12, 50, y, "Costo de mercaderia vendida: " + formatoMoneda(estado.getCmv()));
-                    y = escribirLinea(cs, PDType1Font.HELVETICA, 12, 50, y, "Utilidad bruta: " + formatoMoneda(estado.getUtilidadBruta()));
-                    y = escribirLinea(cs, PDType1Font.HELVETICA, 12, 50, y, "Gastos operativos: " + formatoMoneda(estado.getGastosTotal()));
-                    y = escribirLinea(cs, PDType1Font.HELVETICA, 12, 50, y, "Otros ingresos: " + formatoMoneda(estado.getoIngresosTotal()));
-                    y = escribirLinea(cs, PDType1Font.HELVETICA, 12, 50, y, "Otros egresos: " + formatoMoneda(estado.getoEgresosTotal()));
-                    y -= 6;
-                    y = escribirLinea(cs, PDType1Font.HELVETICA_BOLD, 13, 50, y, "Ganancia del periodo: " + formatoMoneda(estado.getGanancia()));
-                    y = escribirLinea(cs, PDType1Font.HELVETICA, 12, 50, y, "Rentabilidad: " + formatoPorcentaje(estado.getRentabilidad()));
-                    y = escribirLinea(cs, PDType1Font.HELVETICA, 12, 50, y, "Margen de utilidad: " + formatoPorcentaje(estado.getMargenUtilidad()));
-                    y = escribirLinea(cs, PDType1Font.HELVETICA, 12, 50, y,
-                            "Variacion vs. periodo anterior: " + (estado.getVariacionAnterior() >= 0 ? "+" : "") + formatoPorcentaje(estado.getVariacionAnterior()));
-                    y -= 20;
-                    escribirLinea(cs, PDType1Font.HELVETICA_OBLIQUE, 9, 50, y,
-                            "Generado el " + formatoFechaMostrar.format(new Date()) + " - Contas Portal - Lofrano Sanchez Estudio Contable");
-                }
-
-                resp.setContentType("application/pdf");
-                resp.setHeader("Content-Disposition", "attachment; filename=\"estado-resultados.pdf\"");
-                try (OutputStream salida = resp.getOutputStream()) {
-                    documento.save(salida);
-                }
+            resp.setContentType("application/pdf");
+            resp.setHeader("Content-Disposition", "attachment; filename=\"estado-resultados-"
+                    + formatoFecha.format(desde) + "_" + formatoFecha.format(hasta) + ".pdf\"");
+            try (OutputStream salida = resp.getOutputStream()) {
+                EstadoResultadosPdf.generar(salida, datos);
             }
         } catch (ServiceException e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "No se pudo generar el PDF: " + e.getMessage());
@@ -267,31 +253,31 @@ public class EstadoResultadosServlet extends HttpServlet {
 
     private String construirResumenNarrativo(EstadoResultadosDTO estado) {
         String tendenciaGanancia = estado.getVariacionAnterior() > 0 ? "aumento"
-                : estado.getVariacionAnterior() < 0 ? "disminucion" : "se mantuvo estable";
-        String resultado = estado.getGanancia() >= 0 ? "una ganancia" : "una perdida";
+                : estado.getVariacionAnterior() < 0 ? "disminución" : "se mantuvo estable";
+        String resultado = estado.getGanancia() >= 0 ? "una ganancia" : "una pérdida";
 
         StringBuilder texto = new StringBuilder();
-        texto.append("En el periodo analizado, el negocio registro ").append(resultado)
-                .append(" de ").append(formatoMoneda(Math.abs(estado.getGanancia())))
-                .append(", equivalente a una rentabilidad del ").append(formatoPorcentaje(estado.getRentabilidad())).append(". ");
+        texto.append("En el período analizado, el negocio registró ").append(resultado)
+                .append(" de ").append(monedaAr(Math.abs(estado.getGanancia())))
+                .append(", equivalente a una rentabilidad del ").append(porcentajeAr(estado.getRentabilidad())).append(". ");
 
         if (estado.getVariacionAnterior() == 0) {
-            texto.append("La ganancia se mantuvo estable respecto al periodo anterior.");
+            texto.append("La ganancia se mantuvo estable respecto al período anterior.");
         } else {
             texto.append("La ganancia tuvo un ").append(tendenciaGanancia)
-                    .append(" del ").append(formatoPorcentaje(Math.abs(estado.getVariacionAnterior())))
-                    .append(" respecto al periodo inmediato anterior.");
+                    .append(" del ").append(porcentajeAr(Math.abs(estado.getVariacionAnterior())))
+                    .append(" respecto al período inmediato anterior.");
         }
         return texto.toString();
     }
 
-    private float escribirLinea(PDPageContentStream cs, PDFont fuente, float tamanio, float x, float y, String texto) throws IOException {
-        cs.beginText();
-        cs.setFont(fuente, tamanio);
-        cs.newLineAtOffset(x, y);
-        cs.showText(texto);
-        cs.endText();
-        return y - (tamanio + 6);
+    // Mismo formato numerico que las tarjetas de la pagina (es-AR: $ 1.234,56 / 12,3%).
+    private String monedaAr(double valor) {
+        return "$ " + String.format(Locale.forLanguageTag("es-AR"), "%,.2f", valor);
+    }
+
+    private String porcentajeAr(double valor) {
+        return String.format(Locale.forLanguageTag("es-AR"), "%.1f", valor) + "%";
     }
 
     private String formatoMoneda(double valor) {

@@ -37,22 +37,39 @@
                         </form>
                         <div class="table-responsive">
                             <table class="table table-sm table-hover align-middle mb-0">
-                                <thead class="table-light"><tr><th>Nombre</th><th>Tipo</th><th></th></tr></thead>
+                                <thead class="table-light"><tr><th>Nombre</th><th>Tipo</th><th>Estado</th><th></th></tr></thead>
                                 <tbody>
                                 <c:forEach var="metodo" items="${metodos}">
                                     <tr>
                                         <td>${metodo.nombre}</td>
                                         <td>${metodo.cobroOPago == 'COBRO' ? 'Cobro' : 'Pago'}</td>
                                         <td>
-                                            <form method="post" action="${pageContext.request.contextPath}/Catalogo" onsubmit="return confirmarAccion('¿Eliminar este medio?');">
-                                                <input type="hidden" name="action" value="eliminarMetodo">
-                                                <input type="hidden" name="idMetodo" value="${metodo.idMetodo}">
-                                                <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                            </form>
+                                            <c:choose>
+                                                <c:when test="${metodo.estaActivo}"><span class="badge text-bg-success">Activo</span></c:when>
+                                                <c:otherwise><span class="badge text-bg-secondary">Inactivo</span></c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${metodo.estaActivo}">
+                                                    <form method="post" action="${pageContext.request.contextPath}/Catalogo" onsubmit="return confirmarAccion('¿Desactivar este medio? Dejará de ofrecerse en los formularios; los movimientos ya cargados lo conservan.');">
+                                                        <input type="hidden" name="action" value="desactivarMetodo">
+                                                        <input type="hidden" name="idMetodo" value="${metodo.idMetodo}">
+                                                        <button type="submit" class="btn btn-sm btn-danger">Desactivar</button>
+                                                    </form>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <form method="post" action="${pageContext.request.contextPath}/Catalogo">
+                                                        <input type="hidden" name="action" value="activarMetodo">
+                                                        <input type="hidden" name="idMetodo" value="${metodo.idMetodo}">
+                                                        <button type="submit" class="btn btn-sm btn-success">Activar</button>
+                                                    </form>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                     </tr>
                                 </c:forEach>
-                                <c:if test="${empty metodos}"><tr><td colspan="3" class="text-center text-secondary py-3">Sin medios cargados.</td></tr></c:if>
+                                <c:if test="${empty metodos}"><tr><td colspan="4" class="text-center text-secondary py-3">Sin medios cargados.</td></tr></c:if>
                                 </tbody>
                             </table>
                         </div>
@@ -84,7 +101,7 @@
                         </form>
                         <div class="table-responsive">
                             <table class="table table-sm table-hover align-middle mb-0">
-                                <thead class="table-light"><tr><th>Nombre</th><th>Se usa en</th><th></th></tr></thead>
+                                <thead class="table-light"><tr><th>Nombre</th><th>Se usa en</th><th>Estado</th><th></th></tr></thead>
                                 <tbody>
                                 <c:forEach var="categoria" items="${categorias}">
                                     <tr>
@@ -95,15 +112,32 @@
                                             <c:if test="${categoria.aplicaA == 'EGRESO'}">Otros egresos</c:if>
                                         </td>
                                         <td>
-                                            <form method="post" action="${pageContext.request.contextPath}/Catalogo" onsubmit="return confirmarAccion('¿Eliminar esta categoria?');">
-                                                <input type="hidden" name="action" value="eliminarCategoria">
-                                                <input type="hidden" name="idCategoria" value="${categoria.idCategoria}">
-                                                <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                                            </form>
+                                            <c:choose>
+                                                <c:when test="${categoria.estaActivo}"><span class="badge text-bg-success">Activo</span></c:when>
+                                                <c:otherwise><span class="badge text-bg-secondary">Inactivo</span></c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${categoria.estaActivo}">
+                                                    <form method="post" action="${pageContext.request.contextPath}/Catalogo" onsubmit="return confirmarAccion('¿Desactivar esta categoría? Dejará de ofrecerse en los formularios; los movimientos ya cargados la conservan.');">
+                                                        <input type="hidden" name="action" value="desactivarCategoria">
+                                                        <input type="hidden" name="idCategoria" value="${categoria.idCategoria}">
+                                                        <button type="submit" class="btn btn-sm btn-danger">Desactivar</button>
+                                                    </form>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <form method="post" action="${pageContext.request.contextPath}/Catalogo">
+                                                        <input type="hidden" name="action" value="activarCategoria">
+                                                        <input type="hidden" name="idCategoria" value="${categoria.idCategoria}">
+                                                        <button type="submit" class="btn btn-sm btn-success">Activar</button>
+                                                    </form>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                     </tr>
                                 </c:forEach>
-                                <c:if test="${empty categorias}"><tr><td colspan="3" class="text-center text-secondary py-3">Sin categorias cargadas.</td></tr></c:if>
+                                <c:if test="${empty categorias}"><tr><td colspan="4" class="text-center text-secondary py-3">Sin categorias cargadas.</td></tr></c:if>
                                 </tbody>
                             </table>
                         </div>

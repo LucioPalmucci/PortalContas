@@ -102,20 +102,18 @@ public class CategoriaConceptoServicio {
         return exito;
     }
 
-    public boolean eliminarCategoria(int idCategoria) throws ServiceException {
+    public boolean cambiarEstadoCategoria(int id, boolean estaActivo) throws ServiceException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         boolean exito;
         try {
-            CategoriaConcepto categoria = new CategoriaConcepto();
-            categoria.setIdCategoria(idCategoria);
             ((CategoriaConceptoDAOImplDb) categoriaConceptoDAO).setHibernateSession(session);
             session.beginTransaction();
-            exito = categoriaConceptoDAO.eliminarCategoria(categoria);
+            exito = categoriaConceptoDAO.cambiarEstadoCategoria(id, estaActivo);
             if (exito) session.getTransaction().commit();
             else session.getTransaction().rollback();
         } catch (HQLException e) {
             session.getTransaction().rollback();
-            throw new ServiceException("Error al eliminar categoria: " + e.getMessage());
+            throw new ServiceException("Error al cambiar el estado de la categoria: " + e.getMessage());
         } finally {
             session.close();
         }

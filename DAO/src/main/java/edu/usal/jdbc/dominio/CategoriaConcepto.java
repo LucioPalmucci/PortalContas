@@ -16,6 +16,8 @@ public class CategoriaConcepto implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "aplica_a")
     private AplicaA aplicaA;
+    @Column(name = "esta_activo", nullable = false, columnDefinition = "boolean not null default true")
+    private boolean estaActivo = true;
 
     public CategoriaConcepto() {}
 
@@ -38,6 +40,9 @@ public class CategoriaConcepto implements Serializable {
 
     public AplicaA getAplicaA() { return aplicaA; }
     public void setAplicaA(AplicaA aplicaA) { this.aplicaA = aplicaA; }
+
+    public boolean isEstaActivo() { return estaActivo; }
+    public void setEstaActivo(boolean estaActivo) { this.estaActivo = estaActivo; }
 
     @Override
     public String toString() {

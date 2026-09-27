@@ -149,7 +149,8 @@
                     <input type="hidden" name="action" value="importarExcel">
                     <div class="col-md-6">
                         <label for="archivoExcel" class="form-label">Importar desde Excel</label>
-                        <input type="file" class="form-control" id="archivoExcel" name="archivoExcel" accept=".xlsx">
+                        <input type="file" class="form-control" id="archivoExcel" name="archivoExcel" accept=".xlsx" onchange="if (this.files.length &amp;&amp; this.files[0].size &gt; 5 * 1024 * 1024) { alert('El archivo supera el maximo permitido de 5 MB.'); this.value = ''; }">
+                        <div class="form-text">Maximo 5 MB.</div>
                     </div>
                     <div class="col-md-3">
                         <button type="submit" class="btn btn-outline-primary rounded-pill w-100"><i class="bi bi-upload" aria-hidden="true"></i> Importar</button>
@@ -281,7 +282,7 @@
                                                 <button type="submit" class="btn btn-sm btn-success rounded-pill"><i class="bi bi-check2" aria-hidden="true"></i> Marcar realizado</button>
                                             </form>
                                         </c:if>
-                                        <form method="post" action="${pageContext.request.contextPath}/Vencimiento" class="d-inline" onsubmit="return confirmarAccion('Esta accion elimina el vencimiento de forma permanente. ¿Continuar?');">
+                                        <form method="post" action="${pageContext.request.contextPath}/Vencimiento" class="d-inline" onsubmit="return confirmarAccion('¿Eliminar este vencimiento? Dejara de mostrarse en el calendario y en el listado.');">
                                             <input type="hidden" name="action" value="eliminar">
                                             <input type="hidden" name="idVencimiento" value="${v.idVencimiento}">
                                             <button type="submit" class="btn btn-sm btn-danger rounded-pill"><i class="bi bi-trash" aria-hidden="true"></i> Eliminar</button>

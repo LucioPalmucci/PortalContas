@@ -17,13 +17,15 @@ CREATE TABLE Usuario (
 CREATE TABLE MetodoOperacion (
   metodo_id     INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre        VARCHAR(50) NOT NULL,
-  cobro_o_pago  VARCHAR(10) NOT NULL
+  cobro_o_pago  VARCHAR(10) NOT NULL,
+  esta_activo   BOOLEAN     NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE CategoriaConcepto (
   categoria_id  INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   nombre        VARCHAR(100) NOT NULL,
-  aplica_a      VARCHAR(10)  NOT NULL
+  aplica_a      VARCHAR(10)  NOT NULL,
+  esta_activo   BOOLEAN      NOT NULL DEFAULT TRUE
 );
 
 CREATE TABLE Venta (

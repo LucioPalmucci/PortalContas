@@ -129,6 +129,7 @@
                                     <div class="col-md-4">
                                         <label for="emetodo" class="form-label">Medio de pago</label>
                                         <select class="form-select" id="emetodo" name="idMetodo" required>
+                                            <c:if test="${not compraAEditar.metodo.estaActivo}"><option value="${compraAEditar.metodo.idMetodo}" selected>${compraAEditar.metodo.nombre} (inactivo)</option></c:if>
                                             <c:forEach var="metodo" items="${metodosPago}">
                                                 <option value="${metodo.idMetodo}" ${metodo.idMetodo == compraAEditar.metodo.idMetodo ? 'selected' : ''}>${metodo.nombre}</option>
                                             </c:forEach>
@@ -226,7 +227,6 @@
                             <option value="">Todos</option>
                             <option value="PAGADO">Pagada</option>
                             <option value="PENDIENTE_DE_PAGO">Pendiente</option>
-                            <option value="ANULADO">Anulada</option>
                         </select>
                     </div>
                 </div>

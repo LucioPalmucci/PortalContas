@@ -118,14 +118,14 @@ public class GastoServicio {
         return gastos;
     }
 
-    public boolean editarGasto(int idGasto, String descripcion, int idCategoria, double valor, int idMetodo, String estado) throws ServiceException {
+    public boolean editarGasto(int idGasto, java.util.Date fecha, String descripcion, int idCategoria, double valor, int idMetodo, String estado) throws ServiceException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         boolean exito;
         try {
             ((GastoDAOImplDb) gastoDAO).setHibernateSession(session);
             CategoriaConcepto categoria = session.get(CategoriaConcepto.class, idCategoria);
             MetodoOperacion metodo = session.get(MetodoOperacion.class, idMetodo);
-            Gasto gasto = new Gasto(idGasto, null, null, descripcion, EstadoPago.valueOf(estado), categoria, valor, metodo);
+            Gasto gasto = new Gasto(idGasto, null, fecha, descripcion, EstadoPago.valueOf(estado), categoria, valor, metodo);
             session.beginTransaction();
             exito = gastoDAO.editarGasto(gasto);
             if (exito) session.getTransaction().commit();

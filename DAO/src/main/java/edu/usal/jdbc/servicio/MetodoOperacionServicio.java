@@ -101,20 +101,18 @@ public class MetodoOperacionServicio {
         return exito;
     }
 
-    public boolean eliminarMetodo(int idMetodo) throws ServiceException {
+    public boolean cambiarEstadoMetodo(int id, boolean estaActivo) throws ServiceException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         boolean exito;
         try {
-            MetodoOperacion metodo = new MetodoOperacion();
-            metodo.setIdMetodo(idMetodo);
             ((MetodoOperacionDAOImplDb) metodoOperacionDAO).setHibernateSession(session);
             session.beginTransaction();
-            exito = metodoOperacionDAO.eliminarMetodo(metodo);
+            exito = metodoOperacionDAO.cambiarEstadoMetodo(id, estaActivo);
             if (exito) session.getTransaction().commit();
             else session.getTransaction().rollback();
         } catch (HQLException e) {
             session.getTransaction().rollback();
-            throw new ServiceException("Error al eliminar metodo: " + e.getMessage());
+            throw new ServiceException("Error al cambiar el estado del metodo: " + e.getMessage());
         } finally {
             session.close();
         }

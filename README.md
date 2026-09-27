@@ -8,7 +8,7 @@ Este proyecto se instala de forma manual con IntelliJ. No usa `npm`.
  
 ### Requisitos previos
  
-- **JDK 21**
+- **JDK 11**
 - **Apache Tomcat 9.0.109**
 - **IntelliJ IDEA**
 ### Pasos
@@ -20,7 +20,7 @@ Este proyecto se instala de forma manual con IntelliJ. No usa `npm`.
 ```
  
 2. Abrí el proyecto en **IntelliJ IDEA**.
-3. Configurá el JDK del proyecto en `File > Project Structure > Project SDK` y seleccioná **JDK 21**.
+3. Configurá el JDK del proyecto en `File > Project Structure > Project SDK` y seleccioná **JDK 11**.
 4. Configurá Tomcat como servidor de aplicaciones: `Run > Edit Configurations > Add New Configuration > Tomcat Server > Local`, y apuntá a tu instalación de **Tomcat 9.0.109**.
 5. Desplegá el artefacto (`.war`) en la pestaña **Deployment** de la configuración de Tomcat.
 6. Ejecutá la configuración desde IntelliJ para levantar el proyecto en Tomcat.

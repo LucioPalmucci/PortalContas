@@ -1,0 +1,15 @@
+# Maven
+target/
+*.war
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Herramientas locales
+.graphify/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

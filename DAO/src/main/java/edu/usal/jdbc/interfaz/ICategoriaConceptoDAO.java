@@ -20,5 +20,5 @@ public interface ICategoriaConceptoDAO {
 
     boolean editarCategoria(CategoriaConcepto categoria) throws HQLException;
 
-    boolean eliminarCategoria(CategoriaConcepto categoria) throws HQLException;
+    boolean cambiarEstadoCategoria(int idCategoria, boolean estaActivo) throws HQLException;
 }

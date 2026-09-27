@@ -16,6 +16,8 @@ public class MetodoOperacion implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "cobro_o_pago")
     private CobroOPago cobroOPago;
+    @Column(name = "esta_activo", nullable = false, columnDefinition = "boolean not null default true")
+    private boolean estaActivo = true;
 
     public MetodoOperacion() {}
 
@@ -38,6 +40,9 @@ public class MetodoOperacion implements Serializable {
 
     public CobroOPago getCobroOPago() { return cobroOPago; }
     public void setCobroOPago(CobroOPago cobroOPago) { this.cobroOPago = cobroOPago; }
+
+    public boolean isEstaActivo() { return estaActivo; }
+    public void setEstaActivo(boolean estaActivo) { this.estaActivo = estaActivo; }
 
     @Override
     public String toString() {

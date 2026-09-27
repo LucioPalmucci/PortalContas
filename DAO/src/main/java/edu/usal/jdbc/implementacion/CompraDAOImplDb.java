@@ -103,6 +103,7 @@ public class CompraDAOImplDb implements ICompraDAO {
             if (existente == null) {
                 return false;
             }
+            existente.setFecha(compra.getFecha());
             existente.setDescripcion(compra.getDescripcion());
             existente.setEstado(compra.getEstado());
             existente.setConceptoCompra(compra.getConceptoCompra());
