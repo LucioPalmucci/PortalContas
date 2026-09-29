@@ -118,7 +118,7 @@
                                     <div class="col-md-6">
                                         <label for="ecategoria" class="form-label">Categoria</label>
                                         <select class="form-select" id="ecategoria" name="idCategoria" required>
-                                            <c:if test="${not otroEgresoAEditar.categoria.estaActivo}"><option value="${otroEgresoAEditar.categoria.idCategoria}" selected>${otroEgresoAEditar.categoria.nombre} (inactivo)</option></c:if>
+                                            <c:if test="${not otroEgresoAEditar.categoria.estaActivo}"><option value="${otroEgresoAEditar.categoria.idCategoria}" selected>${otroEgresoAEditar.categoria.nombre} (inactiva)</option></c:if>
                                             <c:forEach var="categoria" items="${categorias}">
                                                 <option value="${categoria.idCategoria}" ${categoria.idCategoria == otroEgresoAEditar.categoria.idCategoria ? 'selected' : ''}>${categoria.nombre}</option>
                                             </c:forEach>

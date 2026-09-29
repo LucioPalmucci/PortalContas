@@ -1,6 +1,6 @@
 package edu.usal.jdbc.servicio;
 
-import edu.usal.jdbc.dominio.AplicaA;
+import edu.usal.jdbc.dominio.CategoriaAplicaA;
 import edu.usal.jdbc.dominio.CategoriaConcepto;
 import edu.usal.jdbc.excepciones.HQLException;
 import edu.usal.jdbc.excepciones.ServiceException;
@@ -69,7 +69,7 @@ public class CategoriaConceptoServicio {
         boolean exito;
         try {
             ((CategoriaConceptoDAOImplDb) categoriaConceptoDAO).setHibernateSession(session);
-            CategoriaConcepto categoria = new CategoriaConcepto(nombre, AplicaA.valueOf(aplicaA));
+            CategoriaConcepto categoria = new CategoriaConcepto(nombre, CategoriaAplicaA.valueOf(aplicaA));
             session.beginTransaction();
             exito = categoriaConceptoDAO.guardarCategoria(categoria);
             if (exito) session.getTransaction().commit();
@@ -88,7 +88,7 @@ public class CategoriaConceptoServicio {
         boolean exito;
         try {
             ((CategoriaConceptoDAOImplDb) categoriaConceptoDAO).setHibernateSession(session);
-            CategoriaConcepto categoria = new CategoriaConcepto(idCategoria, nombre, AplicaA.valueOf(aplicaA));
+            CategoriaConcepto categoria = new CategoriaConcepto(idCategoria, nombre, CategoriaAplicaA.valueOf(aplicaA));
             session.beginTransaction();
             exito = categoriaConceptoDAO.editarCategoria(categoria);
             if (exito) session.getTransaction().commit();

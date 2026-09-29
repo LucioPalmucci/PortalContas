@@ -5,6 +5,9 @@ import edu.usal.jdbc.dominio.Gasto;
 import edu.usal.jdbc.excepciones.ServiceException;
 import edu.usal.jdbc.servicio.CategoriaConceptoServicio;
 import edu.usal.jdbc.servicio.GastoServicio;
+import edu.usal.jdbc.util.EvolucionMensualUtil;
+import edu.usal.jdbc.util.ValidacionMovimientoUtil;
+
 import edu.usal.jdbc.servicio.MetodoOperacionServicio;
 import edu.usal.jdbc.servicio.UsuarioServicio;
 
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -74,7 +78,7 @@ public class GastoServlet extends HttpServlet {
             req.setAttribute("metodosPago", metodoOperacionServicio.obtenerMetodosPorTipo("PAGO"));
             req.setAttribute("categorias", categoriaConceptoServicio.obtenerCategoriasPorAplicaA("GASTO"));
 
-            List<Gasto> gastosActivos = new java.util.ArrayList<>();
+            List<Gasto> gastosActivos = new ArrayList<>();
             for (Gasto g : gastos) {
                 if (g.getEstado() != EstadoPago.ANULADO) gastosActivos.add(g);
             }
@@ -143,7 +147,7 @@ public class GastoServlet extends HttpServlet {
             return;
         }
 
-        String errorValidacion = ValidacionMovimiento.validarMonto(valor, "valor");
+        String errorValidacion = ValidacionMovimientoUtil.validarMonto(valor, "valor");
         if (errorValidacion != null) {
             req.setAttribute("error", errorValidacion);
             return;
@@ -180,7 +184,7 @@ public class GastoServlet extends HttpServlet {
             req.setAttribute("error", "Complete todos los campos obligatorios.");
             return;
         }
-        String errorValidacion = ValidacionMovimiento.validarMonto(valor, "valor");
+        String errorValidacion = ValidacionMovimientoUtil.validarMonto(valor, "valor");
         if (errorValidacion != null) {
             req.setAttribute("error", errorValidacion);
             return;

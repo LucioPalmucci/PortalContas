@@ -10,7 +10,7 @@
 
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
             <h1 class="mb-0">Manual de uso</h1>
-            <button type="button" class="btn btn-outline-secondary d-print-none" onclick="imprimirPagina()">Imprimir / guardar como PDF</button>
+            <button type="button" class="btn btn-outline-secondary d-print-none" onclick="imprimirPagina()">Guardar manual</button>
         </div>
 
         <div class="card mb-3">

@@ -55,34 +55,6 @@ public class VencimientoServicio {
         return vencimientos;
     }
 
-    public List<Vencimiento> obtenerVencimientosPorEstado(String estado) throws ServiceException {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Vencimiento> vencimientos;
-        try {
-            ((VencimientoDAOImplDb) vencimientoDAO).setHibernateSession(session);
-            vencimientos = vencimientoDAO.obtenerVencimientosPorEstado(estado);
-        } catch (HQLException e) {
-            throw new ServiceException("Error al obtener los vencimientos por estado: " + e.getMessage());
-        } finally {
-            session.close();
-        }
-        return vencimientos;
-    }
-
-    public List<Vencimiento> obtenerVencimientosPorRangoFechas(Date desde, Date hasta) throws ServiceException {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Vencimiento> vencimientos;
-        try {
-            ((VencimientoDAOImplDb) vencimientoDAO).setHibernateSession(session);
-            vencimientos = vencimientoDAO.obtenerVencimientosPorRangoFechas(desde, hasta);
-        } catch (HQLException e) {
-            throw new ServiceException("Error al obtener los vencimientos por rango de fechas: " + e.getMessage());
-        } finally {
-            session.close();
-        }
-        return vencimientos;
-    }
-
     public boolean guardarVencimiento(Vencimiento vencimiento) throws ServiceException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         boolean exito;
@@ -137,7 +109,6 @@ public class VencimientoServicio {
         return exito;
     }
 
-    //Baja logica: el vencimiento queda con estado ELIMINADO y deja de mostrarse, pero se conserva en la base de datos
     public boolean eliminarVencimiento(int idVencimiento) throws ServiceException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         boolean exito;
@@ -157,15 +128,11 @@ public class VencimientoServicio {
     }
 
     public int calcularDiasRestantes(Vencimiento vencimiento) {
-        // No usar .toInstant() aca: Hibernate devuelve java.sql.Date para columnas DATE,
-        // y java.sql.Date.toInstant() siempre tira UnsupportedOperationException.
         LocalDate fechaVencimiento = Instant.ofEpochMilli(vencimiento.getFecha().getTime())
                 .atZone(ZoneId.systemDefault()).toLocalDate();
         return (int) ChronoUnit.DAYS.between(LocalDate.now(), fechaVencimiento);
     }
 
-    //PROXIMO es un estado derivado/visual, calculado a partir de PENDIENTE + dias restantes <= 7.
-    //Nunca se persiste como EstadoVencimiento.PROXIMO en la base: los unicos estados almacenables son PENDIENTE y REALIZADO.
     public boolean esProximo(Vencimiento vencimiento) {
         return vencimiento.getEstado() == EstadoVencimiento.PENDIENTE
                 && calcularDiasRestantes(vencimiento) >= 0

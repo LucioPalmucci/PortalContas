@@ -88,8 +88,8 @@
                                 <input type="text" class="form-control" id="nombreCategoria" name="nombreCategoria" placeholder="Ej: Papeleria" required>
                             </div>
                             <div class="col-sm-5">
-                                <label for="aplicaA" class="form-label">Se usa en</label>
-                                <select class="form-select" id="aplicaA" name="aplicaA" required>
+                                <label for="categoriaAplicaA" class="form-label">Se usa en</label>
+                                <select class="form-select" id="categoriaAplicaA" name="categoriaAplicaA" required>
                                     <option value="GASTO">Gastos</option>
                                     <option value="INGRESO">Otros ingresos</option>
                                     <option value="EGRESO">Otros egresos</option>
@@ -107,9 +107,9 @@
                                     <tr>
                                         <td>${categoria.nombre}</td>
                                         <td>
-                                            <c:if test="${categoria.aplicaA == 'GASTO'}">Gastos</c:if>
-                                            <c:if test="${categoria.aplicaA == 'INGRESO'}">Otros ingresos</c:if>
-                                            <c:if test="${categoria.aplicaA == 'EGRESO'}">Otros egresos</c:if>
+                                            <c:if test="${categoria.categoriaAplicaA == 'GASTO'}">Gastos</c:if>
+                                            <c:if test="${categoria.categoriaAplicaA == 'INGRESO'}">Otros ingresos</c:if>
+                                            <c:if test="${categoria.categoriaAplicaA == 'EGRESO'}">Otros egresos</c:if>
                                         </td>
                                         <td>
                                             <c:choose>

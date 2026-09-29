@@ -6,6 +6,9 @@ import edu.usal.jdbc.excepciones.ServiceException;
 import edu.usal.jdbc.servicio.CategoriaConceptoServicio;
 import edu.usal.jdbc.servicio.MetodoOperacionServicio;
 import edu.usal.jdbc.servicio.OtroIngresoServicio;
+import edu.usal.jdbc.util.EvolucionMensualUtil;
+import edu.usal.jdbc.util.ValidacionMovimientoUtil;
+
 import edu.usal.jdbc.servicio.UsuarioServicio;
 
 import javax.servlet.ServletException;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -74,7 +78,7 @@ public class OtroIngresoServlet extends HttpServlet {
             req.setAttribute("metodosCobro", metodoOperacionServicio.obtenerMetodosPorTipo("COBRO"));
             req.setAttribute("categorias", categoriaConceptoServicio.obtenerCategoriasPorAplicaA("INGRESO"));
 
-            List<OtroIngreso> otrosIngresosActivos = new java.util.ArrayList<>();
+            List<OtroIngreso> otrosIngresosActivos = new ArrayList<>();
             for (OtroIngreso oi : otrosIngresos) {
                 if (oi.getEstado() != EstadoCobro.ANULADO) otrosIngresosActivos.add(oi);
             }
@@ -143,7 +147,7 @@ public class OtroIngresoServlet extends HttpServlet {
             return;
         }
 
-        String errorValidacion = ValidacionMovimiento.validarMonto(valor, "valor");
+        String errorValidacion = ValidacionMovimientoUtil.validarMonto(valor, "valor");
         if (errorValidacion != null) {
             req.setAttribute("error", errorValidacion);
             return;
@@ -180,7 +184,7 @@ public class OtroIngresoServlet extends HttpServlet {
             req.setAttribute("error", "Complete todos los campos obligatorios.");
             return;
         }
-        String errorValidacion = ValidacionMovimiento.validarMonto(valor, "valor");
+        String errorValidacion = ValidacionMovimientoUtil.validarMonto(valor, "valor");
         if (errorValidacion != null) {
             req.setAttribute("error", errorValidacion);
             return;

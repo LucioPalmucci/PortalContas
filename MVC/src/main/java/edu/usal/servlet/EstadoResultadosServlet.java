@@ -10,6 +10,9 @@ import edu.usal.jdbc.dominio.Usuario;
 import edu.usal.jdbc.dominio.Venta;
 import edu.usal.jdbc.dto.ComposicionCategoriaDTO;
 import edu.usal.jdbc.dto.EstadoResultadosDTO;
+import edu.usal.servlet.dto.BarraComposicion;
+import edu.usal.servlet.dto.MovimientoResumen;
+
 import edu.usal.jdbc.excepciones.ServiceException;
 import edu.usal.jdbc.servicio.CategoriaConceptoServicio;
 import edu.usal.jdbc.servicio.CompraServicio;

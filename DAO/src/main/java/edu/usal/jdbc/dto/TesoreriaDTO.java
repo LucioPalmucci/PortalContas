@@ -9,7 +9,6 @@ import edu.usal.jdbc.dominio.Venta;
 import java.util.Date;
 import java.util.List;
 
-//Objeto de transporte de solo lectura: no es una entidad, se arma en el momento a partir de Venta/Compra/Gasto/OtroIngreso/OtroEgreso pendientes.
 public class TesoreriaDTO {
 
     private double cuentasPorCobrar;
@@ -21,7 +20,6 @@ public class TesoreriaDTO {
     private List<OtroIngreso> otrosIngresosPendientes;
     private List<OtroEgreso> otrosEgresosPendientes;
 
-    // Resumen del periodo seleccionado (11.1.1 / 11.3): subtotales agrupados por estado, independientes de los pendientes "a hoy" de arriba.
     private Date periodoInicio;
     private Date periodoFin;
     private double totalCobradoPeriodo;

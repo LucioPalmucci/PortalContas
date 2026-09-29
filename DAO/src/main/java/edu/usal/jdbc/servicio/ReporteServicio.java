@@ -153,7 +153,6 @@ public class ReporteServicio {
         return new ComparacionPeriodoDTO(p1, p2, variacionVentas, variacionGanancia);
     }
 
-    // ---------- UC-15 Composicion de gastos ----------
     public List<ComposicionCategoriaDTO> obtenerComposicionGastos(int idUsuario, Date desde, Date hasta) throws ServiceException {
         Set<Integer> idsExcluidas = obtenerIdsCategoriasExcluidas(idUsuario);
         List<Gasto> gastos = gastoServicio.obtenerGastosPorUsuarioYPeriodo(idUsuario, desde, hasta).stream()
@@ -176,7 +175,6 @@ public class ReporteServicio {
         return resultado;
     }
 
-    // ---------- Composicion de otros ingresos (por categoria, mismo criterio que composicion de gastos) ----------
     public List<ComposicionCategoriaDTO> obtenerComposicionOtrosIngresos(int idUsuario, Date desde, Date hasta) throws ServiceException {
         Set<Integer> idsExcluidas = obtenerIdsCategoriasExcluidas(idUsuario);
         List<OtroIngreso> otrosIngresos = otroIngresoServicio.obtenerOtrosIngresosPorUsuarioYPeriodo(idUsuario, desde, hasta).stream()

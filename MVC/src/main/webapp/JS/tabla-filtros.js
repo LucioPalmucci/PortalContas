@@ -1,5 +1,3 @@
-// Buscador, filtros, ordenamiento por columna y paginado en tiempo real (sin recargar la pagina),
-// operando sobre las filas ya renderizadas por el servidor. No requiere ida y vuelta al servidor.
 (function () {
     function inicializarTablaFiltros(contenedor) {
         var tbody = contenedor.querySelector("tbody");

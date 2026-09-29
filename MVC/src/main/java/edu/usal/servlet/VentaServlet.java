@@ -7,6 +7,9 @@ import edu.usal.jdbc.excepciones.ServiceException;
 import edu.usal.jdbc.servicio.MetodoOperacionServicio;
 import edu.usal.jdbc.servicio.UsuarioServicio;
 import edu.usal.jdbc.servicio.VentaServicio;
+import edu.usal.jdbc.util.EvolucionMensualUtil;
+import edu.usal.jdbc.util.ValidacionMovimientoUtil;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,7 +75,7 @@ public class VentaServlet extends HttpServlet {
             req.setAttribute("esAdmin", esAdmin);
             req.setAttribute("metodosCobro", metodoOperacionServicio.obtenerMetodosPorTipo("COBRO"));
 
-            List<Venta> ventasActivas = new java.util.ArrayList<>();
+            List<Venta> ventasActivas = new ArrayList<>();
             for (Venta v : ventas) {
                 if (v.getEstado() != EstadoCobro.ANULADO) ventasActivas.add(v);
             }
@@ -142,8 +146,8 @@ public class VentaServlet extends HttpServlet {
             return;
         }
 
-        String errorValidacion = ValidacionMovimiento.validarMonto(precioUnitario, "precio unitario");
-        if (errorValidacion == null) errorValidacion = ValidacionMovimiento.validarCantidad(cantidad);
+        String errorValidacion = ValidacionMovimientoUtil.validarMonto(precioUnitario, "precio unitario");
+        if (errorValidacion == null) errorValidacion = ValidacionMovimientoUtil.validarCantidad(cantidad);
         if (errorValidacion != null) {
             req.setAttribute("error", errorValidacion);
             return;
@@ -181,8 +185,8 @@ public class VentaServlet extends HttpServlet {
             req.setAttribute("error", "Complete todos los campos obligatorios.");
             return;
         }
-        String errorValidacion = ValidacionMovimiento.validarMonto(precioUnitario, "precio unitario");
-        if (errorValidacion == null) errorValidacion = ValidacionMovimiento.validarCantidad(cantidad);
+        String errorValidacion = ValidacionMovimientoUtil.validarMonto(precioUnitario, "precio unitario");
+        if (errorValidacion == null) errorValidacion = ValidacionMovimientoUtil.validarCantidad(cantidad);
         if (errorValidacion != null) {
             req.setAttribute("error", errorValidacion);
             return;

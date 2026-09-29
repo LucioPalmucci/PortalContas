@@ -7,15 +7,12 @@ import java.util.List;
 
 public interface ICategoriaConceptoDAO {
 
-    //Retornan CategoriaConcepto - tabla CategoriaConcepto
     CategoriaConcepto obtenerCategoriaPorId(int idCategoria) throws HQLException;
 
-    //Retornan List<CategoriaConcepto> - tabla CategoriaConcepto
     List<CategoriaConcepto> obtenerTodasLasCategorias() throws HQLException;
 
     List<CategoriaConcepto> obtenerCategoriasPorAplicaA(String aplicaA) throws HQLException;
 
-    //Retornan boolean - tabla CategoriaConcepto
     boolean guardarCategoria(CategoriaConcepto categoria) throws HQLException;
 
     boolean editarCategoria(CategoriaConcepto categoria) throws HQLException;

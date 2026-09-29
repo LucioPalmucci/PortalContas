@@ -1,6 +1,6 @@
 package edu.usal.jdbc.dominio;
 
-public enum AplicaA {
+public enum CategoriaAplicaA {
     GASTO,
     INGRESO,
     EGRESO

@@ -4,9 +4,13 @@ import edu.usal.jdbc.dto.ComparacionPeriodoDTO;
 import edu.usal.jdbc.dto.ComposicionCategoriaDTO;
 import edu.usal.jdbc.dto.EstadoFinancieroDTO;
 import edu.usal.jdbc.dto.PuntoTendenciaDTO;
+import edu.usal.jdbc.dto.PuntoBarra;
+
 import edu.usal.jdbc.excepciones.ServiceException;
 import edu.usal.jdbc.servicio.ReporteServicio;
 import edu.usal.jdbc.servicio.UsuarioServicio;
+import edu.usal.servlet.dto.BarraComposicion;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

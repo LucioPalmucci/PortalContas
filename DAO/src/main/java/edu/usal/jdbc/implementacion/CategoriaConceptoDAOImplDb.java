@@ -1,6 +1,6 @@
 package edu.usal.jdbc.implementacion;
 
-import edu.usal.jdbc.dominio.AplicaA;
+import edu.usal.jdbc.dominio.CategoriaAplicaA;
 import edu.usal.jdbc.dominio.CategoriaConcepto;
 import edu.usal.jdbc.excepciones.HQLException;
 import edu.usal.jdbc.interfaz.ICategoriaConceptoDAO;
@@ -45,7 +45,7 @@ public class CategoriaConceptoDAOImplDb implements ICategoriaConceptoDAO {
         try {
             Query<CategoriaConcepto> query = hybernateSession.createQuery(
                     "from CategoriaConcepto c where c.aplicaA = :aplicaA and c.estaActivo = true", CategoriaConcepto.class);
-            query.setParameter("aplicaA", AplicaA.valueOf(aplicaA));
+            query.setParameter("aplicaA", CategoriaAplicaA.valueOf(aplicaA));
             return query.list();
         } catch (HibernateException e) {
             throw new HQLException("Error al obtener categorias por aplicaA: " + e.getMessage());
@@ -78,7 +78,6 @@ public class CategoriaConceptoDAOImplDb implements ICategoriaConceptoDAO {
         }
     }
 
-    // Baja logica: la categoria se desactiva (deja de ofrecerse en los formularios) pero el registro se conserva.
     @Override
     public boolean cambiarEstadoCategoria(int idCategoria, boolean estaActivo) throws HQLException {
         try {

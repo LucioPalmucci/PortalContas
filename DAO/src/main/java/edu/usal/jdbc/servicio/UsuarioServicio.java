@@ -102,20 +102,6 @@ public class UsuarioServicio {
         return usuarios;
     }
 
-    public List<Usuario> buscarUsuarios(String texto) throws ServiceException {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        List<Usuario> usuarios;
-        try {
-            ((UsuarioDAOImplDb) usuarioDAO).setHibernateSession(session);
-            usuarios = usuarioDAO.buscarUsuarios(texto);
-        } catch (HQLException e) {
-            throw new ServiceException("Error al buscar usuarios: " + e.getMessage());
-        } finally {
-            session.close();
-        }
-        return usuarios;
-    }
-
     public boolean editarUsuario(int idUsuario, String nombreCompleto, String telefono, String correoElectronico, String descripcion, Rol rol, int idUsuarioActor) throws ServiceException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         boolean exito;

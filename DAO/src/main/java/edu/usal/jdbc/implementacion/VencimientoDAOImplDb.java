@@ -44,32 +44,6 @@ public class VencimientoDAOImplDb implements IVencimientoDAO {
     }
 
     @Override
-    public List<Vencimiento> obtenerVencimientosPorEstado(String estado) throws HQLException {
-        try {
-            Query<Vencimiento> query = hybernateSession.createQuery(
-                    "from Vencimiento v where v.estado = :estado order by v.fecha asc", Vencimiento.class);
-            query.setParameter("estado", EstadoVencimiento.valueOf(estado));
-            return query.list();
-        } catch (HibernateException e) {
-            throw new HQLException("Error al obtener los vencimientos por estado: " + e.getMessage());
-        }
-    }
-
-    @Override
-    public List<Vencimiento> obtenerVencimientosPorRangoFechas(Date desde, Date hasta) throws HQLException {
-        try {
-            Query<Vencimiento> query = hybernateSession.createQuery(
-                    "from Vencimiento v where v.fecha between :desde and :hasta and v.estado <> :eliminado order by v.fecha asc", Vencimiento.class);
-            query.setParameter("desde", desde);
-            query.setParameter("hasta", hasta);
-            query.setParameter("eliminado", EstadoVencimiento.ELIMINADO);
-            return query.list();
-        } catch (HibernateException e) {
-            throw new HQLException("Error al obtener los vencimientos por rango de fechas: " + e.getMessage());
-        }
-    }
-
-    @Override
     public boolean guardarVencimiento(Vencimiento vencimiento) throws HQLException {
         try {
             hybernateSession.save(vencimiento);

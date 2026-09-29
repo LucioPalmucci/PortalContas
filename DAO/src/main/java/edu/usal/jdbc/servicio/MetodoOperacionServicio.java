@@ -21,20 +21,6 @@ public class MetodoOperacionServicio {
         this.metodoOperacionDAO = MetodoOperacionFactory.getMetodoOperacionDAO(fuente);
     }
 
-    public MetodoOperacion obtenerMetodoPorId(int idMetodo) throws ServiceException {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        MetodoOperacion metodo;
-        try {
-            ((MetodoOperacionDAOImplDb) metodoOperacionDAO).setHibernateSession(session);
-            metodo = metodoOperacionDAO.obtenerMetodoPorId(idMetodo);
-        } catch (HQLException e) {
-            throw new ServiceException("Error al obtener metodo por id: " + e.getMessage());
-        } finally {
-            session.close();
-        }
-        return metodo;
-    }
-
     public List<MetodoOperacion> obtenerTodosLosMetodos() throws ServiceException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<MetodoOperacion> metodos;
@@ -76,25 +62,6 @@ public class MetodoOperacionServicio {
         } catch (HQLException e) {
             session.getTransaction().rollback();
             throw new ServiceException("Error al guardar metodo: " + e.getMessage());
-        } finally {
-            session.close();
-        }
-        return exito;
-    }
-
-    public boolean editarMetodo(int idMetodo, String nombre, String cobroOPago) throws ServiceException {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        boolean exito;
-        try {
-            ((MetodoOperacionDAOImplDb) metodoOperacionDAO).setHibernateSession(session);
-            MetodoOperacion metodo = new MetodoOperacion(idMetodo, nombre, edu.usal.jdbc.dominio.CobroOPago.valueOf(cobroOPago));
-            session.beginTransaction();
-            exito = metodoOperacionDAO.editarMetodo(metodo);
-            if (exito) session.getTransaction().commit();
-            else session.getTransaction().rollback();
-        } catch (HQLException e) {
-            session.getTransaction().rollback();
-            throw new ServiceException("Error al editar metodo: " + e.getMessage());
         } finally {
             session.close();
         }
