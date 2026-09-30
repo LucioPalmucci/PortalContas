@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +89,7 @@ public class EstadoFinancieroServlet extends HttpServlet {
                         formatoFecha.parse(desde2), formatoFecha.parse(hasta2));
                 req.setAttribute("comparacion", comparacion);
             }
-        } catch (ServiceException | java.text.ParseException e) {
+        } catch (ServiceException | ParseException e) {
             req.setAttribute("error", "No se pudo calcular el estado financiero: " + e.getMessage());
         }
         req.getRequestDispatcher("/Vistas/OpcionesUsuario/EstadoFinanciero.jsp").forward(req, resp);
@@ -116,7 +117,6 @@ public class EstadoFinancieroServlet extends HttpServlet {
         return barras;
     }
 
-    // Limita la composicion a las primeras 7 categorias + un total "Otras" para no romper el orden fijo de colores categoricos.
     private List<BarraComposicion> construirBarrasComposicion(List<ComposicionCategoriaDTO> composicion) {
         List<BarraComposicion> resultado = new ArrayList<>();
         double totalOtras = 0;

@@ -27,16 +27,14 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.format.TextStyle;
+import java.util.*;
 
 @WebServlet("/Vencimiento")
 @MultipartConfig(maxFileSize = 5L * 1024 * 1024, maxRequestSize = 5L * 1024 * 1024 + 512 * 1024)
@@ -87,7 +85,7 @@ public class VencimientoServlet extends HttpServlet {
             req.setAttribute("mesActual", mesActual);
             req.setAttribute("mesAnterior", mesActual.minusMonths(1));
             req.setAttribute("mesSiguiente", mesActual.plusMonths(1));
-            String nombreMes = capitalizar(mesActual.getMonth().getDisplayName(java.time.format.TextStyle.FULL, new java.util.Locale("es", "ES")));
+            String nombreMes = capitalizar(mesActual.getMonth().getDisplayName(TextStyle.FULL, new Locale("es", "ES")));
             req.setAttribute("nombreMesActual", nombreMes + " " + mesActual.getYear());
 
             String editarId = req.getParameter("editarId");
@@ -144,13 +142,13 @@ public class VencimientoServlet extends HttpServlet {
                 default:
                     break;
             }
-        } catch (ServiceException | NumberFormatException | ServletException | java.text.ParseException e) {
+        } catch (ServiceException | NumberFormatException | ServletException | ParseException e) {
             req.setAttribute("error", "No se pudo completar la operacion: " + e.getMessage());
         }
         doGet(req, resp);
     }
 
-    private void agregarVencimiento(HttpServletRequest req) throws java.text.ParseException {
+    private void agregarVencimiento(HttpServletRequest req) throws ParseException {
         String fecha = req.getParameter("fecha");
         String cuit = req.getParameter("ultimosDigitosCuit");
         String cliente = req.getParameter("nombreCliente");
@@ -166,7 +164,7 @@ public class VencimientoServlet extends HttpServlet {
         req.setAttribute(exito ? "exito" : "error", exito ? "Vencimiento agregado." : "No se pudo agregar el vencimiento.");
     }
 
-    private void editarVencimiento(HttpServletRequest req) throws java.text.ParseException {
+    private void editarVencimiento(HttpServletRequest req) throws ParseException {
         String idVencimiento = req.getParameter("idVencimiento");
         if (idVencimiento == null || idVencimiento.isEmpty()) {
             req.setAttribute("error", "Falta el identificador del vencimiento.");
@@ -229,7 +227,7 @@ public class VencimientoServlet extends HttpServlet {
         }
     }
 
-    private void importarExcel(HttpServletRequest req) throws IOException, ServletException, java.text.ParseException {
+    private void importarExcel(HttpServletRequest req) throws IOException, ServletException, ParseException {
         Part archivo;
         try {
             archivo = req.getPart("archivoExcel");
@@ -274,7 +272,7 @@ public class VencimientoServlet extends HttpServlet {
         req.setAttribute("exito", mensaje);
     }
 
-    private Date leerFechaCelda(Cell celda) throws java.text.ParseException {
+    private Date leerFechaCelda(Cell celda) throws ParseException {
         if (celda == null) return null;
         if (celda.getCellType() == CellType.NUMERIC && DateUtil.isCellDateFormatted(celda)) {
             return celda.getDateCellValue();
@@ -307,8 +305,6 @@ public class VencimientoServlet extends HttpServlet {
     private List<CeldaCalendario> construirCalendario(YearMonth mes, List<Vencimiento> vencimientos, Map<Integer, String> claseEstado) {
         Map<Integer, List<Vencimiento>> porDia = new HashMap<>();
         for (Vencimiento v : vencimientos) {
-            // No usar .toInstant() aca: Hibernate devuelve java.sql.Date para columnas DATE,
-            // y java.sql.Date.toInstant() siempre tira UnsupportedOperationException.
             LocalDate fechaLocal = Instant.ofEpochMilli(v.getFecha().getTime()).atZone(zona).toLocalDate();
             if (YearMonth.from(fechaLocal).equals(mes)) {
                 porDia.computeIfAbsent(fechaLocal.getDayOfMonth(), k -> new ArrayList<>()).add(v);

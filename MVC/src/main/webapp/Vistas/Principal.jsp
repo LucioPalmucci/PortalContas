@@ -1,4 +1,5 @@
-    <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.io.File" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <c:choose>
         <c:when test="${not empty sessionScope.idUsuario and sessionScope.rolUsuario == 'ADMINISTRADOR'}">
@@ -23,7 +24,7 @@
 %>
 <%
     String cssRutaDisco = application.getRealPath("/CSS/custom.css");
-    long cssVersion = cssRutaDisco != null ? new java.io.File(cssRutaDisco).lastModified() : ARRANQUE_APP;
+    long cssVersion = cssRutaDisco != null ? new File(cssRutaDisco).lastModified() : ARRANQUE_APP;
 %>
                 <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/custom.css?v=<%= cssVersion %>">
                 <link rel="icon" href="${pageContext.request.contextPath}/icons/icon-192.png">

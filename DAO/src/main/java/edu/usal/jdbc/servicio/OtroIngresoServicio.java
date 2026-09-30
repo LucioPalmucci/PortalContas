@@ -118,7 +118,7 @@ public class OtroIngresoServicio {
         return otrosIngresos;
     }
 
-    public boolean editarOtroIngreso(int idOtroIngreso, java.util.Date fecha, String descripcion, int idCategoria, double valor, int idMetodo, String estado) throws ServiceException {
+    public boolean editarOtroIngreso(int idOtroIngreso, Date fecha, String descripcion, int idCategoria, double valor, int idMetodo, String estado) throws ServiceException {
         Session session = HibernateUtil.getSessionFactory().openSession();
         boolean exito;
         try {

@@ -31,12 +31,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 @WebServlet("/EstadoResultados")
 public class EstadoResultadosServlet extends HttpServlet {
@@ -133,7 +130,7 @@ public class EstadoResultadosServlet extends HttpServlet {
             EstadoResultadosDTO estado = reporteServicio.generarEstadoResultados(idUsuario, desde, hasta);
             req.setAttribute("estado", estado);
 
-            Set<Integer> idsExcluidasSet = new java.util.HashSet<>(idsExcluidasActuales);
+            Set<Integer> idsExcluidasSet = new HashSet<>(idsExcluidasActuales);
             List<MovimientoResumen> incluidos = new ArrayList<>();
             List<MovimientoResumen> excluidos = new ArrayList<>();
 
@@ -203,7 +200,7 @@ public class EstadoResultadosServlet extends HttpServlet {
                 configuracionServicio.guardarOActualizarConfiguracion(idUsuario, periodoInicio, periodoFin, margenCMV, idsCategorias);
                 req.getSession().setAttribute("estadoResultadosGenerado", true);
             }
-        } catch (ServiceException | NumberFormatException | java.text.ParseException e) {
+        } catch (ServiceException | NumberFormatException | ParseException e) {
             req.setAttribute("error", "No se pudo guardar la configuracion: " + e.getMessage());
         }
         doGet(req, resp);
@@ -295,7 +292,7 @@ public class EstadoResultadosServlet extends HttpServlet {
         if (parametro == null || parametro.isEmpty()) return porDefecto;
         try {
             return formatoFecha.parse(parametro);
-        } catch (java.text.ParseException e) {
+        } catch (ParseException e) {
             throw new ParseFechaException("Fecha invalida");
         }
     }
