@@ -56,7 +56,7 @@
                             </div>
                             <div class="form-check mb-3">
                                 <input type="checkbox" class="form-check-input" id="recordarme" name="recordarme">
-                                <label class="form-check-label" for="recordarme">Recordarme en este dispositivo</label>
+                                <label class="form-check-label" for="recordarme">Recordarme</label>
                             </div>
                             <button type="submit" class="btn btn-primary w-100" name="action" value="login">Iniciar sesion</button>
                         </form>

@@ -30,5 +30,18 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.6.15.Final</version>
         </dependency>
+
+        <!-- Pool de conexiones HikariCP: valida y reemplaza conexiones muertas (FATAL: terminating connection due to administrator command) -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-hikaricp</artifactId>
+            <version>5.6.15.Final</version>
+        </dependency>
+        <!-- Fijado a 4.0.3: hibernate-hikaricp trae 3.2.0, que no soporta keepaliveTime -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>4.0.3</version>
+        </dependency>
     </dependencies>
 </project>

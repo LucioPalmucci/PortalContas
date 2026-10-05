@@ -5,13 +5,22 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="connection.url">jdbc:postgresql://ep-blue-tooth-axmk6rs3.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require</property>
+        <property name="connection.url">jdbc:postgresql://ep-blue-tooth-axmk6rs3.c-4.us-east-2.aws.neon.tech/neondb?sslmode=require&amp;tcpKeepAlive=true</property>
         <property name="connection.username">neondb_owner</property>
         <!-- La contrasenia NO se hardcodea aca: se setea con la variable de entorno DB_PASSWORD (ver HibernateUtil) -->
         <property name="connection.password"></property>
 
-        <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">10</property>
+        <!-- Pool HikariCP: valida las conexiones antes de usarlas y descarta las caidas por reinicio de Postgres o suspension de Neon -->
+        <property name="connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>
+        <property name="hibernate.hikari.maximumPoolSize">10</property>
+        <property name="hibernate.hikari.minimumIdle">2</property>
+        <!-- 5 min: menor que el tiempo de suspension de Neon, asi no quedan conexiones idle muertas -->
+        <property name="hibernate.hikari.idleTimeout">300000</property>
+        <property name="hibernate.hikari.maxLifetime">1800000</property>
+        <!-- Ping periodico para mantener viva la conexion -->
+        <property name="hibernate.hikari.keepaliveTime">120000</property>
+        <property name="hibernate.hikari.connectionTimeout">30000</property>
+        <property name="hibernate.hikari.validationTimeout">5000</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <!-- No imprimir el SQL ejecutado en los logs -->
         <property name="show_sql">false</property>

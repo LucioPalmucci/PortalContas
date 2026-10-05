@@ -188,7 +188,7 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="h5 border-start border-4 borde-serie-1 ps-2 d-flex align-items-center gap-2"><i class="bi bi-graph-up texto-serie-1" aria-hidden="true"></i>Evolucion mensual de compras (ultimos 12 meses)</h2>
-                    <div class="grafico-scroll">
+                    <div class="grafico-scroll" id="graficoComprasScroll">
                         <div class="grafico-barras">
                             <c:forEach var="barra" items="${evolucionMensual}">
                                 <div class="barra-col" title="${barra.etiqueta}: ${barra.valorFormateado}">
@@ -205,23 +205,27 @@
             </div>
         </c:if>
 
+        <c:if test="${not empty compras}">
         <div class="card" data-tabla-filtros>
             <div class="card-body">
                 <h2 class="h5 border-start border-4 borde-serie-1 ps-2 d-flex align-items-center gap-2"><i class="bi bi-list-ul texto-serie-1" aria-hidden="true"></i>Historial de compras</h2>
-                <div class="row g-2 align-items-end mb-3 d-print-none">
-                    <div class="col-md-4">
+                <div class="d-md-none mb-3 d-print-none">
+                    <button type="button" class="btn btn-outline-secondary rounded-pill w-100" data-bs-toggle="modal" data-bs-target="#modalFiltrosCompras"><i class="bi bi-funnel" aria-hidden="true"></i> Filtrar</button>
+                </div>
+                <div class="row g-2 align-items-end mb-3 d-print-none" id="bloqueFiltrosCompras">
+                    <div class="col-12 col-md-4">
                         <label class="form-label small mb-1">Buscar</label>
                         <input type="search" class="form-control form-control-sm" data-rol="buscador" placeholder="Concepto o descripcion...">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-6 col-md-2">
                         <label class="form-label small mb-1">Desde</label>
                         <input type="date" class="form-control form-control-sm" data-rol="desde">
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-6 col-md-2">
                         <label class="form-label small mb-1">Hasta</label>
                         <input type="date" class="form-control form-control-sm" data-rol="hasta">
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-12 col-md-4">
                         <label class="form-label small mb-1">Estado</label>
                         <select class="form-select form-select-sm" data-rol="estado">
                             <option value="">Todos</option>
@@ -291,7 +295,7 @@
                                     </div>
                                 </td>
                                 <td class="d-print-none d-md-none col-alternar">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill w-100" onclick="var f=this.closest('tr'); var e=f.classList.toggle('fila-expandida'); this.querySelector('i').className='bi ' + (e ? 'bi-chevron-up' : 'bi-chevron-down'); this.querySelector('span').textContent = e ? 'Ver menos' : 'Ver mas detalles';">
+                                    <button type="button" class="btn btn-sm btn-detalles-movil rounded-pill w-100" onclick="var f=this.closest('tr'); var e=f.classList.toggle('fila-expandida'); this.querySelector('i').className='bi ' + (e ? 'bi-chevron-up' : 'bi-chevron-down'); this.querySelector('span').textContent = e ? 'Ver menos' : 'Ver mas detalles';">
                                         <i class="bi bi-chevron-down" aria-hidden="true"></i> <span>Ver mas detalles</span>
                                     </button>
                                 </td>
@@ -300,17 +304,57 @@
                         <tr data-fila-vacia style="display:none;">
                             <td colspan="${esAdmin ? 9 : 8}" class="text-center text-secondary py-4">No se encontraron compras con esos filtros.</td>
                         </tr>
-                        <c:if test="${empty compras}">
-                            <tr><td colspan="${esAdmin ? 9 : 8}" class="text-center text-secondary py-4">Todavia no registro ninguna compra.</td></tr>
-                        </c:if>
                         </tbody>
                     </table>
                 </div>
                 <div class="d-flex justify-content-end align-items-center mt-3 d-print-none">
                     <div data-rol="paginador"></div>
                 </div>
+                <div class="modal fade" id="modalFiltrosCompras" tabindex="-1" aria-labelledby="modalFiltrosComprasLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalFiltrosComprasLabel">Filtrar compras</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                            </div>
+                            <div class="modal-body" id="ubicacionFiltrosMovilCompras"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Listo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <script>
+            (function () {
+                var bloque = document.getElementById("bloqueFiltrosCompras");
+                var destinoMovil = document.getElementById("ubicacionFiltrosMovilCompras");
+                var cardBody = bloque.parentNode;
+                var ancla = bloque.nextElementSibling;
+                var movil = window.matchMedia("(max-width: 767.98px)");
+                function ubicarFiltros() {
+                    if (movil.matches) {
+                        destinoMovil.appendChild(bloque);
+                    } else {
+                        cardBody.insertBefore(bloque, ancla);
+                    }
+                }
+                ubicarFiltros();
+                movil.addEventListener("change", ubicarFiltros);
+
+                var grafico = document.getElementById("graficoComprasScroll");
+                function irAlFinal() {
+                    if (grafico) {
+                        grafico.scrollLeft = grafico.scrollWidth;
+                    }
+                }
+                irAlFinal();
+                window.addEventListener("load", irAlFinal);
+                requestAnimationFrame(irAlFinal);
+            })();
+        </script>
+        </c:if>
 
         <%@ include file="/Vistas/fragmentos/Footer.jsp" %>
     </c:otherwise>
