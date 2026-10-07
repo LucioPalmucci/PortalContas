@@ -63,7 +63,7 @@ public class CatalogoServlet extends HttpServlet {
                     req.setAttribute("exito", "Medio activado.");
                     break;
                 case "agregarCategoria":
-                    categoriaConceptoServicio.guardarCategoria(req.getParameter("nombreCategoria"), req.getParameter("aplicaA"));
+                    categoriaConceptoServicio.guardarCategoria(req.getParameter("nombreCategoria"), req.getParameter("categoriaAplicaA"));
                     req.setAttribute("exito", "Categoria agregada.");
                     break;
                 case "desactivarCategoria":
