@@ -71,7 +71,7 @@
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Soporte"><i class="bi bi-question-circle text-secondary" aria-hidden="true"></i>Soporte</a>
                     </c:when>
                     <c:otherwise>
-                        <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Vistas/OpcionesUsuario/PanelUsuario.jsp"><i class="bi bi-house-door text-secondary" aria-hidden="true"></i>Inicio</a>
+                        <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Vistas/OpcionesUsuario/Panel.jsp"><i class="bi bi-house-door text-secondary" aria-hidden="true"></i>Inicio</a>
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Venta"><i class="bi bi-cart-check texto-serie-5" aria-hidden="true"></i>Ventas</a>
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Compra"><i class="bi bi-bag texto-serie-1" aria-hidden="true"></i>Compras</a>
                         <a class="menu-lateral-link" href="${pageContext.request.contextPath}/Gasto"><i class="bi bi-receipt texto-serie-3" aria-hidden="true"></i>Gastos</a>
