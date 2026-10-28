@@ -246,7 +246,7 @@
                     <div class="card-body">
                         <h3 class="h5">Manual de uso</h3>
                         <p class="text-secondary">Guia paso a paso de todas las funciones del sistema.</p>
-                        <a class="btn btn-outline-secondary w-100" href="${pageContext.request.contextPath}/Vistas/Manual.jsp" target="_blank">Abrir manual de uso</a>
+                        <a class="btn btn-outline-secondary w-100" href="${pageContext.request.contextPath}/documentos/ManualDeUsuario.pdf" target="_blank">Abrir manual de uso</a>
                     </div>
                 </div>
             </div>

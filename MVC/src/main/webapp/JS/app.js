@@ -16,6 +16,35 @@ function ocultarCarga() {
     if (barra) barra.classList.remove("activa");
 }
 
+// Evita que en un par de campos de fecha "Desde"/"Hasta" se pueda elegir
+// una fecha inicial posterior a la final (o viceversa): sincroniza los
+// limites min/max del input contrario y corrige el valor si ya quedo
+// invertido.
+function sincronizarRangoFechas(idDesde, idHasta) {
+    var desde = document.getElementById(idDesde);
+    var hasta = document.getElementById(idHasta);
+    if (!desde || !hasta) return;
+
+    function limitarHasta() {
+        hasta.min = desde.value || "";
+        if (desde.value && hasta.value && hasta.value < desde.value) {
+            hasta.value = desde.value;
+        }
+    }
+
+    function limitarDesde() {
+        desde.max = hasta.value || "";
+        if (hasta.value && desde.value && desde.value > hasta.value) {
+            desde.value = hasta.value;
+        }
+    }
+
+    desde.addEventListener("change", limitarHasta);
+    hasta.addEventListener("change", limitarDesde);
+    limitarHasta();
+    limitarDesde();
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", function (evento) {
         var enlace = evento.target.closest("a[href]");

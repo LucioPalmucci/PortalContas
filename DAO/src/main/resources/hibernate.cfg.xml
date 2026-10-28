@@ -10,15 +10,15 @@
         <!-- La contrasenia NO se hardcodea aca: se setea con la variable de entorno DB_PASSWORD (ver HibernateUtil) -->
         <property name="connection.password"></property>
 
-        <!-- Pool HikariCP: valida las conexiones antes de usarlas y descarta las caidas por reinicio de Postgres o suspension de Neon -->
+        <!-- Pool HikariCP: valida las conexiones antes de usarlas y descarta las caidas por reinicio de Postgres o suspension de Neon.
+             minimumIdle=0 y sin keepalive a proposito: asi el pool no mantiene conexiones abiertas en reposo
+             y Neon puede suspender el compute cuando no se usa la app (consume menos horas de computo del plan). -->
         <property name="connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>
         <property name="hibernate.hikari.maximumPoolSize">10</property>
-        <property name="hibernate.hikari.minimumIdle">2</property>
+        <property name="hibernate.hikari.minimumIdle">0</property>
         <!-- 5 min: menor que el tiempo de suspension de Neon, asi no quedan conexiones idle muertas -->
         <property name="hibernate.hikari.idleTimeout">300000</property>
         <property name="hibernate.hikari.maxLifetime">1800000</property>
-        <!-- Ping periodico para mantener viva la conexion -->
-        <property name="hibernate.hikari.keepaliveTime">120000</property>
         <property name="hibernate.hikari.connectionTimeout">30000</property>
         <property name="hibernate.hikari.validationTimeout">5000</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>

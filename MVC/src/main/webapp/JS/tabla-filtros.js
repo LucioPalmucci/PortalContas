@@ -125,9 +125,28 @@
             actualizarIndicadoresOrden();
         }
 
+        // No dejar elegir una fecha "Desde" posterior a "Hasta" ni una
+        // "Hasta" anterior a "Desde": cada una limita el rango de la otra.
+        function limitarHasta() {
+            if (!hasta) return;
+            hasta.min = (desde && desde.value) || "";
+            if (desde && desde.value && hasta.value && hasta.value < desde.value) {
+                hasta.value = desde.value;
+            }
+        }
+        function limitarDesde() {
+            if (!desde) return;
+            desde.max = (hasta && hasta.value) || "";
+            if (hasta && hasta.value && desde.value && desde.value > hasta.value) {
+                desde.value = hasta.value;
+            }
+        }
+        limitarHasta();
+        limitarDesde();
+
         if (buscador) buscador.addEventListener("input", function () { paginaActual = 1; render(); });
-        if (desde) desde.addEventListener("change", function () { paginaActual = 1; render(); });
-        if (hasta) hasta.addEventListener("change", function () { paginaActual = 1; render(); });
+        if (desde) desde.addEventListener("change", function () { limitarHasta(); paginaActual = 1; render(); });
+        if (hasta) hasta.addEventListener("change", function () { limitarDesde(); paginaActual = 1; render(); });
         if (estadoFiltro) estadoFiltro.addEventListener("change", function () { paginaActual = 1; render(); });
         if (clienteFiltro) clienteFiltro.addEventListener("change", function () { paginaActual = 1; render(); });
 

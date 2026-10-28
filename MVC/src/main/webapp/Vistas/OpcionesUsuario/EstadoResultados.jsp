@@ -368,6 +368,12 @@
         </c:if>
         </c:if>
 
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                sincronizarRangoFechas("periodoInicioDefault", "periodoFinDefault");
+            });
+        </script>
+
         <%@ include file="/Vistas/fragmentos/Footer.jsp" %>
     </c:otherwise>
 </c:choose>

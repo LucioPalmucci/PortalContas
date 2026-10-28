@@ -54,13 +54,13 @@
 
         <ul class="nav nav-tabs mb-4 d-print-none tabs-scroll" id="tabsEstadoFinanciero" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link active d-flex align-items-center gap-2" data-bs-toggle="tab" data-bs-target="#panel-dashboard" type="button" role="tab"><i class="bi bi-speedometer2" aria-hidden="true"></i>Dashboard</button>
+                <button class="nav-link d-flex align-items-center gap-2${empty comparacion ? ' active' : ''}" data-bs-toggle="tab" data-bs-target="#panel-dashboard" type="button" role="tab"><i class="bi bi-speedometer2" aria-hidden="true"></i>Dashboard</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link d-flex align-items-center gap-2" data-bs-toggle="tab" data-bs-target="#panel-tendencias" type="button" role="tab"><i class="bi bi-graph-up" aria-hidden="true"></i>Tendencias</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link d-flex align-items-center gap-2" data-bs-toggle="tab" data-bs-target="#panel-comparativa" type="button" role="tab"><i class="bi bi-arrow-left-right" aria-hidden="true"></i>Comparativa</button>
+                <button class="nav-link d-flex align-items-center gap-2${not empty comparacion ? ' active' : ''}" data-bs-toggle="tab" data-bs-target="#panel-comparativa" type="button" role="tab"><i class="bi bi-arrow-left-right" aria-hidden="true"></i>Comparativa</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link d-flex align-items-center gap-2" data-bs-toggle="tab" data-bs-target="#panel-composicion" type="button" role="tab"><i class="bi bi-pie-chart" aria-hidden="true"></i>Composicion</button>
@@ -71,7 +71,7 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="panel-dashboard" role="tabpanel">
+            <div class="tab-pane fade${empty comparacion ? ' show active' : ''}" id="panel-dashboard" role="tabpanel">
                 <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
                     <div class="col">
                         <div class="card card-body h-100 border-start border-4 ${estadoFinanciero.mesesPerdida > 0 ? 'border-danger' : 'border-success'} d-flex flex-row align-items-center gap-3">
@@ -161,7 +161,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="panel-comparativa" role="tabpanel">
+            <div class="tab-pane fade${not empty comparacion ? ' show active' : ''}" id="panel-comparativa" role="tabpanel">
                 <div class="card d-print-none">
                     <div class="card-body">
                         <h2 class="h5 border-start border-4 borde-serie-8 ps-2 d-flex align-items-center gap-2"><i class="bi bi-arrow-left-right texto-serie-8" aria-hidden="true"></i>Comparar dos periodos</h2>
@@ -169,19 +169,19 @@
                             <c:if test="${esAdmin}"><input type="hidden" name="idUsuarioFiltro" value="${idUsuarioFiltro}"></c:if>
                             <div class="col-6 col-md-3">
                                 <label class="form-label">Periodo 1 - desde</label>
-                                <input type="date" class="form-control" name="desde1" required>
+                                <input type="date" class="form-control" id="desde1" name="desde1" required>
                             </div>
                             <div class="col-6 col-md-3">
                                 <label class="form-label">Periodo 1 - hasta</label>
-                                <input type="date" class="form-control" name="hasta1" required>
+                                <input type="date" class="form-control" id="hasta1" name="hasta1" required>
                             </div>
                             <div class="col-6 col-md-3">
                                 <label class="form-label">Periodo 2 - desde</label>
-                                <input type="date" class="form-control" name="desde2" required>
+                                <input type="date" class="form-control" id="desde2" name="desde2" required>
                             </div>
                             <div class="col-6 col-md-3">
                                 <label class="form-label">Periodo 2 - hasta</label>
-                                <input type="date" class="form-control" name="hasta2" required>
+                                <input type="date" class="form-control" id="hasta2" name="hasta2" required>
                             </div>
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary rounded-pill"><i class="bi bi-arrow-left-right me-1" aria-hidden="true"></i>Comparar</button>
@@ -283,6 +283,13 @@
             </div>
         </div>
         </c:if>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                sincronizarRangoFechas("desde1", "hasta1");
+                sincronizarRangoFechas("desde2", "hasta2");
+            });
+        </script>
 
         <%@ include file="/Vistas/fragmentos/Footer.jsp" %>
     </c:otherwise>
